@@ -105,6 +105,11 @@ function getSpots() {
 
 const spotsLeft = getSpots();
 
+const heroUrgMobile = document.getElementById('heroUrgMobile');
+if (heroUrgMobile) {
+  heroUrgMobile.textContent = spotsLeft + ' places restantes';
+}
+
 // BAC capacités affichées (1ère & 2ème année — même logique 25 / 45)
 const BAC_PLACES_LEFT = 25;
 const BAC_PLACES_TOTAL = 45;
