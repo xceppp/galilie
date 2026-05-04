@@ -4,6 +4,9 @@
 // ⚠️ REQUIRED: Replace with your Google Apps Script Web App URL before launch
 const SHEET_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
 
+let lastSubmitTime = 0;
+const SUBMIT_COOLDOWN_MS = 8000;
+
 // Navbar shadow on scroll
 const navbar = document.getElementById('navbar');
 function onScroll(){
@@ -135,6 +138,11 @@ if (scarPctBac2) {
 
 animateBacScarcityBar(document.getElementById('scarBarBac1'), bacBarPct);
 animateBacScarcityBar(document.getElementById('scarBarBac2'), bacBarPct);
+
+const scarBrutalHeroNum = document.getElementById('scarBrutalHeroNum');
+const scarBrutalGhost = document.getElementById('scarBrutalGhost');
+if (scarBrutalHeroNum) scarBrutalHeroNum.textContent = String(BAC_PLACES_LEFT);
+if (scarBrutalGhost) scarBrutalGhost.textContent = String(BAC_PLACES_LEFT);
 
 // 1ère année mise en avant, puis transition, puis 2ème année (+ flash du ratio) — bannière or + carte programme
 (function initBacYearSpotlightCycle() {
@@ -332,9 +340,41 @@ if (niveauSelect){
   updateDependentSelects();
 }
 
-function val(id){
+function val(id) {
   const el = document.getElementById(id);
-  return el ? String(el.value || '').trim() : '';
+  if (!el) return '';
+  return String(el.value || '')
+    .trim()
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;')
+    .slice(0, 500);
+}
+
+function clearErrors() {
+  document.querySelectorAll('.field-error').forEach((el) => el.remove());
+  document.querySelectorAll('.field-err-border').forEach((el) => {
+    el.classList.remove('field-err-border');
+  });
+}
+
+function showFieldError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('field-err-border');
+  const err = document.createElement('div');
+  err.className = 'field-error';
+  err.textContent = msg;
+  err.setAttribute('role', 'alert');
+  el.parentNode.insertBefore(err, el.nextSibling);
+  const clear = () => {
+    el.classList.remove('field-err-border');
+    err.remove();
+  };
+  el.addEventListener('input', clear, { once: true });
+  el.addEventListener('change', clear, { once: true });
 }
 
 function showSuccess(){
@@ -359,42 +399,100 @@ if (leadForm) {
   leadForm.addEventListener('input', updateProgress);
   leadForm.addEventListener('change', updateProgress);
   updateProgress();
-}
 
-leadForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const payload = {
-    timestamp: new Date().toISOString(),
-    prenom: val('prenom'),
-    nom: val('nom'),
-    telephone: val('telephone'),
-    email: val('email'),
-    niveau: val('niveau'),
-    filiere: val('filiere'),
-    service: val('service'),
-    mode: val('mode')
-  };
+  leadForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors();
 
-  const required = ['prenom','nom','telephone','email','niveau','filiere','service','mode'];
-  const ok = required.every(k => payload[k] && payload[k].length > 0);
-  if (!ok){
-    alert('Veuillez remplir tous les champs.');
-    return;
-  }
-
-  showSuccess();
-
-  // Non-blocking UX: attempt send, ignore errors
-  try{
-    if (SHEET_URL && SHEET_URL !== "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-      fetch(SHEET_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(() => {});
+    const hp = document.getElementById('hp_website');
+    if (hp && hp.value.trim() !== '') {
+      showSuccess();
+      return;
     }
-  }catch(_){}
-});
+
+    const now = Date.now();
+    if (now - lastSubmitTime < SUBMIT_COOLDOWN_MS) {
+      const wait = Math.ceil((SUBMIT_COOLDOWN_MS - (now - lastSubmitTime)) / 1000);
+      showFieldError('prenom', `Veuillez patienter ${wait}s avant de soumettre à nouveau.`);
+      return;
+    }
+    lastSubmitTime = now;
+
+    let hasError = false;
+    const validations = [
+      { id: 'prenom', msg: 'Veuillez entrer votre prénom.' },
+      { id: 'nom', msg: 'Veuillez entrer votre nom.' },
+      { id: 'telephone', msg: 'Veuillez entrer votre téléphone.' },
+      { id: 'email', msg: 'Veuillez entrer votre email.' },
+      { id: 'niveau', msg: 'Veuillez sélectionner votre profil.' },
+      { id: 'filiere', msg: 'Veuillez sélectionner une option.' },
+      { id: 'service', msg: 'Veuillez sélectionner un service.' },
+      { id: 'mode', msg: 'Veuillez sélectionner un mode.' }
+    ];
+    validations.forEach(({ id, msg }) => {
+      const v = val(id);
+      if (!v) {
+        showFieldError(id, msg);
+        hasError = true;
+      }
+    });
+
+    const emailVal = val('email');
+    if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      showFieldError('email', 'Format email invalide.');
+      hasError = true;
+    }
+
+    const phoneVal = val('telephone');
+    if (phoneVal && !/^[\d\s+\-()]{8,}$/.test(phoneVal)) {
+      showFieldError('telephone', 'Numéro de téléphone invalide.');
+      hasError = true;
+    }
+
+    if (hasError) {
+      const first = document.querySelector('.field-err-border');
+      if (first) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        first.scrollIntoView({
+          behavior: reduce.matches ? 'auto' : 'smooth',
+          block: 'center'
+        });
+      }
+      return;
+    }
+
+    const payload = {
+      timestamp: new Date().toISOString(),
+      prenom: val('prenom'),
+      nom: val('nom'),
+      telephone: val('telephone'),
+      email: val('email'),
+      niveau: val('niveau'),
+      filiere: val('filiere'),
+      service: val('service'),
+      mode: val('mode')
+    };
+
+    showSuccess();
+
+    const isValidSheetUrl =
+      SHEET_URL &&
+      SHEET_URL !== 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' &&
+      SHEET_URL.startsWith('https://script.google.com/') &&
+      SHEET_URL.length < 500;
+
+    try {
+      if (isValidSheetUrl) {
+        fetch(SHEET_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          mode: 'no-cors',
+          body: JSON.stringify(payload)
+        }).catch(() => {});
+      }
+    } catch (_) {}
+  });
+}
 
 // Programmes — onglets (#svcLayoutRoot + services-layout.css)
 (function initSvcLayout() {
@@ -402,7 +500,7 @@ leadForm.addEventListener('submit', async (e) => {
   if (!root) return;
 
   window.showSvcTab = function (panelKey, btn) {
-    const panelId = panelKey === 'concours' ? 'concours' : 'tab-' + panelKey;
+    const panelId = 'tab-' + panelKey;
     const panel = document.getElementById(panelId);
     root.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
     root.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
@@ -415,7 +513,7 @@ leadForm.addEventListener('submit', async (e) => {
     const tabBtn = root.querySelector('.tab-btn[data-svc-tab="concours"]');
     window.showSvcTab('concours', tabBtn);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const el = document.getElementById('concours');
+    const el = document.getElementById('tab-concours');
     if (!el) return;
     requestAnimationFrame(() => {
       el.scrollIntoView({
@@ -448,3 +546,75 @@ if (navObserveEls.length && navScrollLinks.length) {
   }, { threshold: [0.08, 0.14, 0.22, 0.35], rootMargin: '-10% 0px -48% 0px' });
   navObserveEls.forEach((el) => navIo.observe(el));
 }
+
+// Témoignages — scroll horizontal + points + glisser-déposer (desktop)
+(function initTestiScrollTrack() {
+  const track = document.getElementById('testiScrollTrack');
+  const root = document.getElementById('temoignages');
+  if (!track || !root || !root.classList.contains('testi-scroll')) return;
+
+  const dots = () => Array.from(root.querySelectorAll('.tB-dot'));
+  const cards = () => Array.from(track.querySelectorAll('.tB-card'));
+
+  function setDotsActive(idx) {
+    dots().forEach((d, i) => {
+      const on = i === idx;
+      d.classList.toggle('on', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  function syncDotsFromScroll() {
+    const c = cards();
+    if (!c.length) return;
+    const scroll = track.scrollLeft;
+    let best = Infinity;
+    let idx = 0;
+    c.forEach((card, i) => {
+      const d = Math.abs(card.offsetLeft - scroll);
+      if (d < best) {
+        best = d;
+        idx = i;
+      }
+    });
+    setDotsActive(idx);
+  }
+
+  let scrollRaf = 0;
+  track.addEventListener('scroll', () => {
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      scrollRaf = 0;
+      syncDotsFromScroll();
+    });
+  }, { passive: true });
+
+  dots().forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const card = cards()[i];
+      if (card) {
+        track.scrollTo({
+          left: card.offsetLeft - 16,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  let drag = false;
+  let startX = 0;
+  let startScroll = 0;
+  track.addEventListener('mousedown', (e) => {
+    drag = true;
+    startX = e.pageX;
+    startScroll = track.scrollLeft;
+  });
+  track.addEventListener('mouseleave', () => { drag = false; });
+  track.addEventListener('mouseup', () => { drag = false; });
+  track.addEventListener('mousemove', (e) => {
+    if (!drag) return;
+    track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
+  });
+
+  syncDotsFromScroll();
+})();

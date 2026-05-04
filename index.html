@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- script-src inclut 'unsafe-inline' pour onclick (onglets) et compat JSON-LD ; nonce sur scripts marqués -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-GS2026' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
   <meta name="theme-color" content="#0D2818">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -39,7 +44,7 @@
   <meta name="twitter:image" content="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22630%22%3E%3Crect%20width%3D%221200%22%20height%3D%22630%22%20fill%3D%22%230D2818%22%2F%3E%3Ctext%20x%3D%22600%22%20y%3D%22280%22%20font-family%3D%22serif%22%20font-size%3D%2264%22%20fill%3D%22%23C9A84C%22%20text-anchor%3D%22middle%22%3EGalilie%20Scholar%3C%2Ftext%3E%3Ctext%20x%3D%22600%22%20y%3D%22360%22%20font-family%3D%22sans-serif%22%20font-size%3D%2228%22%20fill%3D%22%23C8E6C9%22%20text-anchor%3D%22middle%22%3ECentre%20de%20Formation%20%E2%80%94%20Mekn%C3%A8s%202026%3C%2Ftext%3E%3Ctext%20x%3D%22600%22%20y%3D%22430%22%20font-family%3D%22sans-serif%22%20font-size%3D%2222%22%20fill%3D%22%23E2C06A%22%20text-anchor%3D%22middle%22%3E97%25%20de%20r%C3%A9ussite%20%C2%B7%20Inscriptions%20ouvertes%3C%2Ftext%3E%3C%2Fsvg%3E">
 
   <!-- Schema.org Structured Data — Local Business -->
-  <script type="application/ld+json">
+  <script type="application/ld+json" nonce="GS2026">
   {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
@@ -90,12 +95,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
 
   <!-- Facebook Pixel Code — paste here -->
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="services-layout.css">
+  <link rel="stylesheet" href="cinematic-hero-testi.css">
 </head>
 
 <body>
@@ -167,132 +173,76 @@
     <a class="btn btn-gold" href="#contact" data-close style="width:100%;margin-top:auto">Réserver ma place →</a>
   </aside>
 
-  <!-- HERO -->
+  <!-- HERO — layout cinématique centré (Fraunces) -->
   <main id="top">
-    <section class="hero" aria-label="Accueil">
-      <div class="bg-base" aria-hidden="true"></div>
-      <div class="bg-noise" aria-hidden="true"></div>
-      <div class="bg-glow-gold" aria-hidden="true"></div>
-      <div class="bg-glow-green" aria-hidden="true"></div>
-      <div class="bg-grid" aria-hidden="true"></div>
-      <div class="bg-line" aria-hidden="true"></div>
-
-      <div class="trust-float" aria-hidden="true">
-        <div class="tf-icon">🏆</div>
-        <div>
-          <div class="tf-val">97%</div>
-          <div class="tf-lbl">Taux de réussite</div>
-          <div class="tf-stars"><span class="tf-star">★</span><span class="tf-star">★</span><span class="tf-star">★</span><span class="tf-star">★</span><span class="tf-star">★</span></div>
+    <section class="hero hero--cinema reveal" aria-label="Accueil">
+      <div class="hC-wrap">
+        <div class="hC-bg" aria-hidden="true"></div>
+        <div class="hC-lines" aria-hidden="true">
+          <div class="hC-vline" style="left:25%"></div>
+          <div class="hC-vline" style="left:75%"></div>
         </div>
-      </div>
-
-      <div class="hero-urgency" role="status" aria-live="polite">
-        <span class="hero-urgency__mark" aria-hidden="true"></span>
-        <div class="hero-urgency__copy">
-          <span class="hero-urgency__title">Peu de places</span>
-          <span class="hero-urgency__sub">Session sept. 2026</span>
-        </div>
-      </div>
-
-      <div class="photo-float" aria-label="Photo du centre">
-        <div class="photo-placeholder">
-          <span aria-hidden="true">📸</span>
-          <small>Photo du centre</small>
-        </div>
-      </div>
-
-      <div class="hero-content">
-        <div class="hero-trust-row" aria-label="Indicateurs de confiance">
-          <div class="htr-item">
-            <span class="htr-val">97%</span>
-            <span class="htr-lbl">Réussite</span>
+        <div class="hC-center">
+          <div class="hero-trust-row" aria-label="Indicateurs de confiance">
+            <div class="htr-item">
+              <span class="htr-val">97%</span>
+              <span class="htr-lbl">Réussite</span>
+            </div>
+            <div class="htr-div" aria-hidden="true"></div>
+            <div class="htr-item">
+              <span class="htr-val">15</span>
+              <span class="htr-lbl">Max/groupe</span>
+            </div>
+            <div class="htr-div" aria-hidden="true"></div>
+            <div class="htr-item htr-urgent">
+              <span class="htr-udot" aria-hidden="true"></span>
+              <span class="htr-lbl" id="heroUrgMobile">Places restantes</span>
+            </div>
           </div>
-          <div class="htr-div" aria-hidden="true"></div>
-          <div class="htr-item">
-            <span class="htr-val">15</span>
-            <span class="htr-lbl">Max/groupe</span>
+          <div class="hC-badge"><span class="hC-bdot" aria-hidden="true"></span>Meknès · Inscriptions 2026</div>
+          <h1 class="hC-h1">
+            Votre <span class="gold-italic">réussite</span><br>commence ici.
+            <span class="hC-sub-line">— Centre de formation supérieure, Meknès</span>
+          </h1>
+          <p class="hC-desc">BAC, concours emploi public, classes préparatoires et capsules personnalisées. Sur site à Meknès ou entièrement à distance.</p>
+          <div class="hC-cta-wrap">
+            <a class="hC-btn" href="#contact">Commencer ma préparation</a>
+            <a class="hC-link" href="#programmes">Découvrir les programmes →</a>
           </div>
-          <div class="htr-div" aria-hidden="true"></div>
-          <div class="htr-item htr-urgent">
-            <span class="htr-udot" aria-hidden="true"></span>
-            <span class="htr-lbl" id="heroUrgMobile">Places restantes</span>
+          <div class="hC-proof">
+            <div class="hC-avs" aria-hidden="true">
+              <div class="hC-av">YB</div>
+              <div class="hC-av">SH</div>
+              <div class="hC-av">KM</div>
+              <div class="hC-av">AN</div>
+            </div>
+            <p class="hC-proof-txt"><strong>1&nbsp;500+ étudiants</strong> ont déjà transformé leur parcours avec nous</p>
           </div>
         </div>
-        <div class="loc-badge">
-          <span class="loc-dot" aria-hidden="true"></span>
-          Meknès · Inscriptions 2026
-        </div>
-
-        <div class="hero-head">
-          <span class="h1-light">Votre</span>
-          <span class="h1-main"><em>réussite</em> mérite</span>
-          <span class="h1-accent">les meilleurs.</span>
-        </div>
-
-        <p class="hero-sub">BAC, concours, prépa — Meknès ou à distance.</p>
-
-        <div class="hero-ctas">
-          <a class="cta-primary" href="#contact">
-            <span>Commencer ma préparation</span>
-            <span class="cta-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="cta-secondary" href="#programmes">Voir les programmes</a>
-        </div>
-
-        <div class="hero-proof-wrap">
-          <div class="proof-avs" aria-hidden="true">
-            <div class="proof-av">YB</div>
-            <div class="proof-av">SH</div>
-            <div class="proof-av">KM</div>
-            <div class="proof-av">AN</div>
-          </div>
-          <p class="hero-proof"><strong>1&nbsp;500+ étudiants</strong> ont<br>transformé leur parcours</p>
-        </div>
-      </div>
-
-      <div class="hero-mini-stats">
-        <div class="mini-stat">
-          <div class="mini-val">97<sup>%</sup></div>
-          <div class="mini-lbl">Réussite</div>
-        </div>
-        <div class="mini-stat">
-          <div class="mini-val">15</div>
-          <div class="mini-lbl">Max / groupe</div>
-        </div>
-        <div class="mini-stat">
-          <div class="mini-val">12</div>
-          <div class="mini-lbl">Ans d’exp.</div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- TRUST — banderole défilante -->
-    <section class="trust" aria-label="Garanties" style="padding:0">
-      <div class="trust-marquee-mask">
-        <div class="trust-marquee-track">
-          <div class="trust-marquee-set">
-            <span class="trust-pill trust-pill--places">🔴 1ère année BAC — 25 / 45 places</span>
-            <span class="trust-pill trust-pill--places">🔴 2ème année BAC — 25 / 45 places</span>
-            <span class="trust-pill">Centre physique agréé</span>
-            <span class="trust-pill">Formateurs certifiés</span>
-            <span class="trust-pill">Capsules personnalisées</span>
-            <span class="trust-pill">Petits groupes (15 max)</span>
-            <span class="trust-pill">🔴 Session 2026 — inscriptions en cours</span>
-          </div>
-          <div class="trust-marquee-set" aria-hidden="true">
-            <span class="trust-pill trust-pill--places">🔴 1ère année BAC — 25 / 45 places</span>
-            <span class="trust-pill trust-pill--places">🔴 2ème année BAC — 25 / 45 places</span>
-            <span class="trust-pill">Centre physique agréé</span>
-            <span class="trust-pill">Formateurs certifiés</span>
-            <span class="trust-pill">Capsules personnalisées</span>
-            <span class="trust-pill">Petits groupes (15 max)</span>
-            <span class="trust-pill">🔴 Session 2026 — inscriptions en cours</span>
+        <div class="hC-ticker" aria-hidden="true">
+          <div class="hC-ticker-track">
+            <span class="hC-tick-item">97% de réussite</span>
+            <span class="hC-tick-item">Concours emploi public</span>
+            <span class="hC-tick-item">Capsules personnalisées</span>
+            <span class="hC-tick-item">Classes préparatoires</span>
+            <span class="hC-tick-item">1&nbsp;500+ accompagnements</span>
+            <span class="hC-tick-item">BAC 1ère &amp; 2ème</span>
+            <span class="hC-tick-item">Français &amp; Anglais</span>
+            <span class="hC-tick-item">Coaching &amp; développement</span>
+            <span class="hC-tick-item">97% de réussite</span>
+            <span class="hC-tick-item">Concours emploi public</span>
+            <span class="hC-tick-item">Capsules personnalisées</span>
+            <span class="hC-tick-item">Classes préparatoires</span>
+            <span class="hC-tick-item">1&nbsp;500+ accompagnements</span>
+            <span class="hC-tick-item">BAC 1ère &amp; 2ème</span>
+            <span class="hC-tick-item">Français &amp; Anglais</span>
+            <span class="hC-tick-item">Coaching &amp; développement</span>
           </div>
         </div>
       </div>
     </section>
 
+    <span id="concours" style="display:block;height:0;visibility:hidden" aria-hidden="true"></span>
     <!-- PROGRAMMES — navigateur à onglets (services-layout.css) -->
     <section id="programmes" class="reveal services-multi">
 <div id="svcLayoutRoot">
@@ -355,7 +305,7 @@
       </div>
     </div>
 
-    <div class="tab-panel" id="concours">
+    <div class="tab-panel" id="tab-concours">
       <div class="tab-left">
         <div class="tab-icon">🏛️</div>
         <h3>Concours <em>Emploi Public</em></h3>
@@ -493,129 +443,99 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS -->
-    <section id="temoignages">
-      <div class="container">
-        <div class="s-label">Témoignages</div>
-        <h2 class="reveal">Ils ont <em>réussi.</em> Ils témoignent.</h2>
-
-        <div class="testi-grid">
-          <div class="card reveal">
-            <div class="testi-photo-slot">
-              <!-- Replace with: <img src="assets/testi-youssef.jpg" alt="Youssef B." class="testi-photo"> -->
-            </div>
-            <div class="quoteMark">“</div>
-            <div class="stars" aria-label="5 étoiles">
-              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-            </div>
-            <div class="t-text">“Galilie Scholar m’a donné une méthode claire et une discipline. J’ai été admis à l’ENSA à la première tentative. Les simulations et les corrections m’ont fait gagner un temps énorme.”</div>
-            <div class="t-meta">
-              <div>
-                <div class="t-name">Youssef B.</div>
-                <div class="t-role">Lauréat ENSA</div>
+    <!-- TESTIMONIALS — cartes horizontales (scroll) -->
+    <section id="temoignages" class="testi-scroll reveal">
+      <div class="tB-wrap">
+        <div class="tB-header">
+          <div class="s-label">Témoignages</div>
+          <h2 class="tB-h2">Ils ont <em>réussi. <sub>Vraiment.</sub></em></h2>
+        </div>
+        <div class="tB-track" id="testiScrollTrack">
+          <article class="tB-card wide">
+            <div class="tB-card-accent" aria-hidden="true"></div>
+            <div class="tB-card-body">
+              <div class="tB-stars" aria-label="5 sur 5"><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span></div>
+              <p class="tB-quote">Galilie Scholar m’a donné une méthode claire et une discipline. J’ai été admis à l’ENSA à la première tentative. Les simulations et les corrections m’ont fait gagner un temps énorme.</p>
+              <div class="tB-result-tag">✓ Admis 1ère tentative · ENSA</div>
+              <div class="tB-author">
+                <div class="tB-av">YB</div>
+                <div><div class="tB-name">Youssef B.</div><div class="tB-role">Lauréat ENSA</div></div>
               </div>
-              <div class="verified-row">
-                <div class="result-badge">Admis 1ère tentative</div>
-                <div class="verified-badge">✓ Vérifié</div>
-              </div>
+              <p class="tB-video"><span aria-hidden="true">▶</span> Témoignage vidéo à venir</p>
             </div>
-            <div class="testi-video-cta">
-              <span aria-hidden="true">▶</span> Voir le témoignage vidéo
-              <!-- Remplacer par un lien YouTube / WhatsApp vidéo lorsque disponible -->
-            </div>
-          </div>
-
-          <div class="side-col">
-            <div class="card reveal reveal-d1">
-              <div class="testi-photo-slot">
-                <!-- Replace with: <img src="assets/testi-hassan.jpg" alt="M. Hassan" class="testi-photo"> -->
-              </div>
-              <div class="quoteMark">“</div>
-              <div class="stars" aria-label="5 étoiles">
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-              </div>
-              <div class="t-text">“Mon fils a gagné en confiance et en organisation. Mention Bien au bac. L’équipe est sérieuse et le suivi est réel.”</div>
-              <div class="t-meta">
-                <div>
-                  <div class="t-name">M. Hassan</div>
-                  <div class="t-role">Parent d’élève BAC</div>
-                </div>
-                <div class="verified-row">
-                  <div class="result-badge">Mention Bien</div>
-                  <div class="verified-badge">✓ Vérifié</div>
-                </div>
+          </article>
+          <article class="tB-card">
+            <div class="tB-card-accent" aria-hidden="true"></div>
+            <div class="tB-card-body">
+              <div class="tB-stars" aria-label="5 sur 5"><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span></div>
+              <p class="tB-quote">Mon fils a gagné en confiance et en organisation. Mention Bien au bac. L’équipe est sérieuse et le suivi est réel.</p>
+              <div class="tB-result-tag">✓ Mention Bien · Parent d’élève</div>
+              <div class="tB-author">
+                <div class="tB-av">MH</div>
+                <div><div class="tB-name">M. Hassan</div><div class="tB-role">Parent d’élève BAC</div></div>
               </div>
             </div>
-
-            <div class="card reveal reveal-d2">
-              <div class="testi-photo-slot">
-                <!-- Replace with: <img src="assets/testi-karim.jpg" alt="Karim M." class="testi-photo"> -->
-              </div>
-              <div class="quoteMark">“</div>
-              <div class="stars" aria-label="5 étoiles">
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-                <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.6-6.2 3.6 1.6-7L2 9.2l7.1-.6L12 2z"/></svg>
-              </div>
-              <div class="t-text">“Préparation concours Finance solide : culture générale, droit, rédaction… et surtout l’oral. Admis.”</div>
-              <div class="t-meta">
-                <div>
-                  <div class="t-name">Karim M.</div>
-                  <div class="t-role">Candidat emploi public</div>
-                </div>
-                <div class="verified-row">
-                  <div class="result-badge">Admis Finance</div>
-                  <div class="verified-badge">✓ Vérifié</div>
-                </div>
+          </article>
+          <article class="tB-card">
+            <div class="tB-card-accent" aria-hidden="true"></div>
+            <div class="tB-card-body">
+              <div class="tB-stars" aria-label="5 sur 5"><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span></div>
+              <p class="tB-quote">Préparation concours Finance solide : culture générale, droit, rédaction… et surtout l’oral. Admis.</p>
+              <div class="tB-result-tag">✓ Admis Finance · Emploi public</div>
+              <div class="tB-author">
+                <div class="tB-av">KM</div>
+                <div><div class="tB-name">Karim M.</div><div class="tB-role">Candidat emploi public</div></div>
               </div>
             </div>
-          </div>
+          </article>
+        </div>
+        <div class="tB-dots" role="tablist" aria-label="Témoignages">
+          <button type="button" class="tB-dot on" aria-label="Témoignage 1" aria-selected="true"></button>
+          <button type="button" class="tB-dot" aria-label="Témoignage 2" aria-selected="false"></button>
+          <button type="button" class="tB-dot" aria-label="Témoignage 3" aria-selected="false"></button>
         </div>
       </div>
     </section>
 
-    <!-- SCARCITY BANNER -->
-    <section class="scarcity" aria-label="Places limitées">
-      <div class="container">
-        <div class="scarcity-inner">
-          <div class="scar-left">
-            <div class="scar-title">⚡ Places limitées — Groupes de 15 étudiants maximum</div>
-            <div class="scar-badge">1ère &amp; 2ème année BAC — suivis séparés</div>
-
-            <div class="scarcity-bac-rows bac-cycle-target" role="group" aria-label="Places restantes par niveau BAC">
-              <div class="scarcity-bac-row bac-row--spotlight" id="bacScarcityRow1">
-                <div class="scarcity-bar-label">
-                  <span>1ère année BAC</span>
-                  <span class="scarcity-pct" id="scarPctBac1">25 / 45 places restantes</span>
-                </div>
-                <div class="scarcity-bar-track">
-                  <div class="urgency-bar-fill urgency-bar-fill--bac" id="scarBarBac1"></div>
-                </div>
-                <div class="scarcity-sub">Capacité max. 45 places — mise à jour session sept. 2026</div>
+    <!-- SCARCITY — contraste brutal (noir / or) -->
+    <section class="scarcity scarcity--brutal" aria-label="Places limitées">
+      <div class="scar-brutal">
+        <div class="scar-brutal-left">
+          <div class="scar-brutal-ghost" id="scarBrutalGhost" aria-hidden="true">25</div>
+          <div class="scar-brutal-left-label">Places restantes</div>
+          <div class="scar-brutal-left-num" id="scarBrutalHeroNum">25</div>
+          <p class="scar-brutal-left-sub">places disponibles sur 45 pour la session de septembre 2026. Groupes limités à 15 étudiants — fermeture à capacité maximale.</p>
+        </div>
+        <div class="scar-brutal-right">
+          <div class="scar-brutal-right-label">Session 2026 — Galilie Scholar · Meknès</div>
+          <h2 class="scar-brutal-title">
+            Sécurisez votre place<br>
+            <em>avant la fermeture des groupes.</em>
+          </h2>
+          <div class="scarcity-bac-rows bac-cycle-target" role="group" aria-label="Places restantes par niveau BAC">
+            <div class="scarcity-bac-row bac-row--spotlight" id="bacScarcityRow1">
+              <div class="scarcity-bar-label scar-brutal-bar-label">
+                <span>1ère année BAC</span>
+                <span class="scarcity-pct" id="scarPctBac1">25 / 45 places restantes</span>
               </div>
-              <div class="scarcity-bac-row" id="bacScarcityRow2">
-                <div class="scarcity-bar-label">
-                  <span>2ème année BAC</span>
-                  <span class="scarcity-pct bac-pct-flash-target" id="scarPctBac2">25 / 45 places restantes</span>
-                </div>
-                <div class="scarcity-bar-track">
-                  <div class="urgency-bar-fill urgency-bar-fill--bac" id="scarBarBac2"></div>
-                </div>
-                <div class="scarcity-sub">Capacité max. 45 places — mise à jour session sept. 2026</div>
+              <div class="scarcity-bar-track scar-brutal-bar-track">
+                <div class="urgency-bar-fill urgency-bar-fill--bac scar-brutal-fill" id="scarBarBac1"></div>
+              </div>
+            </div>
+            <div class="scarcity-bac-row" id="bacScarcityRow2">
+              <div class="scarcity-bar-label scar-brutal-bar-label">
+                <span>2ème année BAC</span>
+                <span class="scarcity-pct bac-pct-flash-target" id="scarPctBac2">25 / 45 places restantes</span>
+              </div>
+              <div class="scarcity-bar-track scar-brutal-bar-track">
+                <div class="urgency-bar-fill urgency-bar-fill--bac scar-brutal-fill" id="scarBarBac2"></div>
               </div>
             </div>
           </div>
-          <a class="btn btn-dark" href="#contact">Réserver ma place maintenant</a>
+          <div class="scar-brutal-cta-row">
+            <a class="scar-brutal-btn" href="#contact">Réserver ma place</a>
+            <span class="scar-brutal-note">Sans engagement · Réponse sous 24h</span>
+          </div>
         </div>
       </div>
     </section>
@@ -803,6 +723,11 @@
                   </div>
                   <div class="form-progress-label" id="formProgressLabel">0 / 8 champs remplis</div>
 
+                  <div class="hp-field" aria-hidden="true">
+                    <label for="hp_website">Website</label>
+                    <input type="text" id="hp_website" name="website" tabindex="-1" autocomplete="off">
+                  </div>
+
                   <button class="submit" type="submit">Obtenir mon plan gratuit →</button>
                   <div class="locknote">🔒 Vos données restent confidentielles. Aucun spam. Jamais.</div>
                 </form>
@@ -955,7 +880,7 @@
     </svg>
   </a>
 
-  <script src="main.js"></script>
+  <script src="main.js" defer nonce="GS2026"></script>
 
   <!--
   ==============================================================================

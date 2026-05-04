@@ -102,4 +102,4 @@
   #svcLayoutRoot .tab-panel.active{grid-template-columns:1fr}
 }
 
-#svcLayoutRoot #concours.tab-panel{scroll-margin-top:calc(62px + 24px)}
+#svcLayoutRoot #tab-concours.tab-panel{scroll-margin-top:calc(62px + 24px)}
