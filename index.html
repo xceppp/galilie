@@ -102,6 +102,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="services-layout.css">
   <link rel="stylesheet" href="cinematic-hero-testi.css">
+  <link rel="stylesheet" href="methode-vertical-story.css">
 </head>
 
 <body>
@@ -253,13 +254,13 @@
       <p class="sec-sub">Chaque programme est organisé pour guider l'étudiant vers un objectif précis.</p>
     </div>
 
-    <div class="tabs-nav">
-      <button type="button" class="tab-btn active" data-svc-tab="bac" onclick="showSvcTab('bac',this)">📘 Cours BAC</button>
-      <button type="button" class="tab-btn" data-svc-tab="concours" onclick="showSvcTab('concours',this)">🏛️ Emploi Public</button>
-      <button type="button" class="tab-btn" data-svc-tab="prepa" onclick="showSvcTab('prepa',this)">🔬 Classes Prépa</button>
-      <button type="button" class="tab-btn" data-svc-tab="langues" onclick="showSvcTab('langues',this)">🌐 Langues</button>
-      <button type="button" class="tab-btn" data-svc-tab="coaching" onclick="showSvcTab('coaching',this)">🧠 Coaching</button>
-      <button type="button" class="tab-btn" data-svc-tab="clubs" onclick="showSvcTab('clubs',this)">♟ Clubs</button>
+    <div class="tabs-nav" role="tablist" aria-label="Nos programmes">
+      <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-svc-tab="bac">📘 Cours BAC</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="concours">🏛️ Emploi Public</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="prepa">🔬 Classes Prépa</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="langues">🌐 Langues</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="coaching">🧠 Coaching</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="clubs">♟ Clubs</button>
     </div>
 
     <div class="tab-panel active" id="tab-bac">
@@ -405,40 +406,68 @@
 </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section id="methode" class="alt">
-      <div class="container">
-        <div class="s-label">Méthode</div>
-        <h2 class="reveal">Trois étapes vers <em>votre objectif</em></h2>
-
-        <div class="steps reveal">
-          <div class="steps-connector" aria-hidden="true"></div>
-          <div class="steps-grid">
-            <div class="card step">
-              <div class="step-top">
-                <div class="step-num">01</div>
-                <div class="badge">Simple & rapide</div>
-              </div>
-              <h3>Choisissez votre programme</h3>
-              <p>Remplissez le formulaire en 2 minutes.</p>
+    <!-- MÉTHODE — récit vertical immersif -->
+    <section id="methode" class="methode--story reveal" aria-labelledby="methode-title">
+      <div class="mv-story">
+        <header class="mv-header">
+          <div class="mv-label">Méthode</div>
+          <h2 id="methode-title" class="mv-h2">Trois étapes vers <em>votre objectif</em></h2>
+        </header>
+        <div class="mv-panels">
+          <article class="mv-panel">
+            <div class="mv-panel-left" aria-hidden="true">
+              <div class="mv-panel-num">ÉTAPE 01</div>
             </div>
-            <div class="card step">
-              <div class="step-top">
-                <div class="step-num">02</div>
-                <div class="badge">Sous 24h</div>
+            <div class="mv-panel-right">
+              <div class="mv-panel-ghost" aria-hidden="true">01</div>
+              <div class="mv-step">
+                <div class="mv-step-tag"><span class="mv-step-tag-dot"></span>Simple &amp; rapide</div>
+                <h3>Choisissez votre programme</h3>
+                <p>Remplissez le formulaire en 2 minutes. Indiquez votre profil, votre filière et votre objectif — nous vous orientons vers l’offre la plus adaptée.</p>
+                <div class="mv-step-detail">
+                  <span class="mv-chip">2 minutes</span>
+                  <span class="mv-chip">Formulaire court</span>
+                  <span class="mv-chip">Sans engagement</span>
+                </div>
               </div>
-              <h3>Guidé par des experts</h3>
-              <p>Un conseiller vous contacte sous 24h.</p>
             </div>
-            <div class="card step">
-              <div class="step-top">
-                <div class="step-num">03</div>
-                <div class="badge">Résultats</div>
+          </article>
+          <article class="mv-panel">
+            <div class="mv-panel-left" aria-hidden="true">
+              <div class="mv-panel-num">ÉTAPE 02</div>
+            </div>
+            <div class="mv-panel-right">
+              <div class="mv-panel-ghost" aria-hidden="true">02</div>
+              <div class="mv-step">
+                <div class="mv-step-tag"><span class="mv-step-tag-dot" style="animation-delay:0.4s"></span>Sous 24h</div>
+                <h3>Guidé par des experts</h3>
+                <p>Un conseiller vous contacte sous 24&nbsp;h. Il analyse votre situation, répond à vos questions et vous propose un plan de préparation clair.</p>
+                <div class="mv-step-detail">
+                  <span class="mv-chip">Réponse sous 24h</span>
+                  <span class="mv-chip">Conseiller dédié</span>
+                  <span class="mv-chip">Gratuit</span>
+                </div>
               </div>
-              <h3>Atteignez votre objectif</h3>
-              <p>Résultats mesurables dès le 1er mois.</p>
             </div>
-          </div>
+          </article>
+          <article class="mv-panel">
+            <div class="mv-panel-left" aria-hidden="true">
+              <div class="mv-panel-num">ÉTAPE 03</div>
+            </div>
+            <div class="mv-panel-right">
+              <div class="mv-panel-ghost" aria-hidden="true">03</div>
+              <div class="mv-step">
+                <div class="mv-step-tag"><span class="mv-step-tag-dot" style="animation-delay:0.8s"></span>Résultats</div>
+                <h3>Atteignez votre objectif</h3>
+                <p>Rejoignez votre groupe, suivez votre programme structuré. Des résultats mesurables dès le 1<sup>er</sup> mois — avec le suivi et la méthode Galilie Scholar.</p>
+                <div class="mv-step-detail">
+                  <span class="mv-chip">97% de réussite</span>
+                  <span class="mv-chip">15 max / groupe</span>
+                  <span class="mv-chip">Dès le 1<sup>er</sup> mois</span>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -493,49 +522,6 @@
           <button type="button" class="tB-dot on" aria-label="Témoignage 1" aria-selected="true"></button>
           <button type="button" class="tB-dot" aria-label="Témoignage 2" aria-selected="false"></button>
           <button type="button" class="tB-dot" aria-label="Témoignage 3" aria-selected="false"></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCARCITY — contraste brutal (noir / or) -->
-    <section class="scarcity scarcity--brutal" aria-label="Places limitées">
-      <div class="scar-brutal">
-        <div class="scar-brutal-left">
-          <div class="scar-brutal-ghost" id="scarBrutalGhost" aria-hidden="true">25</div>
-          <div class="scar-brutal-left-label">Places restantes</div>
-          <div class="scar-brutal-left-num" id="scarBrutalHeroNum">25</div>
-          <p class="scar-brutal-left-sub">places disponibles sur 45 pour la session de septembre 2026. Groupes limités à 15 étudiants — fermeture à capacité maximale.</p>
-        </div>
-        <div class="scar-brutal-right">
-          <div class="scar-brutal-right-label">Session 2026 — Galilie Scholar · Meknès</div>
-          <h2 class="scar-brutal-title">
-            Sécurisez votre place<br>
-            <em>avant la fermeture des groupes.</em>
-          </h2>
-          <div class="scarcity-bac-rows bac-cycle-target" role="group" aria-label="Places restantes par niveau BAC">
-            <div class="scarcity-bac-row bac-row--spotlight" id="bacScarcityRow1">
-              <div class="scarcity-bar-label scar-brutal-bar-label">
-                <span>1ère année BAC</span>
-                <span class="scarcity-pct" id="scarPctBac1">25 / 45 places restantes</span>
-              </div>
-              <div class="scarcity-bar-track scar-brutal-bar-track">
-                <div class="urgency-bar-fill urgency-bar-fill--bac scar-brutal-fill" id="scarBarBac1"></div>
-              </div>
-            </div>
-            <div class="scarcity-bac-row" id="bacScarcityRow2">
-              <div class="scarcity-bar-label scar-brutal-bar-label">
-                <span>2ème année BAC</span>
-                <span class="scarcity-pct bac-pct-flash-target" id="scarPctBac2">25 / 45 places restantes</span>
-              </div>
-              <div class="scarcity-bar-track scar-brutal-bar-track">
-                <div class="urgency-bar-fill urgency-bar-fill--bac scar-brutal-fill" id="scarBarBac2"></div>
-              </div>
-            </div>
-          </div>
-          <div class="scar-brutal-cta-row">
-            <a class="scar-brutal-btn" href="#contact">Réserver ma place</a>
-            <span class="scar-brutal-note">Sans engagement · Réponse sous 24h</span>
-          </div>
         </div>
       </div>
     </section>

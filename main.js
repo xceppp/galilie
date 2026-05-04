@@ -113,102 +113,9 @@ if (heroUrgMobile) {
   heroUrgMobile.textContent = spotsLeft + ' places restantes';
 }
 
-// BAC capacités affichées (1ère & 2ème année — même logique 25 / 45)
+// Texte formulaire — places BAC (cohérent avec la page)
 const BAC_PLACES_LEFT = 25;
 const BAC_PLACES_TOTAL = 45;
-const bacBarPct =
-  Math.round((BAC_PLACES_LEFT / BAC_PLACES_TOTAL) * 1000) / 10;
-
-function animateBacScarcityBar(el, targetPct) {
-  if (!el) return;
-  el.style.width = '100%';
-  setTimeout(() => { el.style.width = targetPct + '%'; }, 150);
-}
-
-const scarPctBac1 = document.getElementById('scarPctBac1');
-const scarPctBac2 = document.getElementById('scarPctBac2');
-if (scarPctBac1) {
-  scarPctBac1.textContent =
-    BAC_PLACES_LEFT + ' / ' + BAC_PLACES_TOTAL + ' places restantes';
-}
-if (scarPctBac2) {
-  scarPctBac2.textContent =
-    BAC_PLACES_LEFT + ' / ' + BAC_PLACES_TOTAL + ' places restantes';
-}
-
-animateBacScarcityBar(document.getElementById('scarBarBac1'), bacBarPct);
-animateBacScarcityBar(document.getElementById('scarBarBac2'), bacBarPct);
-
-const scarBrutalHeroNum = document.getElementById('scarBrutalHeroNum');
-const scarBrutalGhost = document.getElementById('scarBrutalGhost');
-if (scarBrutalHeroNum) scarBrutalHeroNum.textContent = String(BAC_PLACES_LEFT);
-if (scarBrutalGhost) scarBrutalGhost.textContent = String(BAC_PLACES_LEFT);
-
-// 1ère année mise en avant, puis transition, puis 2ème année (+ flash du ratio) — bannière or + carte programme
-(function initBacYearSpotlightCycle() {
-  const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  function pauseCycle() {
-    document.body.classList.add('bac-cycle-paused');
-  }
-  const r1 = document.getElementById('bacScarcityRow1');
-  const r2 = document.getElementById('bacScarcityRow2');
-  const s1 = document.getElementById('bacStripRow1');
-  const s2 = document.getElementById('bacStripRow2');
-  const stripNum2 = s2 && s2.querySelector('.bac-strip-num');
-
-  if (!r1 || !r2 || !s1 || !s2 || !stripNum2) return;
-
-  if (reduceMq.matches) {
-    pauseCycle();
-    return;
-  }
-
-  const HOLD_MS = 4000;
-  let tick = 0;
-
-  function apply(showFirstSpotlight) {
-    if (showFirstSpotlight) {
-      r1.classList.add('bac-row--spotlight');
-      r2.classList.remove('bac-row--spotlight');
-      r2.classList.remove('bac-row--flash-reveal');
-
-      s1.classList.add('bac-strip-active');
-      s2.classList.remove('bac-strip-active');
-
-      stripNum2.classList.remove('bac-num-burst');
-      return;
-    }
-    r2.classList.add('bac-row--spotlight');
-    r1.classList.remove('bac-row--spotlight');
-
-    r2.classList.remove('bac-row--flash-reveal');
-    void r2.offsetWidth;
-    r2.classList.add('bac-row--flash-reveal');
-
-    s2.classList.add('bac-strip-active');
-    s1.classList.remove('bac-strip-active');
-
-    stripNum2.classList.remove('bac-num-burst');
-    void stripNum2.offsetWidth;
-    stripNum2.classList.add('bac-num-burst');
-  }
-
-  const iv = setInterval(() => {
-    tick += 1;
-    apply(tick % 2 === 0);
-  }, HOLD_MS);
-
-  reduceMq.addEventListener?.('change', (e) => {
-    if (e.matches) {
-      clearInterval(iv);
-      pauseCycle();
-      r1.classList.add('bac-row--spotlight');
-      r2.classList.add('bac-row--spotlight');
-      s1.classList.add('bac-strip-active');
-      s2.classList.add('bac-strip-active');
-    }
-  });
-})();
 
 const spotsFormText = document.getElementById('spotsFormText');
 if (spotsFormText) {
@@ -501,12 +408,26 @@ if (leadForm) {
 
   window.showSvcTab = function (panelKey, btn) {
     const panelId = 'tab-' + panelKey;
-    const panel = document.getElementById(panelId);
+    const panel = root.querySelector('#' + panelId) || document.getElementById(panelId);
     root.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
-    root.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+    root.querySelectorAll('.tab-btn').forEach((b) => {
+      b.classList.remove('active');
+      if (b.hasAttribute('aria-selected')) b.setAttribute('aria-selected', 'false');
+    });
     if (panel) panel.classList.add('active');
-    if (btn) btn.classList.add('active');
+    if (btn) {
+      btn.classList.add('active');
+      if (btn.hasAttribute('aria-selected')) btn.setAttribute('aria-selected', 'true');
+    }
   };
+
+  /* CSP (nonce + script-src) bloque souvent onclick — branchement explicite */
+  root.querySelectorAll('.tab-btn[data-svc-tab]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-svc-tab');
+      if (key) window.showSvcTab(key, btn);
+    });
+  });
 
   function applyConcoursHash() {
     if (location.hash !== '#concours') return;
