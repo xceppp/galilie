@@ -686,10 +686,14 @@
 
         </div>
 
-        <div class="lycees-dots" aria-label="Navigation lycées">
-          <button type="button" class="lycees-dot is-active" data-lycee-dot="0" aria-label="Lycée 1"></button>
-          <button type="button" class="lycees-dot" data-lycee-dot="1" aria-label="Lycée 2"></button>
-          <button type="button" class="lycees-dot" data-lycee-dot="2" aria-label="Lycée 3"></button>
+        <div class="lycees-nav" aria-label="Navigation lycées">
+          <button type="button" class="lycees-arrow" data-lycee-prev aria-label="Lycée précédent">‹</button>
+          <div class="lycees-dots" aria-label="Navigation lycées">
+            <button type="button" class="lycees-dot is-active" data-lycee-dot="0" aria-label="Lycée 1"></button>
+            <button type="button" class="lycees-dot" data-lycee-dot="1" aria-label="Lycée 2"></button>
+            <button type="button" class="lycees-dot" data-lycee-dot="2" aria-label="Lycée 3"></button>
+          </div>
+          <button type="button" class="lycees-arrow" data-lycee-next aria-label="Lycée suivant">›</button>
         </div>
 
         <div class="lycees-footer-cta">
@@ -770,12 +774,16 @@
             </div>
           </article>
         </div>
-        <div class="tB-dots" role="tablist" aria-label="Témoignages">
-          <button type="button" class="tB-dot on" aria-label="Témoignage 1" aria-selected="true"></button>
-          <button type="button" class="tB-dot" aria-label="Témoignage 2" aria-selected="false"></button>
-          <button type="button" class="tB-dot" aria-label="Témoignage 3" aria-selected="false"></button>
-          <button type="button" class="tB-dot" aria-label="Témoignage 4" aria-selected="false"></button>
-          <button type="button" class="tB-dot" aria-label="Témoignage 5" aria-selected="false"></button>
+        <div class="tB-nav" aria-label="Navigation témoignages">
+          <button type="button" class="tB-arrow" data-testi-prev aria-label="Témoignage précédent">‹</button>
+          <div class="tB-dots" role="tablist" aria-label="Témoignages">
+            <button type="button" class="tB-dot on" aria-label="Témoignage 1" aria-selected="true"></button>
+            <button type="button" class="tB-dot" aria-label="Témoignage 2" aria-selected="false"></button>
+            <button type="button" class="tB-dot" aria-label="Témoignage 3" aria-selected="false"></button>
+            <button type="button" class="tB-dot" aria-label="Témoignage 4" aria-selected="false"></button>
+            <button type="button" class="tB-dot" aria-label="Témoignage 5" aria-selected="false"></button>
+          </div>
+          <button type="button" class="tB-arrow" data-testi-next aria-label="Témoignage suivant">›</button>
         </div>
       </div>
     </section>
@@ -854,10 +862,14 @@
           </div>
         </div>
 
-        <div class="offers-dots" aria-label="Navigation offres">
-          <button type="button" class="offers-dot is-active" data-offer-dot="0" aria-label="Offre 1"></button>
-          <button type="button" class="offers-dot" data-offer-dot="1" aria-label="Offre 2"></button>
-          <button type="button" class="offers-dot" data-offer-dot="2" aria-label="Offre 3"></button>
+        <div class="offers-nav" aria-label="Navigation offres">
+          <button type="button" class="offers-arrow" data-offer-prev aria-label="Offre précédente">‹</button>
+          <div class="offers-dots" aria-label="Navigation offres">
+            <button type="button" class="offers-dot is-active" data-offer-dot="0" aria-label="Offre 1"></button>
+            <button type="button" class="offers-dot" data-offer-dot="1" aria-label="Offre 2"></button>
+            <button type="button" class="offers-dot" data-offer-dot="2" aria-label="Offre 3"></button>
+          </div>
+          <button type="button" class="offers-arrow" data-offer-next aria-label="Offre suivante">›</button>
         </div>
       </div>
     </section>

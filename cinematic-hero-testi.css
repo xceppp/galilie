@@ -464,7 +464,7 @@
   display: flex;
   justify-content: center;
   gap: 6px;
-  padding: 8px 0 0;
+  padding: 0;
 }
 #temoignages.testi-scroll .tB-dot {
   width: 6px;
@@ -480,6 +480,27 @@
   background: var(--gold);
   width: 18px;
   border-radius: 3px;
+}
+
+#temoignages.testi-scroll .tB-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+#temoignages.testi-scroll .tB-arrow {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--cream);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
 }
 
 #temoignages.testi-scroll .tB-video {

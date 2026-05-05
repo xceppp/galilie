@@ -575,7 +575,10 @@ if (navObserveEls.length && navScrollLinks.length) {
   if (!track || !root || !root.classList.contains('testi-scroll')) return;
 
   const dots = () => Array.from(root.querySelectorAll('.tB-dot'));
+  const prevBtn = root.querySelector('[data-testi-prev]');
+  const nextBtn = root.querySelector('[data-testi-next]');
   const cards = () => Array.from(track.querySelectorAll('.tB-card'));
+  let activeIdx = 0;
 
   function setDotsActive(idx) {
     dots().forEach((d, i) => {
@@ -598,6 +601,7 @@ if (navObserveEls.length && navScrollLinks.length) {
         idx = i;
       }
     });
+    activeIdx = idx;
     setDotsActive(idx);
   }
 
@@ -618,13 +622,30 @@ if (navObserveEls.length && navScrollLinks.length) {
           left: card.offsetLeft - 16,
           behavior: 'smooth'
         });
-        if (mobileMq.matches) {
-          activeIdx = i;
-          restartAuto();
-        }
       }
     });
   });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const list = cards();
+      if (!list.length) return;
+      activeIdx = (activeIdx - 1 + list.length) % list.length;
+      const card = list[activeIdx];
+      if (!card) return;
+      track.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' });
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const list = cards();
+      if (!list.length) return;
+      activeIdx = (activeIdx + 1) % list.length;
+      const card = list[activeIdx];
+      if (!card) return;
+      track.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' });
+    });
+  }
 
   let drag = false;
   let startX = 0;
@@ -641,73 +662,10 @@ if (navObserveEls.length && navScrollLinks.length) {
     track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
   });
 
-  const mobileMq = window.matchMedia('(max-width: 768px)');
-  let autoTimer = null;
-  let activeIdx = 0;
-
-  function scrollToCard(idx) {
-    const card = cards()[idx];
-    if (!card) return;
-    track.scrollTo({
-      left: card.offsetLeft - 16,
-      behavior: 'smooth'
-    });
-  }
-
-  function startAuto() {
-    if (autoTimer || !mobileMq.matches) return;
-    autoTimer = window.setInterval(() => {
-      const list = cards();
-      if (!list.length) return;
-      activeIdx = (activeIdx + 1) % list.length;
-      scrollToCard(activeIdx);
-    }, 2500);
-  }
-
-  function stopAuto() {
-    if (!autoTimer) return;
-    clearInterval(autoTimer);
-    autoTimer = null;
-  }
-
-  function restartAuto() {
-    stopAuto();
-    startAuto();
-  }
-
-  function applyAutoMode() {
-    if (mobileMq.matches) startAuto();
-    else stopAuto();
-  }
-
-  mobileMq.addEventListener('change', applyAutoMode);
-  track.addEventListener('touchstart', restartAuto, { passive: true });
-  track.addEventListener('mouseup', restartAuto);
-  track.addEventListener('mouseleave', restartAuto);
-
-  const originalSync = syncDotsFromScroll;
-  syncDotsFromScroll = function patchedSyncDotsFromScroll() {
-    originalSync();
-    const list = cards();
-    if (!list.length) return;
-    const scroll = track.scrollLeft;
-    let best = Infinity;
-    let idx = 0;
-    list.forEach((card, i) => {
-      const d = Math.abs(card.offsetLeft - scroll);
-      if (d < best) {
-        best = d;
-        idx = i;
-      }
-    });
-    activeIdx = idx;
-  };
-
   syncDotsFromScroll();
-  applyAutoMode();
 })();
 
-// Lycées AEFE — mobile auto-cycle cards (1.5s)
+// Lycées AEFE — mobile manual carousel (dots + arrows)
 (function initLyceesMobileCycle() {
   const section = document.getElementById('lycees-francais');
   if (!section) return;
@@ -715,13 +673,15 @@ if (navObserveEls.length && navScrollLinks.length) {
   const grid = section.querySelector('.lycees-grid');
   if (!grid) return;
   const dots = Array.from(section.querySelectorAll('.lycees-dot'));
+  const prevBtn = section.querySelector('[data-lycee-prev]');
+  const nextBtn = section.querySelector('[data-lycee-next]');
 
   const cards = Array.from(grid.querySelectorAll('.lycee-card'));
   if (cards.length <= 1) return;
 
   const mobileMq = window.matchMedia('(max-width: 768px)');
   let activeIdx = 0;
-  let timer = null;
+  let syncRaf = 0;
 
   function render() {
     const activeCard = cards[activeIdx];
@@ -735,27 +695,18 @@ if (navObserveEls.length && navScrollLinks.length) {
     });
   }
 
-  function start() {
-    if (timer) return;
-    timer = window.setInterval(() => {
-      activeIdx = (activeIdx + 1) % cards.length;
-      render();
-    }, 2500);
-  }
-
-  function stop() {
-    if (!timer) return;
-    clearInterval(timer);
-    timer = null;
+  function syncActiveFromScroll() {
+    const left = grid.scrollLeft;
+    const width = Math.max(1, grid.clientWidth);
+    activeIdx = Math.round(left / width) % cards.length;
+    dots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === activeIdx));
   }
 
   function applyMode() {
     if (mobileMq.matches) {
       grid.classList.add('is-mobile-cycle');
       render();
-      start();
     } else {
-      stop();
       grid.classList.remove('is-mobile-cycle');
       grid.style.minHeight = '';
       grid.scrollTo({ left: 0, behavior: 'auto' });
@@ -765,19 +716,34 @@ if (navObserveEls.length && navScrollLinks.length) {
   applyMode();
   window.addEventListener('resize', applyMode);
   mobileMq.addEventListener('change', applyMode);
+  grid.addEventListener('scroll', () => {
+    if (syncRaf) return;
+    syncRaf = requestAnimationFrame(() => {
+      syncRaf = 0;
+      syncActiveFromScroll();
+    });
+  }, { passive: true });
   dots.forEach((dot, idx) => {
     dot.addEventListener('click', () => {
       activeIdx = idx;
       render();
-      if (mobileMq.matches) {
-        stop();
-        start();
-      }
     });
   });
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      activeIdx = (activeIdx - 1 + cards.length) % cards.length;
+      render();
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      activeIdx = (activeIdx + 1) % cards.length;
+      render();
+    });
+  }
 })();
 
-// Offres — mobile auto-cycle cards (2.5s) + dots
+// Offres — mobile manual carousel (dots + arrows)
 (function initOffersMobileCycle() {
   const section = document.querySelector('.offers');
   if (!section) return;
@@ -789,9 +755,11 @@ if (navObserveEls.length && navScrollLinks.length) {
   if (cards.length <= 1) return;
 
   const dots = Array.from(section.querySelectorAll('.offers-dot'));
+  const prevBtn = section.querySelector('[data-offer-prev]');
+  const nextBtn = section.querySelector('[data-offer-next]');
   const mobileMq = window.matchMedia('(max-width: 768px)');
   let activeIdx = 0;
-  let timer = null;
+  let syncRaf = 0;
 
   function render() {
     const activeCard = cards[activeIdx];
@@ -804,27 +772,20 @@ if (navObserveEls.length && navScrollLinks.length) {
     });
   }
 
-  function start() {
-    if (timer) return;
-    timer = window.setInterval(() => {
-      activeIdx = (activeIdx + 1) % cards.length;
-      render();
-    }, 2500);
-  }
-
-  function stop() {
-    if (!timer) return;
-    clearInterval(timer);
-    timer = null;
+  function syncActiveFromScroll() {
+    const left = grid.scrollLeft;
+    const width = Math.max(1, grid.clientWidth);
+    activeIdx = Math.round(left / width) % cards.length;
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('is-active', idx === activeIdx);
+    });
   }
 
   function applyMode() {
     if (mobileMq.matches) {
       grid.classList.add('is-mobile-cycle');
       render();
-      start();
     } else {
-      stop();
       grid.classList.remove('is-mobile-cycle');
       grid.scrollTo({ left: 0, behavior: 'auto' });
       dots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === 0));
@@ -834,14 +795,29 @@ if (navObserveEls.length && navScrollLinks.length) {
   applyMode();
   window.addEventListener('resize', applyMode);
   mobileMq.addEventListener('change', applyMode);
+  grid.addEventListener('scroll', () => {
+    if (syncRaf) return;
+    syncRaf = requestAnimationFrame(() => {
+      syncRaf = 0;
+      syncActiveFromScroll();
+    });
+  }, { passive: true });
   dots.forEach((dot, idx) => {
     dot.addEventListener('click', () => {
       activeIdx = idx;
       render();
-      if (mobileMq.matches) {
-        stop();
-        start();
-      }
     });
   });
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      activeIdx = (activeIdx - 1 + cards.length) % cards.length;
+      render();
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      activeIdx = (activeIdx + 1) % cards.length;
+      render();
+    });
+  }
 })();
