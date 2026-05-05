@@ -1,0 +1,554 @@
+/* Concours — bandeau ministères (onglet Emploi Public) + section Lycées AEFE */
+
+:root {
+  --cl-f1: #0d2818;
+  --cl-f2: #122d1e;
+  --cl-f3: #1a4731;
+  --cl-jade: #2e7a50;
+  --cl-g: #c9a84c;
+  --cl-gl: #e2c06a;
+  --cl-cr: #f4f9f5;
+  --cl-mu: rgba(200, 230, 201, 0.72);
+  --cl-dm: rgba(200, 230, 201, 0.42);
+}
+
+/* ── Bandeau défilant ministères (#tab-concours uniquement) ── */
+#svcLayoutRoot #tab-concours .conc-min-marquee-wrap {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0; /* avoid grid blowout from max-content marquee track */
+  box-sizing: border-box;
+  margin: -8px 0 20px;
+  padding: 16px 0 18px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+  overflow-x: hidden;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-marquee-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--cl-mu);
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-marquee-head strong {
+  color: var(--cl-gl);
+  font-weight: 800;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cl-g);
+  flex-shrink: 0;
+  animation: concMinPulse 2s ease infinite;
+}
+
+@keyframes concMinPulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #svcLayoutRoot #tab-concours .conc-min-dot {
+    animation: none;
+  }
+}
+
+#svcLayoutRoot #tab-concours .conc-min-marquee {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+#svcLayoutRoot #tab-concours .conc-min-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 28px;
+  align-items: flex-end;
+  animation: concMinScroll 48s linear infinite;
+}
+
+@keyframes concMinScroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #svcLayoutRoot #tab-concours .conc-min-marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
+#svcLayoutRoot #tab-concours .conc-min-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  width: 88px;
+  text-align: center;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-logo-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+
+#svcLayoutRoot #tab-concours .conc-min-logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-logo-box.is-more {
+  background: rgba(201, 168, 76, 0.15);
+}
+
+#svcLayoutRoot #tab-concours .conc-min-chip-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--cl-cr);
+  line-height: 1.25;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-chip-name.more {
+  color: var(--cl-gl);
+}
+
+#svcLayoutRoot #tab-concours .conc-min-dev-hint {
+  margin-top: 12px;
+  font-size: 10px;
+  color: rgba(200, 230, 201, 0.45);
+  line-height: 1.5;
+  text-align: center;
+}
+
+#svcLayoutRoot #tab-concours .conc-min-dev-hint .conc-min-code {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.25);
+  color: rgba(200, 230, 201, 0.85);
+}
+
+/* ── Section Lycées français ── */
+#lycees-francais.lycees-sec {
+  background: var(--cl-f2);
+  padding: 88px 0;
+  position: relative;
+  scroll-margin-top: calc(62px + 24px);
+}
+
+#lycees-francais .container {
+  width: min(1140px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+#lycees-francais .ly-s-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cl-jade);
+  margin-bottom: 14px;
+}
+
+#lycees-francais .ly-s-label::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: var(--cl-g);
+  border-radius: 2px;
+  display: block;
+}
+
+#lycees-francais .ly-s-title {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.12;
+  margin-bottom: 10px;
+}
+
+#lycees-francais .ly-s-title em {
+  font-style: italic;
+  color: var(--cl-g);
+}
+
+#lycees-francais .ly-s-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--cl-mu);
+  line-height: 1.85;
+  max-width: 540px;
+  margin-bottom: 40px;
+}
+
+#lycees-francais .lycees-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+#lycees-francais .lycee-card {
+  background: var(--cl-f3);
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+}
+
+#lycees-francais .lycee-card:hover {
+  border-color: rgba(201, 168, 76, 0.28);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+#lycees-francais .lycee-hd {
+  padding: 28px 20px 20px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 11px;
+  position: relative;
+  overflow: hidden;
+}
+
+#lycees-francais .lycee-logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 16px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 8px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+#lycees-francais .lycee-card:hover .lycee-logo {
+  transform: scale(1.04);
+}
+
+#lycees-francais .lycee-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+#lycees-francais .lycee-aefe {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(150, 200, 255, 0.85);
+  background: rgba(0, 90, 180, 0.12);
+  border: 1px solid rgba(100, 160, 255, 0.18);
+  padding: 4px 10px;
+  border-radius: 100px;
+  position: relative;
+  z-index: 1;
+}
+
+#lycees-francais .lycee-name {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 1.12rem;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+}
+
+#lycees-francais .lycee-city {
+  font-size: 11px;
+  color: var(--cl-dm);
+  position: relative;
+  z-index: 1;
+}
+
+#lycees-francais .lycee-tag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  position: relative;
+  z-index: 1;
+}
+
+#lycees-francais .lycee-card.lpv .lycee-hd::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(0, 78, 152, 0.1), transparent 65%);
+  pointer-events: none;
+}
+
+#lycees-francais .lycee-card.lyau .lycee-hd::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(0, 120, 70, 0.1), transparent 65%);
+  pointer-events: none;
+}
+
+#lycees-francais .lycee-card.desc .lycee-hd::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(170, 0, 0, 0.1), transparent 65%);
+  pointer-events: none;
+}
+
+#lycees-francais .lycee-card.lpv .lycee-tag {
+  background: rgba(0, 78, 152, 0.18);
+  color: #8abbf8;
+  border: 1px solid rgba(0, 78, 152, 0.28);
+}
+
+#lycees-francais .lycee-card.lyau .lycee-tag {
+  background: rgba(0, 120, 70, 0.18);
+  color: #80e8a4;
+  border: 1px solid rgba(0, 120, 70, 0.28);
+}
+
+#lycees-francais .lycee-card.desc .lycee-tag {
+  background: rgba(170, 0, 0, 0.18);
+  color: #f08080;
+  border: 1px solid rgba(170, 0, 0, 0.28);
+}
+
+#lycees-francais .lycee-body {
+  padding: 18px 22px 22px;
+}
+
+#lycees-francais .lycee-desc {
+  font-size: 12.5px;
+  font-weight: 300;
+  color: var(--cl-mu);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+#lycees-francais .lycee-features {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+#lycees-francais .lycee-feat {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--cl-mu);
+  line-height: 1.5;
+}
+
+#lycees-francais .lycee-feat::before {
+  content: "✓";
+  color: var(--cl-jade);
+  font-weight: 700;
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+#lycees-francais .lycee-cta {
+  display: block;
+  width: 100%;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.22);
+  color: var(--cl-gl);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+#lycees-francais .lycee-cta:hover {
+  background: rgba(201, 168, 76, 0.18);
+  border-color: rgba(201, 168, 76, 0.4);
+}
+
+#lycees-francais .lycees-footer-cta {
+  text-align: center;
+  margin-top: 36px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+#lycees-francais .lycees-footer-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cl-jade);
+  margin-bottom: 14px;
+}
+
+#lycees-francais .btn-gold-ly {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cl-g);
+  color: var(--cl-f1);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+
+#lycees-francais .btn-gold-ly:hover {
+  background: var(--cl-gl);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.38);
+}
+
+#lycees-francais .lycees-footer-note {
+  font-size: 11px;
+  color: var(--cl-dm);
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  #lycees-francais .lycees-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile / tablet: align with styles.css .container + ministry strip readability */
+@media (max-width: 768px) {
+  #svcLayoutRoot #tab-concours .conc-min-marquee-wrap {
+    padding: 12px 0 14px;
+    margin: -4px 0 14px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-marquee-head {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 0 10px;
+    line-height: 1.45;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-marquee-track {
+    gap: 18px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-chip {
+    width: 76px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-logo-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-chip-name {
+    font-size: 9px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-dev-hint {
+    padding: 0 10px;
+  }
+
+  #lycees-francais.lycees-sec {
+    padding: 64px 0;
+    scroll-margin-top: calc(62px + 16px);
+  }
+
+  #lycees-francais .container {
+    width: calc(100% - 28px);
+    max-width: 100%;
+  }
+
+  #lycees-francais .btn-gold-ly {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #svcLayoutRoot #tab-concours .conc-min-marquee-track {
+    gap: 14px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-chip {
+    width: 70px;
+  }
+
+  #svcLayoutRoot #tab-concours .conc-min-marquee {
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+}
+
+@media (max-width: 600px) {
+  #lycees-francais .lycees-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -99,7 +99,19 @@
 #svcLayoutRoot .tab-mode-badge{margin-left:auto;background:rgba(201,168,76,.12);color:var(--g);font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px}
 
 @media(max-width:768px){
-  #svcLayoutRoot .tab-panel.active{grid-template-columns:1fr}
+  #svcLayoutRoot .tab-panel.active{
+    grid-template-columns:1fr;
+    width:100%;
+    min-width:0;
+  }
+  /* Marquee + cards share one column: children must shrink with the container */
+  #svcLayoutRoot .tab-panel.active > .tab-left,
+  #svcLayoutRoot .tab-panel.active > .tab-right,
+  #svcLayoutRoot .tab-panel.active > .conc-min-marquee-wrap{
+    min-width:0;
+  }
+  /* Match horizontal rhythm with global .container on small screens */
+  #svcLayoutRoot .container{padding-left:14px;padding-right:14px}
 }
 
 #svcLayoutRoot #tab-concours.tab-panel{scroll-margin-top:calc(62px + 24px)}
