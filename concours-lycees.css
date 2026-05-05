@@ -419,6 +419,10 @@
   border-top: 1px solid rgba(201, 168, 76, 0.1);
 }
 
+#lycees-francais .lycees-dots {
+  display: none;
+}
+
 #lycees-francais .lycees-footer-kicker {
   font-size: 10px;
   font-weight: 700;
@@ -501,9 +505,54 @@
     scroll-margin-top: calc(62px + 16px);
   }
 
+  /* Mobile: auto-cycle one lycée card at a time */
+  #lycees-francais .lycees-grid.is-mobile-cycle {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+    width: 100%;
+    scroll-behavior: smooth;
+  }
+
+  #lycees-francais .lycees-grid.is-mobile-cycle .lycee-card {
+    display: block;
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    margin: 0;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    box-shadow: none;
+  }
+
   #lycees-francais .container {
     width: calc(100% - 28px);
     max-width: 100%;
+  }
+
+  #lycees-francais .lycees-dots {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin: 14px 0 8px;
+  }
+
+  #lycees-francais .lycees-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(200, 230, 201, 0.28);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  #lycees-francais .lycees-dot.is-active {
+    width: 20px;
+    background: var(--cl-g);
   }
 
   #lycees-francais .btn-gold-ly {
@@ -533,3 +582,4 @@
     grid-template-columns: 1fr;
   }
 }
+

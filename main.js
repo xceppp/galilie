@@ -618,6 +618,10 @@ if (navObserveEls.length && navScrollLinks.length) {
           left: card.offsetLeft - 16,
           behavior: 'smooth'
         });
+        if (mobileMq.matches) {
+          activeIdx = i;
+          restartAuto();
+        }
       }
     });
   });
@@ -637,5 +641,207 @@ if (navObserveEls.length && navScrollLinks.length) {
     track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
   });
 
+  const mobileMq = window.matchMedia('(max-width: 768px)');
+  let autoTimer = null;
+  let activeIdx = 0;
+
+  function scrollToCard(idx) {
+    const card = cards()[idx];
+    if (!card) return;
+    track.scrollTo({
+      left: card.offsetLeft - 16,
+      behavior: 'smooth'
+    });
+  }
+
+  function startAuto() {
+    if (autoTimer || !mobileMq.matches) return;
+    autoTimer = window.setInterval(() => {
+      const list = cards();
+      if (!list.length) return;
+      activeIdx = (activeIdx + 1) % list.length;
+      scrollToCard(activeIdx);
+    }, 2500);
+  }
+
+  function stopAuto() {
+    if (!autoTimer) return;
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
+  function restartAuto() {
+    stopAuto();
+    startAuto();
+  }
+
+  function applyAutoMode() {
+    if (mobileMq.matches) startAuto();
+    else stopAuto();
+  }
+
+  mobileMq.addEventListener('change', applyAutoMode);
+  track.addEventListener('touchstart', restartAuto, { passive: true });
+  track.addEventListener('mouseup', restartAuto);
+  track.addEventListener('mouseleave', restartAuto);
+
+  const originalSync = syncDotsFromScroll;
+  syncDotsFromScroll = function patchedSyncDotsFromScroll() {
+    originalSync();
+    const list = cards();
+    if (!list.length) return;
+    const scroll = track.scrollLeft;
+    let best = Infinity;
+    let idx = 0;
+    list.forEach((card, i) => {
+      const d = Math.abs(card.offsetLeft - scroll);
+      if (d < best) {
+        best = d;
+        idx = i;
+      }
+    });
+    activeIdx = idx;
+  };
+
   syncDotsFromScroll();
+  applyAutoMode();
+})();
+
+// Lycées AEFE — mobile auto-cycle cards (1.5s)
+(function initLyceesMobileCycle() {
+  const section = document.getElementById('lycees-francais');
+  if (!section) return;
+
+  const grid = section.querySelector('.lycees-grid');
+  if (!grid) return;
+  const dots = Array.from(section.querySelectorAll('.lycees-dot'));
+
+  const cards = Array.from(grid.querySelectorAll('.lycee-card'));
+  if (cards.length <= 1) return;
+
+  const mobileMq = window.matchMedia('(max-width: 768px)');
+  let activeIdx = 0;
+  let timer = null;
+
+  function render() {
+    const activeCard = cards[activeIdx];
+    if (activeCard) {
+      grid.style.minHeight = `${activeCard.offsetHeight}px`;
+      const left = activeIdx * grid.clientWidth;
+      grid.scrollTo({ left, behavior: 'smooth' });
+    }
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('is-active', idx === activeIdx);
+    });
+  }
+
+  function start() {
+    if (timer) return;
+    timer = window.setInterval(() => {
+      activeIdx = (activeIdx + 1) % cards.length;
+      render();
+    }, 2500);
+  }
+
+  function stop() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  function applyMode() {
+    if (mobileMq.matches) {
+      grid.classList.add('is-mobile-cycle');
+      render();
+      start();
+    } else {
+      stop();
+      grid.classList.remove('is-mobile-cycle');
+      grid.style.minHeight = '';
+      grid.scrollTo({ left: 0, behavior: 'auto' });
+    }
+  }
+
+  applyMode();
+  window.addEventListener('resize', applyMode);
+  mobileMq.addEventListener('change', applyMode);
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      activeIdx = idx;
+      render();
+      if (mobileMq.matches) {
+        stop();
+        start();
+      }
+    });
+  });
+})();
+
+// Offres — mobile auto-cycle cards (2.5s) + dots
+(function initOffersMobileCycle() {
+  const section = document.querySelector('.offers');
+  if (!section) return;
+
+  const grid = section.querySelector('.offers-grid');
+  if (!grid) return;
+
+  const cards = Array.from(grid.querySelectorAll('.card'));
+  if (cards.length <= 1) return;
+
+  const dots = Array.from(section.querySelectorAll('.offers-dot'));
+  const mobileMq = window.matchMedia('(max-width: 768px)');
+  let activeIdx = 0;
+  let timer = null;
+
+  function render() {
+    const activeCard = cards[activeIdx];
+    if (activeCard) {
+      const left = activeIdx * grid.clientWidth;
+      grid.scrollTo({ left, behavior: 'smooth' });
+    }
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('is-active', idx === activeIdx);
+    });
+  }
+
+  function start() {
+    if (timer) return;
+    timer = window.setInterval(() => {
+      activeIdx = (activeIdx + 1) % cards.length;
+      render();
+    }, 2500);
+  }
+
+  function stop() {
+    if (!timer) return;
+    clearInterval(timer);
+    timer = null;
+  }
+
+  function applyMode() {
+    if (mobileMq.matches) {
+      grid.classList.add('is-mobile-cycle');
+      render();
+      start();
+    } else {
+      stop();
+      grid.classList.remove('is-mobile-cycle');
+      grid.scrollTo({ left: 0, behavior: 'auto' });
+      dots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === 0));
+    }
+  }
+
+  applyMode();
+  window.addEventListener('resize', applyMode);
+  mobileMq.addEventListener('change', applyMode);
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      activeIdx = idx;
+      render();
+      if (mobileMq.matches) {
+        stop();
+        start();
+      }
+    });
+  });
 })();
