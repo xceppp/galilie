@@ -75,6 +75,13 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+// Keep social section before FAQ in page flow
+const socialSection = document.getElementById('social');
+const faqSection = document.getElementById('faq');
+if (socialSection && faqSection && faqSection.parentNode) {
+  faqSection.parentNode.insertBefore(socialSection, faqSection);
+}
+
 // FAQ accordion (one open at a time)
 const faqItems = Array.from(document.querySelectorAll('.faq-item'));
 faqItems.forEach((item) => {
@@ -111,24 +118,6 @@ const spotsLeft = getSpots();
 const heroUrgMobile = document.getElementById('heroUrgMobile');
 if (heroUrgMobile) {
   heroUrgMobile.textContent = spotsLeft + ' places restantes';
-}
-
-// Texte formulaire — places BAC (cohérent avec la page)
-const BAC_PLACES_LEFT = 25;
-const BAC_PLACES_TOTAL = 45;
-
-const spotsFormText = document.getElementById('spotsFormText');
-if (spotsFormText) {
-  spotsFormText.innerHTML =
-    'Il reste <strong>' +
-    BAC_PLACES_LEFT +
-    ' / ' +
-    BAC_PLACES_TOTAL +
-    '</strong> places pour la <strong>1ère année BAC</strong> et <strong>' +
-    BAC_PLACES_LEFT +
-    ' / ' +
-    BAC_PLACES_TOTAL +
-    '</strong> pour la <strong>2ème année BAC</strong> (session sept. 2026).';
 }
 
 // Floating CTA urgency mode
@@ -289,8 +278,24 @@ function showSuccess(){
   if (successState) successState.style.display = 'block';
 }
 
-// Form progress tracker
+// Form progress + multi-step wizard
 const formFields = ['prenom','nom','telephone','email','niveau','filiere','service','mode'];
+const wizardStepRules = {
+  1: [
+    { id: 'prenom', msg: 'Veuillez entrer votre prénom.' },
+    { id: 'nom', msg: 'Veuillez entrer votre nom.' },
+    { id: 'telephone', msg: 'Veuillez entrer votre téléphone.' },
+    { id: 'email', msg: 'Veuillez entrer votre email.' }
+  ],
+  2: [
+    { id: 'niveau', msg: 'Veuillez sélectionner votre profil.' },
+    { id: 'filiere', msg: 'Veuillez sélectionner une option.' },
+    { id: 'service', msg: 'Veuillez sélectionner un service.' },
+    { id: 'mode', msg: 'Veuillez sélectionner un mode.' }
+  ]
+};
+let wizardStep = 1;
+
 function updateProgress(){
   const filled = formFields.filter((id) => {
     const el = document.getElementById(id);
@@ -302,14 +307,119 @@ function updateProgress(){
   if (bar) bar.style.width = pct + '%';
   if (lbl) lbl.textContent = filled + ' / ' + formFields.length + ' champs remplis';
 }
+
+function validateStep(step){
+  let hasError = false;
+  const rules = wizardStepRules[step] || [];
+  rules.forEach(({ id, msg }) => {
+    const v = val(id);
+    if (!v) {
+      showFieldError(id, msg);
+      hasError = true;
+    }
+  });
+
+  if (step === 1) {
+    const emailVal = val('email');
+    if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      showFieldError('email', 'Format email invalide.');
+      hasError = true;
+    }
+    const phoneVal = val('telephone');
+    if (phoneVal && !/^[\d\s+\-()]{8,}$/.test(phoneVal)) {
+      showFieldError('telephone', 'Numéro de téléphone invalide.');
+      hasError = true;
+    }
+  }
+
+  if (hasError) {
+    const first = document.querySelector('.field-err-border');
+    if (first) {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      first.scrollIntoView({
+        behavior: reduce.matches ? 'auto' : 'smooth',
+        block: 'center'
+      });
+    }
+    return false;
+  }
+  return true;
+}
+
+function updateWizardSummary() {
+  const name = `${val('prenom')} ${val('nom')}`.trim();
+  const serviceMode = [val('service'), val('mode')].filter(Boolean).join(' / ');
+  const setText = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text || '—';
+  };
+  setText('sumName', name);
+  setText('sumPhone', val('telephone'));
+  setText('sumEmail', val('email'));
+  setText('sumNiveau', val('niveau'));
+  setText('sumFiliere', val('filiere'));
+  setText('sumServiceMode', serviceMode);
+}
+
+function setWizardStep(nextStep) {
+  wizardStep = Math.max(1, Math.min(3, nextStep));
+  for (let i = 1; i <= 3; i++) {
+    const panel = document.getElementById(`wizPanel${i}`);
+    const dot = document.getElementById(`wizDot${i}`);
+    const lbl = document.getElementById(`wizLbl${i}`);
+    if (panel) panel.classList.toggle('active', i === wizardStep);
+    if (dot) {
+      dot.classList.remove('active', 'done');
+      dot.textContent = String(i);
+      if (i < wizardStep) {
+        dot.classList.add('done');
+        dot.textContent = '✓';
+      } else if (i === wizardStep) {
+        dot.classList.add('active');
+      }
+    }
+    if (lbl) {
+      lbl.classList.remove('active', 'done');
+      if (i < wizardStep) lbl.classList.add('done');
+      else if (i === wizardStep) lbl.classList.add('active');
+    }
+  }
+  const l1 = document.getElementById('wizLine1');
+  const l2 = document.getElementById('wizLine2');
+  if (l1) l1.classList.toggle('done', wizardStep > 1);
+  if (l2) l2.classList.toggle('done', wizardStep > 2);
+  if (wizardStep === 3) updateWizardSummary();
+}
+
 if (leadForm) {
   leadForm.addEventListener('input', updateProgress);
   leadForm.addEventListener('change', updateProgress);
   updateProgress();
+  setWizardStep(1);
+
+  leadForm.querySelectorAll('[data-wiz-next]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      clearErrors();
+      const target = Number(btn.getAttribute('data-wiz-next') || '1');
+      if (!validateStep(wizardStep)) return;
+      setWizardStep(target);
+    });
+  });
+  leadForm.querySelectorAll('[data-wiz-prev]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      clearErrors();
+      const target = Number(btn.getAttribute('data-wiz-prev') || '1');
+      setWizardStep(target);
+    });
+  });
 
   leadForm.addEventListener('submit', (e) => {
     e.preventDefault();
     clearErrors();
+
+    // Ensure all steps valid before final submit
+    if (!validateStep(1)) { setWizardStep(1); return; }
+    if (!validateStep(2)) { setWizardStep(2); return; }
 
     const hp = document.getElementById('hp_website');
     if (hp && hp.value.trim() !== '') {
@@ -321,52 +431,10 @@ if (leadForm) {
     if (now - lastSubmitTime < SUBMIT_COOLDOWN_MS) {
       const wait = Math.ceil((SUBMIT_COOLDOWN_MS - (now - lastSubmitTime)) / 1000);
       showFieldError('prenom', `Veuillez patienter ${wait}s avant de soumettre à nouveau.`);
+      setWizardStep(1);
       return;
     }
     lastSubmitTime = now;
-
-    let hasError = false;
-    const validations = [
-      { id: 'prenom', msg: 'Veuillez entrer votre prénom.' },
-      { id: 'nom', msg: 'Veuillez entrer votre nom.' },
-      { id: 'telephone', msg: 'Veuillez entrer votre téléphone.' },
-      { id: 'email', msg: 'Veuillez entrer votre email.' },
-      { id: 'niveau', msg: 'Veuillez sélectionner votre profil.' },
-      { id: 'filiere', msg: 'Veuillez sélectionner une option.' },
-      { id: 'service', msg: 'Veuillez sélectionner un service.' },
-      { id: 'mode', msg: 'Veuillez sélectionner un mode.' }
-    ];
-    validations.forEach(({ id, msg }) => {
-      const v = val(id);
-      if (!v) {
-        showFieldError(id, msg);
-        hasError = true;
-      }
-    });
-
-    const emailVal = val('email');
-    if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
-      showFieldError('email', 'Format email invalide.');
-      hasError = true;
-    }
-
-    const phoneVal = val('telephone');
-    if (phoneVal && !/^[\d\s+\-()]{8,}$/.test(phoneVal)) {
-      showFieldError('telephone', 'Numéro de téléphone invalide.');
-      hasError = true;
-    }
-
-    if (hasError) {
-      const first = document.querySelector('.field-err-border');
-      if (first) {
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-        first.scrollIntoView({
-          behavior: reduce.matches ? 'auto' : 'smooth',
-          block: 'center'
-        });
-      }
-      return;
-    }
 
     const payload = {
       timestamp: new Date().toISOString(),

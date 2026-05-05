@@ -753,39 +753,17 @@
     <section class="offers">
       <div class="container">
         <div class="s-label">Offres</div>
-        <h2 class="reveal">Choisissez votre <em>parcours</em></h2>
+        <h2 class="reveal">Programmes les <em>plus demandés</em></h2>
 
         <div class="offers-grid">
           <div class="card reveal">
-            <div class="offer-top">
-              <div>
-                <div class="offer-type">Préparation</div>
-                <div class="offer-name">BAC</div>
-                <div class="offer-dur">Régional (1ère) & National (2ème) — 2026</div>
-              </div>
-              <div class="badge">Toutes filières</div>
-            </div>
-            <ul class="offer-ul">
-              <li><span class="check">✓</span><span>Groupes à effectif réduit</span></li>
-              <li><span class="check">✓</span><span>Plan de révision structuré</span></li>
-              <li><span class="check">✓</span><span>Capsules à distance disponibles</span></li>
-              <li><span class="check">✓</span><span>Suivi & feedback régulier</span></li>
-              <li><span class="check">✓</span><span>Préparation aux sujets type</span></li>
-            </ul>
-            <div class="offer-cta">
-              <a class="btn btn-ghost" href="#contact">Demander mon plan →</a>
-              <div class="micro-urgency">⚡ 1ère année : 25/45 · 2ème année : 25/45 places</div>
-            </div>
-          </div>
-
-          <div class="card offer--featured reveal reveal-d1">
             <div class="offer-top">
               <div>
                 <div class="offer-type">Service phare</div>
                 <div class="offer-name">Concours Emploi Public</div>
                 <div class="offer-dur">Tous ministères — tous grades</div>
               </div>
-              <div class="badge">⭐ Le Plus Demandé</div>
+              <div class="badge">Concours</div>
             </div>
             <ul class="offer-ul">
               <li><span class="check">✓</span><span>Culture générale & actualités marocaines</span></li>
@@ -795,8 +773,30 @@
               <li><span class="check">✓</span><span>Annales 10 ans commentées</span></li>
             </ul>
             <div class="offer-cta">
-              <a class="btn btn-gold" href="#contact">Réserver →</a>
+              <a class="btn btn-ghost" href="#contact">Réserver →</a>
               <div class="micro-urgency">⚡ Places limitées pour 2026</div>
+            </div>
+          </div>
+
+          <div class="card offer--featured reveal reveal-d1">
+            <div class="offer-top">
+              <div>
+                <div class="offer-type">Préparation</div>
+                <div class="offer-name">BAC</div>
+                <div class="offer-dur">Régional (1ère) & National (2ème) — 2026</div>
+              </div>
+              <div class="badge">Le Plus Demandé</div>
+            </div>
+            <ul class="offer-ul">
+              <li><span class="check">✓</span><span>Groupes à effectif réduit</span></li>
+              <li><span class="check">✓</span><span>Plan de révision structuré</span></li>
+              <li><span class="check">✓</span><span>Capsules à distance disponibles</span></li>
+              <li><span class="check">✓</span><span>Suivi & feedback régulier</span></li>
+              <li><span class="check">✓</span><span>Préparation aux sujets type</span></li>
+            </ul>
+            <div class="offer-cta">
+              <a class="btn btn-gold" href="#contact">Demander mon plan →</a>
+              <div class="micro-urgency">⚡ 1ère année : 25/45 · 2ème année : 25/45 places</div>
             </div>
           </div>
 
@@ -856,89 +856,134 @@
             <div class="form-box">
               <div class="form-topline"></div>
               <div class="form-pad" id="formWrap">
-                <div class="form-urgency" style="cursor:pointer" onclick="document.getElementById('leadForm').querySelector('input').focus()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'){document.getElementById('leadForm').querySelector('input').focus();}">
-                  <span class="pulse-dot" aria-hidden="true"></span>
-                  <span id="spotsFormText">Il reste <strong>25 / 45</strong> places pour la <strong>1ère année BAC</strong> et <strong>25 / 45</strong> pour la <strong>2ème année BAC</strong> (session sept. 2026).</span>
-                </div>
-
                 <div class="form-h">Démarrez votre préparation</div>
-                <div class="form-sub">Gratuit & sans engagement — réponse en 24h</div>
+                <div class="form-sub">Assistant en 3 étapes — simple, rapide, mobile friendly</div>
 
                 <form id="leadForm" novalidate>
-                  <div class="fgrid2">
-                    <div class="field">
-                      <label for="prenom">Prénom</label>
-                      <input id="prenom" name="prenom" type="text" autocomplete="given-name" required>
+                  <div class="wiz-head" aria-label="Étapes du formulaire">
+                    <div class="wiz-step">
+                      <div class="wiz-dot active" id="wizDot1">1</div>
+                      <div class="wiz-lbl active" id="wizLbl1">Contact</div>
                     </div>
-                    <div class="field">
-                      <label for="nom">Nom</label>
-                      <input id="nom" name="nom" type="text" autocomplete="family-name" required>
+                    <div class="wiz-line" id="wizLine1"></div>
+                    <div class="wiz-step">
+                      <div class="wiz-dot" id="wizDot2">2</div>
+                      <div class="wiz-lbl" id="wizLbl2">Profil</div>
+                    </div>
+                    <div class="wiz-line" id="wizLine2"></div>
+                    <div class="wiz-step">
+                      <div class="wiz-dot" id="wizDot3">3</div>
+                      <div class="wiz-lbl" id="wizLbl3">Confirmation</div>
                     </div>
                   </div>
 
-                  <div class="field" style="margin-top:10px">
-                    <label for="telephone">Téléphone</label>
-                    <input id="telephone" name="telephone" type="tel" placeholder="+212 6XX XX XX XX" autocomplete="tel" required>
+                  <div class="wiz-panel active" id="wizPanel1">
+                    <div class="wiz-title">Commençons par vos coordonnées</div>
+                    <div class="wiz-sub">Ces informations nous permettent de vous recontacter rapidement.</div>
+                    <div class="fgrid2">
+                      <div class="field">
+                        <label for="prenom">Prénom</label>
+                        <input id="prenom" name="prenom" type="text" autocomplete="given-name" required>
+                      </div>
+                      <div class="field">
+                        <label for="nom">Nom</label>
+                        <input id="nom" name="nom" type="text" autocomplete="family-name" required>
+                      </div>
+                    </div>
+
+                    <div class="field" style="margin-top:10px">
+                      <label for="telephone">Téléphone</label>
+                      <input id="telephone" name="telephone" type="tel" placeholder="+212 6XX XX XX XX" autocomplete="tel" required>
+                    </div>
+
+                    <div class="field" style="margin-top:10px">
+                      <label for="email">Email</label>
+                      <input id="email" name="email" type="email" placeholder="contact@exemple.com" autocomplete="email" required>
+                    </div>
+
+                    <div class="wiz-nav">
+                      <button class="submit wiz-next" type="button" data-wiz-next="2">Suivant — Mon profil →</button>
+                    </div>
                   </div>
 
-                  <div class="field" style="margin-top:10px">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="contact@exemple.com" autocomplete="email" required>
+                  <div class="wiz-panel" id="wizPanel2">
+                    <div class="wiz-title">Votre objectif 2026</div>
+                    <div class="wiz-sub">Nous personnalisons ensuite le programme selon votre profil.</div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="niveau">Profil / Parcours principal</label>
+                      <select id="niveau" name="niveau" required>
+                        <option value="" disabled selected>Sélectionnez</option>
+                        <option value="bac1">Lycéen 1ère BAC</option>
+                        <option value="bac2">Lycéen 2ème BAC</option>
+                        <option value="prepa_sci">Classes Prépa Scientifique (MP / PCSI)</option>
+                        <option value="prepa_eco">Classes Prépa Économique (ECG / ECT)</option>
+                        <option value="concours_public">Concours Emploi Public</option>
+                        <option value="langues">Langues</option>
+                        <option value="coaching">Coaching & Développement</option>
+                        <option value="bacplus">Étudiant Bac+</option>
+                        <option value="pro">Professionnel en activité</option>
+                        <option value="parent">Parent</option>
+                      </select>
+                    </div>
+
+                    <div class="field" style="margin-top:10px">
+                      <label for="filiere">Options adaptées à votre choix</label>
+                      <select id="filiere" name="filiere" required>
+                        <option value="" disabled selected>Choisissez d'abord le profil</option>
+                      </select>
+                    </div>
+
+                    <div class="field" style="margin-top:10px">
+                      <label for="service">Service souhaité</label>
+                      <select id="service" name="service" required>
+                        <option value="" disabled selected>Choisissez d'abord le profil</option>
+                      </select>
+                    </div>
+
+                    <div class="field" style="margin-top:10px">
+                      <label for="mode">Mode</label>
+                      <select id="mode" name="mode" required>
+                        <option value="" disabled selected>Sélectionnez</option>
+                        <option>Présentiel (Meknès)</option>
+                        <option>À distance</option>
+                        <option>Les deux</option>
+                      </select>
+                    </div>
+
+                    <div class="wiz-nav">
+                      <button class="wiz-back" type="button" data-wiz-prev="1">← Retour</button>
+                      <button class="submit wiz-next" type="button" data-wiz-next="3">Confirmer →</button>
+                    </div>
                   </div>
 
-                  <div class="field" style="margin-top:10px">
-                    <label for="niveau">Profil / Parcours principal</label>
-                    <select id="niveau" name="niveau" required>
-                      <option value="" disabled selected>Sélectionnez</option>
-                      <option value="bac1">Lycéen 1ère BAC</option>
-                      <option value="bac2">Lycéen 2ème BAC</option>
-                      <option value="prepa_sci">Classes Prépa Scientifique (MP / PCSI)</option>
-                      <option value="prepa_eco">Classes Prépa Économique (ECG / ECT)</option>
-                      <option value="concours_public">Concours Emploi Public</option>
-                      <option value="langues">Langues</option>
-                      <option value="coaching">Coaching & Développement</option>
-                      <option value="bacplus">Étudiant Bac+</option>
-                      <option value="pro">Professionnel en activité</option>
-                      <option value="parent">Parent</option>
-                    </select>
-                  </div>
+                  <div class="wiz-panel" id="wizPanel3">
+                    <div class="wiz-title">Validation finale</div>
+                    <div class="wiz-sub">Vérifiez vos informations et envoyez votre demande.</div>
+                    <div class="wiz-summary">
+                      <div class="wiz-row"><span>Nom</span><strong id="sumName">—</strong></div>
+                      <div class="wiz-row"><span>Téléphone</span><strong id="sumPhone">—</strong></div>
+                      <div class="wiz-row"><span>Email</span><strong id="sumEmail">—</strong></div>
+                      <div class="wiz-row"><span>Profil</span><strong id="sumNiveau">—</strong></div>
+                      <div class="wiz-row"><span>Option</span><strong id="sumFiliere">—</strong></div>
+                      <div class="wiz-row"><span>Service / Mode</span><strong id="sumServiceMode">—</strong></div>
+                    </div>
 
-                  <div class="field" style="margin-top:10px">
-                    <label for="filiere">Options adaptées à votre choix</label>
-                    <select id="filiere" name="filiere" required>
-                      <option value="" disabled selected>Choisissez d'abord le profil</option>
-                    </select>
-                  </div>
+                    <div class="form-progress" id="formProgress">
+                      <div class="form-progress-bar" id="formProgressBar"></div>
+                    </div>
+                    <div class="form-progress-label" id="formProgressLabel">0 / 8 champs remplis</div>
 
-                  <div class="field" style="margin-top:10px">
-                    <label for="service">Service souhaité</label>
-                    <select id="service" name="service" required>
-                      <option value="" disabled selected>Choisissez d'abord le profil</option>
-                    </select>
-                  </div>
+                    <div class="hp-field" aria-hidden="true">
+                      <label for="hp_website">Website</label>
+                      <input type="text" id="hp_website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
 
-                  <div class="field" style="margin-top:10px">
-                    <label for="mode">Mode</label>
-                    <select id="mode" name="mode" required>
-                      <option value="" disabled selected>Sélectionnez</option>
-                      <option>Présentiel (Meknès)</option>
-                      <option>À distance</option>
-                      <option>Les deux</option>
-                    </select>
+                    <div class="wiz-nav">
+                      <button class="wiz-back" type="button" data-wiz-prev="2">← Retour</button>
+                      <button class="submit" type="submit">✓ Envoyer ma demande</button>
+                    </div>
+                    <div class="locknote">🔒 Vos données restent confidentielles. Aucun spam. Jamais.</div>
                   </div>
-
-                  <div class="form-progress" id="formProgress">
-                    <div class="form-progress-bar" id="formProgressBar"></div>
-                  </div>
-                  <div class="form-progress-label" id="formProgressLabel">0 / 8 champs remplis</div>
-
-                  <div class="hp-field" aria-hidden="true">
-                    <label for="hp_website">Website</label>
-                    <input type="text" id="hp_website" name="website" tabindex="-1" autocomplete="off">
-                  </div>
-
-                  <button class="submit" type="submit">Obtenir mon plan gratuit →</button>
-                  <div class="locknote">🔒 Vos données restent confidentielles. Aucun spam. Jamais.</div>
                 </form>
               </div>
 
@@ -1056,7 +1101,7 @@
             <div class="ig-reel-frame">
               <iframe
                 title="Reel Instagram Galilie Scholar (1)"
-                src="https://www.instagram.com/reel/DWFAF7-DnYP/embed/captioned/?cr=1&amp;v=14"
+                src="https://www.instagram.com/reel/DWFAF7-DnYP/embed"
                 allowfullscreen
                 loading="lazy"
                 referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -1064,7 +1109,7 @@
             <div class="ig-reel-frame">
               <iframe
                 title="Reel Instagram Galilie Scholar (2)"
-                src="https://www.instagram.com/reel/DX7TRhOO0dB/embed/captioned/?cr=1&amp;v=14"
+                src="https://www.instagram.com/reel/DX7TRhOO0dB/embed"
                 allowfullscreen
                 loading="lazy"
                 referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -1072,7 +1117,7 @@
             <div class="ig-reel-frame">
               <iframe
                 title="Reel Instagram Galilie Scholar (3)"
-                src="https://www.instagram.com/reel/DVES5McDGBY/embed/captioned/?cr=1&amp;v=14"
+                src="https://www.instagram.com/reel/DVES5McDGBY/embed"
                 allowfullscreen
                 loading="lazy"
                 referrerpolicy="strict-origin-when-cross-origin"></iframe>

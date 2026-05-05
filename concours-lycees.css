@@ -141,6 +141,7 @@
   font-weight: 700;
   color: var(--cl-cr);
   line-height: 1.25;
+  display: none; /* logos only, no ministry/bank names */
 }
 
 #svcLayoutRoot #tab-concours .conc-min-chip-name.more {

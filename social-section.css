@@ -292,20 +292,12 @@ section#social.social-section::before {
 #social .ig-embed-grid,
 #social .tt-embed-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 16px 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
   width: 100%;
-  max-width: 1140px;
+  max-width: 1040px;
   margin: 0 auto 24px;
-  align-items: start;
-  justify-items: stretch;
-}
-
-@media (min-width: 960px) {
-  #social .ig-embed-grid,
-  #social .tt-embed-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  align-items: stretch;
 }
 
 #social .ig-embed-grid .instagram-media {
@@ -321,33 +313,32 @@ section#social.social-section::before {
 /* Cadres iframe — Instagram + TikTok */
 #social .ig-reel-frame,
 #social .tt-reel-frame {
+  position: relative;
   width: 100%;
+  aspect-ratio: 9 / 16;
   min-width: 0;
   margin: 0;
   border-radius: 12px;
   overflow: hidden;
   background: #0a0a0a;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
+  contain: layout paint;
 }
 
 #social .tt-reel-frame {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-#social .ig-reel-frame iframe {
-  display: block;
-  width: 100%;
-  min-height: 400px;
-  height: min(640px, 58vh);
-  border: 0;
-}
-
+#social .ig-reel-frame iframe,
 #social .tt-reel-frame iframe {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  min-height: 420px;
-  height: min(720px, 65vh);
+  height: 100%;
   border: 0;
+  background: #000;
 }
 
 #social .ig-post {
@@ -1033,16 +1024,6 @@ section#social.social-section::before {
     gap: 12px;
   }
 
-  #social .ig-reel-frame iframe {
-    min-height: 360px;
-    height: min(600px, 52vh);
-  }
-
-  #social .tt-reel-frame iframe {
-    min-height: 380px;
-    height: min(620px, 55vh);
-  }
-
   #social .ig-feed-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
@@ -1090,17 +1071,8 @@ section#social.social-section::before {
 @media (max-width: 480px) {
   #social .ig-embed-grid,
   #social .tt-embed-grid {
-    gap: 12px;
-  }
-
-  #social .ig-reel-frame iframe {
-    min-height: 400px;
-    height: min(680px, 62vh);
-  }
-
-  #social .tt-reel-frame iframe {
-    min-height: 420px;
-    height: min(720px, 68vh);
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   #social .ig-feed-grid {
