@@ -148,22 +148,6 @@
   color: var(--cl-gl);
 }
 
-#svcLayoutRoot #tab-concours .conc-min-dev-hint {
-  margin-top: 12px;
-  font-size: 10px;
-  color: rgba(200, 230, 201, 0.45);
-  line-height: 1.5;
-  text-align: center;
-}
-
-#svcLayoutRoot #tab-concours .conc-min-dev-hint .conc-min-code {
-  font-size: 9px;
-  padding: 1px 5px;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.25);
-  color: rgba(200, 230, 201, 0.85);
-}
-
 /* ── Section Lycées français ── */
 #lycees-francais.lycees-sec {
   background: var(--cl-f2);
@@ -510,10 +494,6 @@
 
   #svcLayoutRoot #tab-concours .conc-min-chip-name {
     font-size: 9px;
-  }
-
-  #svcLayoutRoot #tab-concours .conc-min-dev-hint {
-    padding: 0 10px;
   }
 
   #lycees-francais.lycees-sec {
