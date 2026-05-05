@@ -1392,21 +1392,16 @@ body:has(a:hover) .cursor-ring{
   }
   .offers-grid.is-mobile-cycle{
     display:flex;
-    overflow-x:auto;
-    overflow-y:hidden;
+    overflow:hidden;
     gap:0;
     width:100%;
     scroll-behavior:smooth;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    touch-action:pan-x;
+    touch-action:pan-y;
   }
-  .offers-grid.is-mobile-cycle::-webkit-scrollbar{display:none}
   .offers-grid.is-mobile-cycle .card{
     flex:0 0 100%;
     width:100%;
     margin:0;
-    scroll-snap-align:start;
   }
   .offers-dots{
     display:flex;
