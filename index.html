@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- script-src inclut 'unsafe-inline' pour onclick (onglets) et compat JSON-LD ; nonce sur scripts marqués -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-GS2026' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-GS2026' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com https://www.tiktok.com https://www.youtube.com https://www.instagram.com https://instagram.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.instagram.com https://instagram.com https://*.cdninstagram.com https://*.fbcdn.net; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
@@ -103,6 +103,7 @@
   <link rel="stylesheet" href="services-layout.css">
   <link rel="stylesheet" href="cinematic-hero-testi.css">
   <link rel="stylesheet" href="methode-vertical-story.css">
+  <link rel="stylesheet" href="social-section.css">
 </head>
 
 <body>
@@ -137,6 +138,7 @@
         <a href="#methode">Méthode</a>
         <a href="#temoignages">Témoignages</a>
         <a href="#concours">Concours</a>
+        <a href="#social">Réseaux</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -169,6 +171,7 @@
       <a href="#methode" data-close>Méthode</a>
       <a href="#temoignages" data-close>Témoignages</a>
       <a href="#concours" data-close>Concours</a>
+      <a href="#social" data-close>Réseaux</a>
       <a href="#contact" data-close>Contact</a>
     </div>
     <a class="btn btn-gold" href="#contact" data-close style="width:100%;margin-top:auto">Réserver ma place →</a>
@@ -765,6 +768,278 @@
       </div>
     </section>
 
+    <!-- Réseaux sociaux -->
+    <section class="social-section reveal" id="social" aria-label="Nos réseaux sociaux">
+      <div class="soc-container">
+
+        <div class="social-header">
+          <div class="soc-kicker">Nos réseaux</div>
+          <h2 class="social-title">Suivez <em>Galilie Scholar</em><br>sur les réseaux sociaux</h2>
+          <p class="social-sub">Conseils, résultats, coulisses du centre et témoignages en exclusivité. Rejoignez notre communauté.</p>
+        </div>
+
+        <div class="platform-tabs" role="tablist" aria-label="Choisir la plateforme">
+          <button type="button" id="social-tab-ig" class="ptab on" data-p="ig" role="tab" aria-selected="true" aria-controls="soc-panel-ig">
+            <svg class="ptab-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+            Instagram
+          </button>
+          <button type="button" id="social-tab-tt" class="ptab" data-p="tt" role="tab" aria-selected="false" aria-controls="soc-panel-tt">
+            <svg class="ptab-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.16 8.16 0 0 0 4.77 1.52V7.12a4.85 4.85 0 0 1-1-.43z"/>
+            </svg>
+            TikTok
+          </button>
+          <button type="button" id="social-tab-yt" class="ptab" data-p="yt" role="tab" aria-selected="false" aria-controls="soc-panel-yt">
+            <svg class="ptab-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 0 0 .5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.52V8.48L15.84 12l-6.09 3.52z"/>
+            </svg>
+            YouTube
+          </button>
+        </div>
+
+        <div id="soc-panel-ig" class="soc-panel on ig-panel" role="tabpanel" aria-labelledby="social-tab-ig">
+          <div class="ig-profile-bar">
+            <div class="ig-profile-left">
+              <div class="ig-avatar">
+                <div class="ig-avatar-inner">GS</div>
+              </div>
+              <div>
+                <div class="ig-profile-name">Galilie Scholar</div>
+                <div class="ig-profile-handle">@galilie.scholar</div>
+              </div>
+            </div>
+            <div class="ig-stats">
+              <div class="ig-stat">
+                <div class="ig-stat-val" id="igPosts">16</div>
+                <div class="ig-stat-lbl">Publications</div>
+              </div>
+              <div class="ig-stat">
+                <div class="ig-stat-val" id="igFollowers">875</div>
+                <div class="ig-stat-lbl">Abonnés</div>
+              </div>
+            </div>
+            <a class="ig-follow-btn" href="https://www.instagram.com/galilie.scholar/" target="_blank" rel="noopener noreferrer" aria-label="Suivre Galilie Scholar sur Instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+              Suivre sur Instagram
+            </a>
+          </div>
+
+          <div class="ig-embed-grid" id="igFeedGrid">
+            <div class="ig-reel-frame">
+              <iframe
+                title="Reel Instagram Galilie Scholar (1)"
+                src="https://www.instagram.com/reel/DWFAF7-DnYP/embed/captioned/?cr=1&amp;v=14"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="ig-reel-frame">
+              <iframe
+                title="Reel Instagram Galilie Scholar (2)"
+                src="https://www.instagram.com/reel/DX7TRhOO0dB/embed/captioned/?cr=1&amp;v=14"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="ig-reel-frame">
+              <iframe
+                title="Reel Instagram Galilie Scholar (3)"
+                src="https://www.instagram.com/reel/DVES5McDGBY/embed/captioned/?cr=1&amp;v=14"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </div>
+
+          <div class="soc-tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 8v4m0 4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>
+              <strong>Note :</strong>
+              Les reels s’affichent via la page d’intégration officielle Instagram. Ouvrez le site via <strong>http(s)://</strong> (pas en fichier <code>file://</code>). Si un cadre reste vide, vérifiez le blocage des cookies / du tracking pour <code>instagram.com</code>.
+            </span>
+          </div>
+
+          <div class="ig-view-more">
+            <a class="ig-view-btn" href="https://www.instagram.com/galilie.scholar/" target="_blank" rel="noopener noreferrer">Voir toutes les publications sur Instagram</a>
+          </div>
+        </div>
+
+        <div id="soc-panel-tt" class="soc-panel tt-panel" role="tabpanel" aria-labelledby="social-tab-tt" hidden>
+          <div class="tt-profile-bar">
+            <div class="ig-profile-left">
+              <div class="tt-avatar">NC</div>
+              <div>
+                <div class="tt-profile-name">Nouamane Chaltoute</div>
+                <div class="tt-profile-handle">@nouamanechaltoute</div>
+              </div>
+            </div>
+            <div class="tt-stats">
+              <div class="tt-stat">
+                <div class="tt-stat-val">4</div>
+                <div class="tt-stat-lbl">Suivis</div>
+              </div>
+              <div class="tt-stat">
+                <div class="tt-stat-val">58</div>
+                <div class="tt-stat-lbl">Abonnés</div>
+              </div>
+              <div class="tt-stat">
+                <div class="tt-stat-val">274</div>
+                <div class="tt-stat-lbl">J’aime</div>
+              </div>
+            </div>
+            <a class="tt-follow-btn" href="https://www.tiktok.com/@nouamanechaltoute/" target="_blank" rel="noopener noreferrer" aria-label="Suivre sur TikTok">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.16 8.16 0 0 0 4.77 1.52V7.12a4.85 4.85 0 0 1-1-.43z"/>
+              </svg>
+              Suivre sur TikTok
+            </a>
+          </div>
+
+          <div class="tt-embed-grid" id="ttGrid">
+            <div class="tt-reel-frame">
+              <iframe
+                title="TikTok — prépa Maroc, CPGE (#prepaMaroc)"
+                src="https://www.tiktok.com/embed/v2/7635627318114880786"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="tt-reel-frame">
+              <iframe
+                title="TikTok — prépa Maroc, CPGE"
+                src="https://www.tiktok.com/embed/v2/7635438301570223368"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <div class="tt-reel-frame">
+              <iframe
+                title="TikTok — témoignage"
+                src="https://www.tiktok.com/embed/v2/7633478113959103762"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+          </div>
+
+          <div class="soc-tip soc-tip--dark">
+            <span>
+              <strong>Note :</strong>
+              Même principe qu’Instagram : intégration par iframe officielle (<code>embed/v2/VIDEO_ID</code>). Les IDs correspondent aux trois vidéos collées depuis TikTok (dont le témoignage).
+            </span>
+          </div>
+
+          <div class="tt-cta-row">
+            <a class="tt-view-btn" href="https://www.tiktok.com/@nouamanechaltoute/" target="_blank" rel="noopener noreferrer">Voir tous les TikToks →</a>
+          </div>
+        </div>
+
+        <div id="soc-panel-yt" class="soc-panel yt-panel" role="tabpanel" aria-labelledby="social-tab-yt" hidden>
+          <div class="yt-profile-bar">
+            <div class="ig-profile-left">
+              <div class="yt-avatar">GS</div>
+              <div>
+                <div class="yt-profile-name">Galilie Scholar</div>
+                <div class="yt-profile-handle">@galiliescholar — Chaîne YouTube</div>
+              </div>
+            </div>
+            <a class="yt-subscribe-btn" href="https://www.youtube.com/@galiliescholar" target="_blank" rel="noopener noreferrer" aria-label="S'abonner à la chaîne YouTube Galilie Scholar">
+              <svg width="14" height="10" viewBox="0 0 24 17" fill="currentColor" aria-hidden="true">
+                <path d="M23.5 2.69a3.02 3.02 0 0 0-2.12-2.14C19.54 0 12 0 12 0S4.46 0 2.62.55A3.02 3.02 0 0 0 .5 2.69C0 4.54 0 8.5 0 8.5s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 17 12 17 12 17s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 12.46 24 8.5 24 8.5s0-3.96-.5-5.81zM9.75 12.02V4.98L15.84 8.5l-6.09 3.52z"/>
+              </svg>
+              S'abonner
+            </a>
+          </div>
+
+          <div class="yt-featured">
+            <div class="yt-placeholder">
+              <div class="yt-play-icon" aria-hidden="true">▶</div>
+              <div class="yt-placeholder-title">Votre prochaine vidéo YouTube apparaîtra ici</div>
+              <div class="yt-placeholder-desc">Filmez un témoignage, un corrigé de concours, ou une présentation du centre. Uploadez sur YouTube, copiez l’ID de la vidéo, et remplacez ce placeholder.</div>
+              <div class="yt-add-note">Remplacez par iframe YouTube</div>
+            </div>
+          </div>
+
+          <div class="yt-grid">
+            <div class="yt-thumb">
+              <div class="yt-thumb-bg" style="background:linear-gradient(135deg,var(--s2),var(--s1))"></div>
+              <div class="yt-thumb-play">
+                <div class="yt-thumb-play-ico" aria-hidden="true">▶</div>
+              </div>
+              <div class="yt-thumb-title">Comment réussir le concours Emploi Public 2026 — Galilie Scholar</div>
+            </div>
+            <div class="yt-thumb">
+              <div class="yt-thumb-bg" style="background:linear-gradient(135deg,var(--s1),var(--s3))"></div>
+              <div class="yt-thumb-play">
+                <div class="yt-thumb-play-ico" aria-hidden="true">▶</div>
+              </div>
+              <div class="yt-thumb-title">Programme ENSA 2026 — Ce que les candidats ignorent</div>
+            </div>
+          </div>
+
+          <div class="yt-channel-more">
+            <a class="yt-channel-link" href="https://www.youtube.com/@galiliescholar" target="_blank" rel="noopener noreferrer">Voir la chaîne YouTube →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="follow-strip">
+        <a class="follow-item" href="https://www.instagram.com/galilie.scholar/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Galilie Scholar">
+          <div class="follow-item-icon fi-ig">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="white"/>
+            </svg>
+          </div>
+          <div class="follow-item-txt">
+            <div class="follow-item-platform">Instagram</div>
+            <div class="follow-item-action">Suivre nos publications</div>
+            <div class="follow-item-handle">@galilie.scholar</div>
+          </div>
+          <span class="follow-item-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="follow-item" href="https://www.tiktok.com/@nouamanechaltoute/" target="_blank" rel="noopener noreferrer" aria-label="TikTok Galilie Scholar">
+          <div class="follow-item-icon fi-tt">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.05a8.16 8.16 0 0 0 4.77 1.52V7.12a4.85 4.85 0 0 1-1-.43z"/>
+            </svg>
+          </div>
+          <div class="follow-item-txt">
+            <div class="follow-item-platform">TikTok</div>
+            <div class="follow-item-action">Voir nos vidéos</div>
+            <div class="follow-item-handle">@nouamanechaltoute</div>
+          </div>
+          <span class="follow-item-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="follow-item" href="https://www.youtube.com/@galiliescholar" target="_blank" rel="noopener noreferrer" aria-label="YouTube Galilie Scholar">
+          <div class="follow-item-icon fi-yt">
+            <svg width="18" height="12" viewBox="0 0 24 17" fill="white" aria-hidden="true">
+              <path d="M23.5 2.69a3.02 3.02 0 0 0-2.12-2.14C19.54 0 12 0 12 0S4.46 0 2.62.55A3.02 3.02 0 0 0 .5 2.69C0 4.54 0 8.5 0 8.5s0 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 17 12 17 12 17s7.54 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14C24 12.46 24 8.5 24 8.5s0-3.96-.5-5.81zM9.75 12.02V4.98L15.84 8.5l-6.09 3.52z"/>
+            </svg>
+          </div>
+          <div class="follow-item-txt">
+            <div class="follow-item-platform">YouTube</div>
+            <div class="follow-item-action">S'abonner à la chaîne</div>
+            <div class="follow-item-handle">@galiliescholar</div>
+          </div>
+          <span class="follow-item-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
       <div class="container">
@@ -818,6 +1093,7 @@
               <a href="#methode">À propos</a>
               <a href="#temoignages">Témoignages</a>
               <a href="#faq">FAQ</a>
+              <a href="#social">Réseaux</a>
               <a href="#contact">Contact</a>
               <a href="#top">Résultats 2026</a>
             </div>

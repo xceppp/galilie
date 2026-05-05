@@ -448,6 +448,38 @@ if (leadForm) {
   applyConcoursHash();
 })();
 
+// Réseaux sociaux — onglets (#social, sans onclick inline)
+(function initSocialTabs() {
+  const root = document.getElementById('social');
+  if (!root) return;
+
+  function showSocialPanel(panelKey, btn) {
+    root.querySelectorAll('.soc-panel').forEach((p) => {
+      const on = p.id === 'soc-panel-' + panelKey;
+      p.classList.toggle('on', on);
+      p.hidden = !on;
+    });
+    root.querySelectorAll('.ptab[data-p]').forEach((b) => {
+      const on = b === btn;
+      b.classList.toggle('on', on);
+      if (b.hasAttribute('aria-selected')) b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  root.querySelectorAll('.ptab[data-p]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const key = tab.getAttribute('data-p');
+      if (key) showSocialPanel(key, tab);
+    });
+  });
+
+  const initial = root.querySelector('.ptab.on[data-p]') || root.querySelector('.ptab[data-p]');
+  if (initial) {
+    const key = initial.getAttribute('data-p');
+    if (key) showSocialPanel(key, initial);
+  }
+})();
+
 // Nav active state (sections + carte Concours)
 const navObserveEls = [
   ...document.querySelectorAll('section[id]'),

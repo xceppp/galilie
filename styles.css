@@ -20,7 +20,11 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
 body{
   background:var(--bg);
   color:var(--cream);
@@ -59,6 +63,7 @@ input, textarea, select { cursor: text !important; }
 button, a, label[for], [role="button"] { cursor: pointer !important; }
 
 /* Layout */
+main{min-width:0}
 .container{width:min(var(--maxw), calc(100% - 64px));margin:0 auto}
 section{padding:88px 0;position:relative}
 #programmes.services-multi{padding:0;background:#06100A}
@@ -1105,7 +1110,11 @@ body:has(a:hover) .cursor-ring{
 }
 @media (max-width:768px){
   section{padding:70px 0}
-  .container{width:calc(100% - 28px)}
+  body{
+    padding-left:env(safe-area-inset-left, 0px);
+    padding-right:env(safe-area-inset-right, 0px);
+  }
+  .container{width:calc(100% - 28px);max-width:100%}
   .brand{min-width:0}
   .brand-sub{display:none}
 
@@ -1199,8 +1208,18 @@ body:has(a:hover) .cursor-ring{
   .subgrid,.subgrid-2,.steps-grid,.testi-grid,.faq-grid,.form-grid{grid-template-columns:1fr}
   .fgrid2{grid-template-columns:1fr}
   .foot-grid{grid-template-columns:1fr 1fr}
-  .float-cta{right:12px;bottom:12px;padding:10px 14px;font-size:11px}
-  .wa-float{left:12px;bottom:12px;width:48px;height:48px}
+  .float-cta{
+    right:max(12px, env(safe-area-inset-right, 0px));
+    bottom:max(12px, env(safe-area-inset-bottom, 0px));
+    padding:10px 14px;
+    font-size:11px;
+  }
+  .wa-float{
+    left:max(12px, env(safe-area-inset-left, 0px));
+    bottom:max(12px, env(safe-area-inset-bottom, 0px));
+    width:48px;
+    height:48px;
+  }
   .countdown-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:768px) and (prefers-reduced-motion:reduce){
