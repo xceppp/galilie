@@ -55,6 +55,78 @@ function getSheetsId() {
   return id;
 }
 
+/** JSON collé dans Vercel avec de vrais retours à la ligne dans private_key → JSON invalide. */
+function tryRepairPrivateKeyMultiline(jsonText) {
+  const re = /"private_key"\s*:\s*"/;
+  const m = jsonText.match(re);
+  if (!m || m.index === undefined) return jsonText;
+  const valueStart = m.index + m[0].length;
+  const endMarker = '-----END PRIVATE KEY-----';
+  const endIdx = jsonText.indexOf(endMarker, valueStart);
+  if (endIdx === -1) return jsonText;
+  const closeIdx = jsonText.indexOf('"', endIdx + endMarker.length);
+  if (closeIdx === -1) return jsonText;
+  const inner = jsonText.slice(valueStart, closeIdx);
+  if (!/[\r\n]/.test(inner)) return jsonText;
+  const fixed = inner.replace(/\r\n/g, '\n').replace(/\n/g, '\\n');
+  return jsonText.slice(0, valueStart) + fixed + jsonText.slice(closeIdx);
+}
+
+function tryStripTrailingCommas(s) {
+  return s.replace(/,\s*([}\]])/g, '$1');
+}
+
+/** Si la variable est une chaîne JSON doublement encodée (rare). */
+function tryUnwrapQuotedJson(s) {
+  const t = s.trim();
+  if (t.length < 2) return s;
+  if (t.startsWith('"') && t.endsWith('"')) {
+    try {
+      const inner = JSON.parse(t);
+      if (typeof inner === 'string' && inner.trim().startsWith('{')) {
+        return inner.trim();
+      }
+    } catch (_) {
+      /* ignore */
+    }
+  }
+  if (t.startsWith("'") && t.endsWith("'")) {
+    const inner = t.slice(1, -1);
+    if (inner.trim().startsWith('{')) return inner.trim();
+  }
+  return s;
+}
+
+function parseJsonCredentials(jsonText) {
+  let t = String(jsonText || '')
+    .replace(/^\uFEFF/, '')
+    .trim();
+  if (!t) throw new Error('Empty credentials JSON');
+  t = tryUnwrapQuotedJson(t);
+  const attempts = [
+    t,
+    tryStripTrailingCommas(t),
+    tryRepairPrivateKeyMultiline(t),
+    tryRepairPrivateKeyMultiline(tryStripTrailingCommas(t)),
+  ];
+  let lastErr = null;
+  for (const candidate of attempts) {
+    try {
+      return JSON.parse(candidate);
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  const hint =
+    'Utilisez GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 (JSON encodé en base64), ou un JSON sur une ligne : ' +
+    'dans private_key uniquement des \\n (backslash + n), jamais de vrais retours à la ligne.';
+  throw new Error(
+    lastErr && lastErr.message
+      ? `Invalid credentials JSON (${lastErr.message}). ${hint}`
+      : `Invalid credentials JSON. ${hint}`
+  );
+}
+
 function parseServiceAccount() {
   const b64 = String(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 || '').trim();
   let jsonText = '';
@@ -72,14 +144,7 @@ function parseServiceAccount() {
       'Missing credentials: set GOOGLE_SERVICE_ACCOUNT_CREDENTIALS (JSON) or GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 (base64 du JSON)'
     );
   }
-  let creds;
-  try {
-    creds = JSON.parse(jsonText);
-  } catch (_) {
-    throw new Error(
-      'Invalid service account JSON (guillemets, virgules, ou private_key avec \\n)'
-    );
-  }
+  const creds = parseJsonCredentials(jsonText);
   if (creds.private_key) creds.private_key = creds.private_key.replace(/\\n/g, '\n');
   return creds;
 }
