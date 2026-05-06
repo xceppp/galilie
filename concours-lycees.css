@@ -518,11 +518,12 @@
     gap: 0;
     width: 100%;
     scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
+    /* proximity + no scroll-snap-stop: easier to scroll the page vertically through this block */
+    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
+    overscroll-behavior: auto;
     scrollbar-width: none;
-    touch-action: auto;
+    touch-action: pan-x pan-y;
   }
 
   #lycees-francais .lycees-grid.is-mobile-cycle::-webkit-scrollbar {
@@ -536,7 +537,6 @@
     width: 100%;
     margin: 0;
     scroll-snap-align: start;
-    scroll-snap-stop: always;
     opacity: 1;
     transform: none;
     pointer-events: auto;

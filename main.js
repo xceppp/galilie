@@ -81,6 +81,10 @@ drawerClose.addEventListener('click', closeDrawer);
 overlay.addEventListener('click', closeDrawer);
 drawer.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeDrawer));
 
+window.addEventListener('resize', () => {
+  if (drawer && !drawer.classList.contains('open')) document.body.style.overflow = '';
+});
+
 /* ── 4. CUSTOM CURSOR ─────────────────────────────────── */
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');

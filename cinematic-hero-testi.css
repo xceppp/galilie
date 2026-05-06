@@ -519,7 +519,7 @@
   position: relative;
   overflow: hidden;
   margin-top: 12px;
-  touch-action: pan-y;
+  touch-action: manipulation;
 }
 
 #temoignages.testi-spotlight .tB-spotlight-outer::before,
