@@ -2,7 +2,8 @@
 
 // Google Sheet connection
 // ⚠️ REQUIRED: Replace with your Google Apps Script Web App URL before launch
-const SHEET_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycby9Ba-1dp3qs_LmS3WANXynPU0cwL1ZeTHNstGyZuRtVOwJgjRIa8YdNbP4WcOCbRuFDw/exec";
+const RECAPTCHA_SITE_KEY = "6LcTitwsAAAAAKuFlJuCIyeV1ugZkUxNa3GJsdye";
 
 let lastSubmitTime = 0;
 const SUBMIT_COOLDOWN_MS = 8000;
@@ -278,6 +279,50 @@ function showSuccess(){
   if (successState) successState.style.display = 'block';
 }
 
+let recaptchaScriptPromise = null;
+function isRecaptchaConfigured() {
+  return Boolean(
+    RECAPTCHA_SITE_KEY &&
+    RECAPTCHA_SITE_KEY !== 'PASTE_RECAPTCHA_SITE_KEY_HERE' &&
+    RECAPTCHA_SITE_KEY.length > 20
+  );
+}
+
+function loadRecaptchaScript() {
+  if (window.grecaptcha && typeof window.grecaptcha.execute === 'function') {
+    return Promise.resolve();
+  }
+  if (recaptchaScriptPromise) return recaptchaScriptPromise;
+  recaptchaScriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(RECAPTCHA_SITE_KEY)}`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('reCAPTCHA script failed to load.'));
+    document.head.appendChild(script);
+  });
+  return recaptchaScriptPromise;
+}
+
+async function getRecaptchaToken(action = 'lead_submit') {
+  if (!isRecaptchaConfigured()) {
+    throw new Error('reCAPTCHA site key is not configured.');
+  }
+  await loadRecaptchaScript();
+  if (!window.grecaptcha || typeof window.grecaptcha.execute !== 'function') {
+    throw new Error('reCAPTCHA is unavailable.');
+  }
+  return await new Promise((resolve, reject) => {
+    window.grecaptcha.ready(() => {
+      window.grecaptcha
+        .execute(RECAPTCHA_SITE_KEY, { action })
+        .then(resolve)
+        .catch(() => reject(new Error('reCAPTCHA token generation failed.')));
+    });
+  });
+}
+
 // Form progress + multi-step wizard
 const formFields = ['prenom','nom','telephone','email','niveau','filiere','service','mode'];
 const wizardStepRules = {
@@ -413,7 +458,7 @@ if (leadForm) {
     });
   });
 
-  leadForm.addEventListener('submit', (e) => {
+  leadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
 
@@ -436,6 +481,18 @@ if (leadForm) {
     }
     lastSubmitTime = now;
 
+    let recaptchaToken = '';
+    try {
+      recaptchaToken = await getRecaptchaToken('lead_submit');
+      if (!recaptchaToken) {
+        throw new Error('Empty reCAPTCHA token.');
+      }
+    } catch (_) {
+      showFieldError('prenom', 'Vérification anti-spam indisponible. Réessayez dans quelques secondes.');
+      setWizardStep(1);
+      return;
+    }
+
     const payload = {
       timestamp: new Date().toISOString(),
       prenom: val('prenom'),
@@ -445,14 +502,16 @@ if (leadForm) {
       niveau: val('niveau'),
       filiere: val('filiere'),
       service: val('service'),
-      mode: val('mode')
+      mode: val('mode'),
+      recaptchaToken,
+      recaptchaAction: 'lead_submit'
     };
 
     showSuccess();
 
     const isValidSheetUrl =
       SHEET_URL &&
-      SHEET_URL !== 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' &&
+      SHEET_URL !== 'https://script.google.com/macros/s/AKfycby9Ba-1dp3qs_LmS3WANXynPU0cwL1ZeTHNstGyZuRtVOwJgjRIa8YdNbP4WcOCbRuFDw/exec' &&
       SHEET_URL.startsWith('https://script.google.com/') &&
       SHEET_URL.length < 500;
 
@@ -588,14 +647,22 @@ if (navObserveEls.length && navScrollLinks.length) {
     });
   }
 
+  function scrollToCardCentered(card) {
+    if (!card) return;
+    const target =
+      card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+    track.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+  }
+
   function syncDotsFromScroll() {
     const c = cards();
     if (!c.length) return;
-    const scroll = track.scrollLeft;
+    const mid = track.scrollLeft + track.clientWidth / 2;
     let best = Infinity;
     let idx = 0;
     c.forEach((card, i) => {
-      const d = Math.abs(card.offsetLeft - scroll);
+      const cardMid = card.offsetLeft + card.offsetWidth / 2;
+      const d = Math.abs(cardMid - mid);
       if (d < best) {
         best = d;
         idx = i;
@@ -617,12 +684,7 @@ if (navObserveEls.length && navScrollLinks.length) {
   dots().forEach((dot, i) => {
     dot.addEventListener('click', () => {
       const card = cards()[i];
-      if (card) {
-        track.scrollTo({
-          left: card.offsetLeft - 16,
-          behavior: 'smooth'
-        });
-      }
+      if (card) scrollToCardCentered(card);
     });
   });
 
@@ -633,7 +695,7 @@ if (navObserveEls.length && navScrollLinks.length) {
       activeIdx = (activeIdx - 1 + list.length) % list.length;
       const card = list[activeIdx];
       if (!card) return;
-      track.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' });
+      scrollToCardCentered(card);
     });
   }
   if (nextBtn) {
@@ -643,7 +705,7 @@ if (navObserveEls.length && navScrollLinks.length) {
       activeIdx = (activeIdx + 1) % list.length;
       const card = list[activeIdx];
       if (!card) return;
-      track.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' });
+      scrollToCardCentered(card);
     });
   }
 
