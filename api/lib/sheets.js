@@ -52,15 +52,22 @@ function getTabForNiveau(niveau = '') {
 }
 
 function getSheetsId() {
-  const id = process.env.GOOGLE_SHEETS_ID;
+  const id = (process.env.GOOGLE_SHEETS_ID || '').trim();
   if (!id) throw new Error('Missing GOOGLE_SHEETS_ID');
   return id;
 }
 
 function parseServiceAccount() {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS;
+  const raw = String(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS || '').trim();
   if (!raw) throw new Error('Missing GOOGLE_SERVICE_ACCOUNT_CREDENTIALS');
-  const creds = JSON.parse(raw);
+  let creds;
+  try {
+    creds = JSON.parse(raw);
+  } catch (_) {
+    throw new Error(
+      'Invalid GOOGLE_SERVICE_ACCOUNT_CREDENTIALS JSON (vérifiez guillemets et \\n dans private_key)'
+    );
+  }
   if (creds.private_key) creds.private_key = creds.private_key.replace(/\\n/g, '\n');
   return creds;
 }

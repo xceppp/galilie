@@ -550,15 +550,46 @@ if (leadForm) {
       recaptchaAction: 'lead_submit'
     };
 
-    showSuccess();
-
+    let res;
     try {
-      fetch(LEAD_API_URL, {
+      res = await fetch(LEAD_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(() => {});
-    } catch (_) {}
+        body: JSON.stringify(payload),
+        credentials: 'same-origin'
+      });
+    } catch (_) {
+      lastSubmitTime = 0;
+      showFieldError('prenom', 'Impossible d’atteindre le serveur. Vérifiez la connexion et réessayez.');
+      setWizardStep(3);
+      return;
+    }
+
+    let apiJson = null;
+    try {
+      apiJson = await res.json();
+    } catch (_) {
+      apiJson = null;
+    }
+
+    if (!res.ok || !apiJson || apiJson.ok !== true) {
+      lastSubmitTime = 0;
+      const code = apiJson && apiJson.error ? String(apiJson.error) : '';
+      let msg = 'Erreur à l’envoi. Réessayez dans quelques instants.';
+      if (code === 'recaptcha_failed') {
+        msg = 'Vérification de sécurité non validée (score faible ou configuration). Réessayez.';
+      } else if (code === 'server_error' && apiJson && apiJson.detail) {
+        const d = String(apiJson.detail).toLowerCase();
+        if (d.includes('google_sheets_id') || d.includes('credential')) {
+          msg = 'Le serveur n’a pas pu enregistrer la demande. Contact technique à prévenir.';
+        }
+      }
+      showFieldError('prenom', msg);
+      setWizardStep(3);
+      return;
+    }
+
+    showSuccess();
   });
 }
 
