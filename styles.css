@@ -808,6 +808,14 @@ body.bac-cycle-paused .bac-places-strip--cycle .bac-cycle-line{
   flex-shrink:0;
 }
 
+.lead-submit-error{
+  margin:12px 0 8px;
+  line-height:1.45;
+}
+.lead-submit-error[hidden]{
+  display:none !important;
+}
+
 .hp-field{
   position:absolute;
   left:-9999px;

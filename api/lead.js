@@ -1,5 +1,22 @@
 const { appendLeadRow } = require('./lib/sheets');
 
+/** Réponse JSON fiable sur Node (fallback si res.status/res.json sont absents). */
+function sendJson(res, statusCode, payload) {
+  const body = JSON.stringify(payload);
+  try {
+    if (typeof res.status === 'function' && typeof res.json === 'function') {
+      res.status(statusCode).json(payload);
+      return;
+    }
+  } catch (_) {
+    /* fall through */
+  }
+  res.statusCode = statusCode;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
+  res.end(body);
+}
+
 /** Vercel / Node peuvent livrer req.body sous forme objet, chaîne ou Buffer. */
 function parseRequestBody(req) {
   let b = req.body;
@@ -62,7 +79,13 @@ async function verifyRecaptcha(token, expectedAction) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: params.toString(),
   });
-  const data = await resp.json();
+  const raw = await resp.text();
+  let data;
+  try {
+    data = JSON.parse(raw || '{}');
+  } catch (_) {
+    return { ok: false, data: {} };
+  }
   const minScore = Number(process.env.RECAPTCHA_MIN_SCORE || '0.5');
   const scoreOk = data && data.success === true && Number(data.score || 0) >= minScore;
   const actionOk =
@@ -78,28 +101,28 @@ async function verifyRecaptcha(token, expectedAction) {
 module.exports = async function handler(req, res) {
   try {
     if (req.method !== 'POST') {
-      return res.status(405).json({ ok: false, error: 'method_not_allowed' });
+      return sendJson(res, 405, { ok: false, error: 'method_not_allowed' });
     }
 
     const body = parseRequestBody(req);
 
     for (const field of REQUIRED_FIELDS) {
       if (!String(body[field] || '').trim()) {
-        return res.status(400).json({ ok: false, error: `missing_${field}` });
+        return sendJson(res, 400, { ok: false, error: `missing_${field}` });
       }
     }
 
     if (!verifyEmail(body.email)) {
-      return res.status(400).json({ ok: false, error: 'invalid_email' });
+      return sendJson(res, 400, { ok: false, error: 'invalid_email' });
     }
     if (!verifyPhone(body.telephone)) {
-      return res.status(400).json({ ok: false, error: 'invalid_phone' });
+      return sendJson(res, 400, { ok: false, error: 'invalid_phone' });
     }
 
     const recaptchaAction = body.recaptchaAction || 'lead_submit';
     const recaptcha = await verifyRecaptcha(body.recaptchaToken, recaptchaAction);
     if (!recaptcha.ok) {
-      return res.status(403).json({
+      return sendJson(res, 403, {
         ok: false,
         error: 'recaptcha_failed',
         score: recaptcha.data && recaptcha.data.score != null ? recaptcha.data.score : undefined,
@@ -107,12 +130,14 @@ module.exports = async function handler(req, res) {
     }
 
     const { tabName } = await appendLeadRow(body, recaptcha.data);
-    return res.status(200).json({ ok: true, tab: tabName });
+    return sendJson(res, 200, { ok: true, tab: tabName });
   } catch (err) {
-    return res.status(500).json({
+    console.error('[api/lead]', err && err.stack ? err.stack : err);
+    const msg = String(err && err.message ? err.message : err);
+    return sendJson(res, 500, {
       ok: false,
       error: 'server_error',
-      detail: String(err.message || err),
+      detail: msg.slice(0, 400),
     });
   }
 };

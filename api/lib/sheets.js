@@ -1,5 +1,3 @@
-const { google } = require('googleapis');
-
 const DEFAULT_TABS = {
   bac: 'Bac',
   prepa: 'Prepa',
@@ -58,14 +56,28 @@ function getSheetsId() {
 }
 
 function parseServiceAccount() {
-  const raw = String(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS || '').trim();
-  if (!raw) throw new Error('Missing GOOGLE_SERVICE_ACCOUNT_CREDENTIALS');
+  const b64 = String(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 || '').trim();
+  let jsonText = '';
+  if (b64) {
+    try {
+      jsonText = Buffer.from(b64, 'base64').toString('utf8');
+    } catch (_) {
+      throw new Error('Invalid GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 (base64)');
+    }
+  } else {
+    jsonText = String(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS || '').trim();
+  }
+  if (!jsonText) {
+    throw new Error(
+      'Missing credentials: set GOOGLE_SERVICE_ACCOUNT_CREDENTIALS (JSON) or GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 (base64 du JSON)'
+    );
+  }
   let creds;
   try {
-    creds = JSON.parse(raw);
+    creds = JSON.parse(jsonText);
   } catch (_) {
     throw new Error(
-      'Invalid GOOGLE_SERVICE_ACCOUNT_CREDENTIALS JSON (vérifiez guillemets et \\n dans private_key)'
+      'Invalid service account JSON (guillemets, virgules, ou private_key avec \\n)'
     );
   }
   if (creds.private_key) creds.private_key = creds.private_key.replace(/\\n/g, '\n');
@@ -75,6 +87,7 @@ function parseServiceAccount() {
 async function getSheetsClient() {
   if (sheetsClientPromise) return sheetsClientPromise;
   sheetsClientPromise = (async () => {
+    const { google } = require('googleapis');
     const credentials = parseServiceAccount();
     const auth = new google.auth.GoogleAuth({
       credentials,

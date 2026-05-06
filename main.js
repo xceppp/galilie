@@ -250,8 +250,26 @@ function val(id) {
     .slice(0, 500);
 }
 
+function clearLeadSubmitError() {
+  const box = document.getElementById('leadSubmitError');
+  if (!box) return;
+  box.textContent = '';
+  box.hidden = true;
+}
+
+function showLeadSubmitError(msg) {
+  const box = document.getElementById('leadSubmitError');
+  if (!box || !msg) return;
+  box.textContent = msg;
+  box.hidden = false;
+  try {
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch (_) {}
+}
+
 function clearErrors() {
-  document.querySelectorAll('.field-error').forEach((el) => el.remove());
+  clearLeadSubmitError();
+  document.querySelectorAll('#leadForm .field-error:not(.lead-submit-error)').forEach((el) => el.remove());
   document.querySelectorAll('.field-err-border').forEach((el) => {
     el.classList.remove('field-err-border');
   });
@@ -522,7 +540,6 @@ if (leadForm) {
       setWizardStep(1);
       return;
     }
-    lastSubmitTime = now;
 
     let recaptchaToken = '';
     try {
@@ -535,6 +552,12 @@ if (leadForm) {
       setWizardStep(1);
       return;
     }
+
+    lastSubmitTime = Date.now();
+
+    const submitBtn = document.getElementById('leadSubmitBtn');
+    const prevSubmitLabel = submitBtn ? submitBtn.textContent : '';
+    clearLeadSubmitError();
 
     const payload = {
       timestamp: new Date().toISOString(),
@@ -550,46 +573,67 @@ if (leadForm) {
       recaptchaAction: 'lead_submit'
     };
 
-    let res;
     try {
-      res = await fetch(LEAD_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        credentials: 'same-origin'
-      });
-    } catch (_) {
-      lastSubmitTime = 0;
-      showFieldError('prenom', 'Impossible d’atteindre le serveur. Vérifiez la connexion et réessayez.');
-      setWizardStep(3);
-      return;
-    }
-
-    let apiJson = null;
-    try {
-      apiJson = await res.json();
-    } catch (_) {
-      apiJson = null;
-    }
-
-    if (!res.ok || !apiJson || apiJson.ok !== true) {
-      lastSubmitTime = 0;
-      const code = apiJson && apiJson.error ? String(apiJson.error) : '';
-      let msg = 'Erreur à l’envoi. Réessayez dans quelques instants.';
-      if (code === 'recaptcha_failed') {
-        msg = 'Vérification de sécurité non validée (score faible ou configuration). Réessayez.';
-      } else if (code === 'server_error' && apiJson && apiJson.detail) {
-        const d = String(apiJson.detail).toLowerCase();
-        if (d.includes('google_sheets_id') || d.includes('credential')) {
-          msg = 'Le serveur n’a pas pu enregistrer la demande. Contact technique à prévenir.';
-        }
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours…';
       }
-      showFieldError('prenom', msg);
-      setWizardStep(3);
-      return;
-    }
 
-    showSuccess();
+      let res;
+      try {
+        res = await fetch(LEAD_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          credentials: 'same-origin'
+        });
+      } catch (_) {
+        lastSubmitTime = 0;
+        showLeadSubmitError(
+          'Impossible de joindre le serveur. Vérifiez la connexion et réessayez.'
+        );
+        return;
+      }
+
+      let apiJson = null;
+      try {
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          apiJson = await res.json();
+        }
+      } catch (_) {
+        apiJson = null;
+      }
+
+      if (!res.ok || !apiJson || apiJson.ok !== true) {
+        lastSubmitTime = 0;
+        const code = apiJson && apiJson.error ? String(apiJson.error) : '';
+        let msg = 'Erreur à l’envoi. Réessayez dans quelques instants.';
+        if (!apiJson) {
+          msg =
+            'Réponse serveur invalide (HTTP ' +
+            res.status +
+            '). Vérifiez les logs Vercel pour /api/lead.';
+        } else if (code === 'recaptcha_failed') {
+          msg =
+            'Vérification de sécurité non validée (score faible ou configuration). Réessayez.';
+        } else if (code === 'server_error' && apiJson.detail) {
+          msg =
+            'Erreur serveur : ' +
+            String(apiJson.detail).slice(0, 220) +
+            (String(apiJson.detail).length > 220 ? '…' : '');
+        }
+        showLeadSubmitError(msg);
+        return;
+      }
+
+      showSuccess();
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = prevSubmitLabel;
+      }
+    }
   });
 }
 
