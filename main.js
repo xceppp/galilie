@@ -283,7 +283,7 @@ let recaptchaScriptPromise = null;
 function isRecaptchaConfigured() {
   return Boolean(
     RECAPTCHA_SITE_KEY &&
-    RECAPTCHA_SITE_KEY !== '6LcTitwsAAAAAKuFlJuCIyeV1ugZkUxNa3GJsdye' &&
+    RECAPTCHA_SITE_KEY !== 'PASTE_RECAPTCHA_SITE_KEY_HERE' &&
     RECAPTCHA_SITE_KEY.length > 20
   );
 }
@@ -511,7 +511,7 @@ if (leadForm) {
 
     const isValidSheetUrl =
       SHEET_URL &&
-      SHEET_URL !== 'https://script.google.com/macros/s/AKfycbzLdtZrPAXrqwxFmNnOBKeK5FFPTnBwZjq3QoNT8cnqIwOZcBGxh2uO5YFW_mREBrbtXA/exec' &&
+      SHEET_URL !== 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' &&
       SHEET_URL.startsWith('https://script.google.com/') &&
       SHEET_URL.length < 500;
 
