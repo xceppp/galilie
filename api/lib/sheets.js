@@ -56,11 +56,29 @@ function getSheetsId() {
 }
 
 /**
+ * Si tu colles la valeur telle qu’elle apparaît dans credentials.json
+ * (chaîne entre guillemets avec \\n littéraux), JSON.parse peut la convertir
+ * en PEM avec de vrais retours ligne.
+ */
+function unwrapJsonQuotedCredentialString(raw) {
+  const t = String(raw || '').replace(/^\uFEFF/, '').trim();
+  if (t.startsWith('"') && t.endsWith('"') && t.length > 2) {
+    try {
+      const decoded = JSON.parse(t);
+      if (typeof decoded === 'string') return decoded;
+    } catch (_) {
+      /* not valid JSON fragment; fall through */
+    }
+  }
+  return t;
+}
+
+/**
  * PEM attendu pour Google JWT. Erreurs OpenSSL DECODER unsupported = souvent
  * clé sur une ligne/cassée dans Vercel ou \n littéraux mal interprétés.
  */
 function normalizePrivateKeyPem(raw) {
-  let s = String(raw || '').replace(/^\uFEFF/, '').trim();
+  let s = unwrapJsonQuotedCredentialString(String(raw || '').replace(/^\uFEFF/, '').trim());
   if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
     s = s.slice(1, -1).trim();
   }
@@ -160,7 +178,9 @@ function parseJsonCredentials(jsonText) {
 
 function parseServiceAccount() {
   const simpleEmail = String(process.env.GOOGLE_CLIENT_EMAIL || '').trim();
-  const simpleKeyRaw = String(process.env.GOOGLE_PRIVATE_KEY || '').trim();
+  const simpleKeyRaw = unwrapJsonQuotedCredentialString(
+    String(process.env.GOOGLE_PRIVATE_KEY || '').trim()
+  ).trim();
   const simpleProjectId = String(process.env.GOOGLE_PROJECT_ID || '').trim();
   if (simpleEmail && simpleKeyRaw) {
     let privateKeyNormalized;
