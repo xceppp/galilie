@@ -55,6 +55,37 @@ function getSheetsId() {
   return id;
 }
 
+/**
+ * PEM attendu pour Google JWT. Erreurs OpenSSL DECODER unsupported = souvent
+ * clé sur une ligne/cassée dans Vercel ou \n littéraux mal interprétés.
+ */
+function normalizePrivateKeyPem(raw) {
+  let s = String(raw || '').replace(/^\uFEFF/, '').trim();
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) {
+    s = s.slice(1, -1).trim();
+  }
+  s = s.replace(/\\r\\n/g, '\n').replace(/\\r/g, '\n').replace(/\\n/g, '\n');
+  s = s.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+  const variants = [
+    ['-----BEGIN PRIVATE KEY-----', '-----END PRIVATE KEY-----'],
+    ['-----BEGIN RSA PRIVATE KEY-----', '-----END RSA PRIVATE KEY-----'],
+  ];
+  for (const [beg, ending] of variants) {
+    if (!s.includes(beg) || !s.includes(ending)) continue;
+    let start = s.indexOf(beg) + beg.length;
+    let end = s.indexOf(ending, start);
+    if (end === -1) continue;
+    const body = s.slice(start, end).replace(/[\s\n\r]/g, '');
+    if (!body) continue;
+    const chunks = body.match(/.{1,64}/g) || [body];
+    return `${beg}\n${chunks.join('\n')}\n${ending}\n`;
+  }
+  throw new Error(
+    'Clé PEM invalide : elle doit contenir -----BEGIN PRIVATE KEY----- … -----END PRIVATE KEY----- (copie depuis credentials.json, champ private_key)'
+  );
+}
+
 /** JSON collé dans Vercel avec de vrais retours à la ligne dans private_key → JSON invalide. */
 function tryRepairPrivateKeyMultiline(jsonText) {
   const re = /"private_key"\s*:\s*"/;
@@ -132,11 +163,19 @@ function parseServiceAccount() {
   const simpleKeyRaw = String(process.env.GOOGLE_PRIVATE_KEY || '').trim();
   const simpleProjectId = String(process.env.GOOGLE_PROJECT_ID || '').trim();
   if (simpleEmail && simpleKeyRaw) {
+    let privateKeyNormalized;
+    try {
+      privateKeyNormalized = normalizePrivateKeyPem(simpleKeyRaw);
+    } catch (e) {
+      throw new Error(
+        `${e.message} Vérifiez GOOGLE_PRIVATE_KEY : une seule variable, valeur du champ "private_key" du fichier JSON téléchargé.`
+      );
+    }
     return {
       type: 'service_account',
       project_id: simpleProjectId || undefined,
       client_email: simpleEmail,
-      private_key: simpleKeyRaw.replace(/\\n/g, '\n'),
+      private_key: privateKeyNormalized,
       token_uri: 'https://oauth2.googleapis.com/token',
     };
   }
@@ -158,7 +197,10 @@ function parseServiceAccount() {
     );
   }
   const creds = parseJsonCredentials(jsonText);
-  if (creds.private_key) creds.private_key = creds.private_key.replace(/\\n/g, '\n');
+  if (!creds.private_key || typeof creds.private_key !== 'string') {
+    throw new Error('JSON credentials: champ private_key manquant ou invalide');
+  }
+  creds.private_key = normalizePrivateKeyPem(creds.private_key.replace(/\\n/g, '\n'));
   return creds;
 }
 
@@ -173,7 +215,16 @@ async function getSheetsClient() {
     });
     const authClient = await auth.getClient();
     return google.sheets({ version: 'v4', auth: authClient });
-  })();
+  })().catch((err) => {
+    sheetsClientPromise = null;
+    const msg = String(err && err.message ? err.message : err);
+    if (/DECODER|unsupported:/i.test(msg)) {
+      throw new Error(
+        `Clé privée Google illisible (OpenSSL). Vérifiez GOOGLE_PRIVATE_KEY : copie du champ "private_key" du JSON, ou définissez GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64. Détail technique : ${msg.slice(0, 120)}`
+      );
+    }
+    throw err;
+  });
   return sheetsClientPromise;
 }
 
