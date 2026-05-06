@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- script-src inclut 'unsafe-inline' pour onclick (onglets) et compat JSON-LD ; nonce sur scripts marqués -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-GS2026' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com https://www.tiktok.com https://www.youtube.com https://www.instagram.com https://instagram.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.instagram.com https://instagram.com https://*.cdninstagram.com https://*.fbcdn.net; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-GS2026' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com https://www.tiktok.com https://www.youtube.com https://www.instagram.com https://instagram.com; connect-src 'self' https://www.google.com https://www.gstatic.com https://www.instagram.com https://instagram.com https://*.cdninstagram.com https://*.fbcdn.net; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
@@ -1495,7 +1495,7 @@
     - Execute as: Me
     - Who has access: Anyone
     - Copy the Web App URL
-    - Paste it as the value of SHEET_URL in main.js (⚠️ comment above SHEET_URL)
+    - Frontend now posts to /api/lead (Vercel serverless endpoint)
 
   DONE — every form submission will now appear as a new row in your Google Sheet.
   ==============================================================================

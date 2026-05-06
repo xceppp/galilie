@@ -2,7 +2,7 @@
 
 // Google Sheet connection
 // ⚠️ REQUIRED: Replace with your Google Apps Script Web App URL before launch
-const SHEET_URL = "https://script.google.com/macros/s/AKfycby9Ba-1dp3qs_LmS3WANXynPU0cwL1ZeTHNstGyZuRtVOwJgjRIa8YdNbP4WcOCbRuFDw/exec";
+const LEAD_API_URL = "/api/lead";
 const RECAPTCHA_SITE_KEY = "6LcTitwsAAAAAKuFlJuCIyeV1ugZkUxNa3GJsdye";
 
 let lastSubmitTime = 0;
@@ -509,21 +509,12 @@ if (leadForm) {
 
     showSuccess();
 
-    const isValidSheetUrl =
-      SHEET_URL &&
-      SHEET_URL !== 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE' &&
-      SHEET_URL.startsWith('https://script.google.com/') &&
-      SHEET_URL.length < 500;
-
     try {
-      if (isValidSheetUrl) {
-        fetch(SHEET_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          mode: 'no-cors',
-          body: JSON.stringify(payload)
-        }).catch(() => {});
-      }
+      fetch(LEAD_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(() => {});
     } catch (_) {}
   });
 }

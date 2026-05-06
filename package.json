@@ -1,0 +1,9 @@
+{
+  "name": "galilie",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Galilie Scholar site with secure lead API",
+  "dependencies": {
+    "googleapis": "^150.0.1"
+  }
+}
