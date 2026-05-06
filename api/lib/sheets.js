@@ -10,20 +10,37 @@ const DEFAULT_TABS = {
   general: 'General',
 };
 
+/** En-têtes visibles (colonnes remplies par l’API jusqu’à anti-spam ; le reste pour le conseiller). */
 const HEADERS = [
-  'timestamp_iso',
-  'received_at',
-  'prenom',
-  'nom',
-  'telephone',
-  'email',
-  'niveau',
-  'filiere',
-  'service',
-  'mode',
-  'recaptcha_score',
-  'recaptcha_action',
+  'Date demande (ISO)',
+  'Reçu le (serveur)',
+  'Prénom',
+  'Nom',
+  'Téléphone',
+  'Email',
+  'Profil',
+  'Option',
+  'Service',
+  'Mode',
+  'Score anti-spam',
+  'Action anti-spam',
+  'Statut dossier',
+  'Marqueur appel',
+  'Notes conseiller',
 ];
+
+const COL_COUNT = HEADERS.length;
+
+function endColumnLetter() {
+  let n = COL_COUNT;
+  let s = '';
+  while (n > 0) {
+    const r = (n - 1) % 26;
+    s = String.fromCharCode(65 + r) + s;
+    n = Math.floor((n - 1) / 26);
+  }
+  return s;
+}
 
 let sheetsClientPromise = null;
 
@@ -249,7 +266,12 @@ async function getSheetsClient() {
 }
 
 function safeCell(value) {
-  return String(value == null ? '' : value).trim().slice(0, 500);
+  let s = String(value == null ? '' : value).trim().slice(0, 500);
+  /** USER_ENTERED : évite l’interprétation formule (=+−@). */
+  if (/^[=+\-@\t\r]/.test(s)) {
+    s = `'${s}`;
+  }
+  return s;
 }
 
 function a1Range(tabName, endColumn = 'Z') {
@@ -272,15 +294,23 @@ async function ensureTabExists(sheets, spreadsheetId, tabName) {
 }
 
 async function ensureHeaders(sheets, spreadsheetId, tabName) {
-  const getResp = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: `'${tabName.replace(/'/g, "''")}'!A1:L1`,
-  }).catch(() => ({ data: {} }));
+  const esc = tabName.replace(/'/g, "''");
+  const getResp = await sheets.spreadsheets.values
+    .get({
+      spreadsheetId,
+      range: `'${esc}'!1:1`,
+    })
+    .catch(() => ({ data: {} }));
   const firstRow = getResp.data.values && getResp.data.values[0];
-  if (Array.isArray(firstRow) && firstRow.length) return;
+  const needWrite =
+    !Array.isArray(firstRow) ||
+    !firstRow.length ||
+    firstRow.length < COL_COUNT ||
+    String(firstRow[0] || '').toLowerCase() === 'timestamp_iso';
+  if (!needWrite) return;
   await sheets.spreadsheets.values.update({
     spreadsheetId,
-    range: `'${tabName.replace(/'/g, "''")}'!A1`,
+    range: `'${esc}'!A1`,
     valueInputOption: 'RAW',
     requestBody: { values: [HEADERS] },
   });
@@ -307,12 +337,15 @@ async function appendLeadRow(lead, recaptcha) {
     safeCell(lead.mode),
     safeCell(recaptcha && recaptcha.score != null ? recaptcha.score : ''),
     safeCell(recaptcha && recaptcha.action ? recaptcha.action : ''),
+    'Nouveau',
+    '',
+    '',
   ];
 
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: a1Range(tabName, 'L'),
-    valueInputOption: 'USER_ENTERED',
+    range: a1Range(tabName, endColumnLetter()),
+    valueInputOption: 'RAW',
     insertDataOption: 'INSERT_ROWS',
     requestBody: { values: [row] },
   });

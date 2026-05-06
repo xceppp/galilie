@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- script-src inclut 'unsafe-inline' pour onclick (onglets) et compat JSON-LD ; nonce sur scripts marqués -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-GS2026' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.recaptcha.net/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com https://www.google.com/recaptcha/ https://www.recaptcha.net https://www.recaptcha.net/recaptcha/ https://www.tiktok.com https://www.youtube.com https://www.instagram.com https://instagram.com; connect-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://instagram.com https://*.cdninstagram.com https://*.fbcdn.net; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
+  <!-- CSP statique : unsafe-inline pour JSON-LD et handlers légers sur le site -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.recaptcha.net/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; frame-src https://www.google.com https://www.google.com/recaptcha/ https://www.recaptcha.net https://www.recaptcha.net/recaptcha/ https://www.tiktok.com https://www.youtube.com https://www.instagram.com https://instagram.com; connect-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://instagram.com https://*.cdninstagram.com https://*.fbcdn.net; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;">
   <link rel="preconnect" href="https://www.google.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.recaptcha.net" crossorigin>
@@ -33,8 +33,7 @@
   <meta property="og:url" content="https://www.galiliescholar.ma/">
   <meta property="og:title" content="Galilie Scholar — Votre Réussite Commence Ici | Meknès 2026">
   <meta property="og:description" content="Cours de soutien BAC, concours emploi public, classes préparatoires et capsules personnalisées. 97% de réussite. Inscriptions 2026 ouvertes — places limitées.">
-  <!-- Remplacer par une vraie image JPG 1200×630 à assets/og-image.jpg pour de meilleurs aperçus WhatsApp / Facebook -->
-  <meta property="og:image" content="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22630%22%3E%3Crect%20width%3D%221200%22%20height%3D%22630%22%20fill%3D%22%230D2818%22%2F%3E%3Ctext%20x%3D%22600%22%20y%3D%22280%22%20font-family%3D%22serif%22%20font-size%3D%2264%22%20fill%3D%22%23C9A84C%22%20text-anchor%3D%22middle%22%3EGalilie%20Scholar%3C%2Ftext%3E%3Ctext%20x%3D%22600%22%20y%3D%22360%22%20font-family%3D%22sans-serif%22%20font-size%3D%2228%22%20fill%3D%22%23C8E6C9%22%20text-anchor%3D%22middle%22%3ECentre%20de%20Formation%20%E2%80%94%20Mekn%C3%A8s%202026%3C%2Ftext%3E%3Ctext%20x%3D%22600%22%20y%3D%22430%22%20font-family%3D%22sans-serif%22%20font-size%3D%2222%22%20fill%3D%22%23E2C06A%22%20text-anchor%3D%22middle%22%3E97%25%20de%20r%C3%A9ussite%20%C2%B7%20Inscriptions%20ouvertes%3C%2Ftext%3E%3C%2Fsvg%3E">
+  <meta property="og:image" content="https://www.galiliescholar.ma/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Galilie Scholar">
@@ -44,10 +43,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Galilie Scholar — Cours de Soutien & Concours | Meknès">
   <meta name="twitter:description" content="97% de réussite. Cours BAC, emploi public, classes prépa. Capsules personnalisées. Inscriptions 2026 ouvertes.">
-  <meta name="twitter:image" content="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22630%22%3E%3Crect%20width%3D%221200%22%20height%3D%22630%22%20fill%3D%22%230D2818%22%2F%3E%3Ctext%20x%3D%22600%22%20y%3D%22280%22%20font-family%3D%22serif%22%20font-size%3D%2264%22%20fill%3D%22%23C9A84C%22%20text-anchor%3D%22middle%22%3EGalilie%20Scholar%3C%2Ftext%3E%3Ctext%20x%3D%22600%22%20y%3D%22360%22%20font-family%3D%22sans-serif%22%20font-size%3D%2228%22%20fill%3D%22%23C8E6C9%22%20text-anchor%3D%22middle%22%3ECentre%20de%20Formation%20%E2%80%94%20Mekn%C3%A8s%202026%3C%2Ftext%3E%3Ctext%20x%3D%22600%22%20y%3D%22430%22%20font-family%3D%22sans-serif%22%20font-size%3D%2222%22%20fill%3D%22%23E2C06A%22%20text-anchor%3D%22middle%22%3E97%25%20de%20r%C3%A9ussite%20%C2%B7%20Inscriptions%20ouvertes%3C%2Ftext%3E%3C%2Fsvg%3E">
+  <meta name="twitter:image" content="https://www.galiliescholar.ma/assets/og-image.jpg">
 
   <!-- Schema.org Structured Data — Local Business -->
-  <script type="application/ld+json" nonce="GS2026">
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
@@ -707,15 +706,16 @@
   </div>
 </section>
 
-    <!-- TESTIMONIALS — cartes horizontales (scroll) -->
-    <section id="temoignages" class="testi-scroll reveal">
+    <!-- TESTIMONIALS — carousel spotlight -->
+    <section id="temoignages" class="testi-scroll testi-spotlight reveal">
       <div class="tB-wrap">
         <div class="tB-header">
           <div class="s-label">Témoignages</div>
           <h2 class="tB-h2">Ils ont <em>réussi. <sub>Vraiment.</sub></em></h2>
     </div>
-        <div class="tB-track" id="testiScrollTrack">
-          <article class="tB-card wide">
+        <div class="tB-spotlight-outer" id="testiSpotOuter" aria-roledescription="carousel">
+          <div class="tB-track testi-spot-stage" id="testiScrollTrack">
+          <article class="tB-card">
             <div class="tB-card-accent" aria-hidden="true"></div>
             <div class="tB-card-body">
               <div class="tB-stars" aria-label="5 sur 5"><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span><span class="tB-star">★</span></div>
@@ -777,6 +777,7 @@
             </div>
           </article>
         </div>
+        </div>
         <div class="tB-nav" aria-label="Navigation témoignages">
           <button type="button" class="tB-arrow" data-testi-prev aria-label="Témoignage précédent">‹</button>
           <div class="tB-dots" role="tablist" aria-label="Témoignages">
@@ -792,12 +793,13 @@
 </section>
 
     <!-- OFFERS -->
-    <section class="offers">
+    <section class="offers offers-spotlight">
       <div class="container">
         <div class="s-label">Offres</div>
         <h2 class="reveal">Programmes les <em>plus demandés</em></h2>
 
-        <div class="offers-grid">
+        <div class="offSpot-outer" id="offSpotOuter" aria-roledescription="carousel">
+        <div class="offers-grid offSpot-stage" id="offersSpotStage">
           <div class="card reveal">
             <div class="offer-top">
     <div>
@@ -861,15 +863,16 @@
             <div class="offer-cta">
               <a class="btn btn-ghost" href="#contact">Échanger avec un conseiller →</a>
               <div class="micro-urgency">⚡ Places limitées pour 2026</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        </div>
 
         <div class="offers-nav" aria-label="Navigation offres">
           <button type="button" class="offers-arrow" data-offer-prev aria-label="Offre précédente">‹</button>
           <div class="offers-dots" aria-label="Navigation offres">
-            <button type="button" class="offers-dot is-active" data-offer-dot="0" aria-label="Offre 1"></button>
-            <button type="button" class="offers-dot" data-offer-dot="1" aria-label="Offre 2"></button>
+            <button type="button" class="offers-dot" data-offer-dot="0" aria-label="Offre 1"></button>
+            <button type="button" class="offers-dot is-active" data-offer-dot="1" aria-label="Offre 2"></button>
             <button type="button" class="offers-dot" data-offer-dot="2" aria-label="Offre 3"></button>
       </div>
           <button type="button" class="offers-arrow" data-offer-next aria-label="Offre suivante">›</button>
@@ -1156,7 +1159,8 @@
                 src="https://www.instagram.com/reel/DWFAF7-DnYP/embed"
                 allowfullscreen
                 loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                referrerpolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
             </div>
             <div class="ig-reel-frame">
               <iframe
@@ -1164,7 +1168,8 @@
                 src="https://www.instagram.com/reel/DX7TRhOO0dB/embed"
                 allowfullscreen
                 loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                referrerpolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
             </div>
             <div class="ig-reel-frame">
               <iframe
@@ -1172,7 +1177,8 @@
                 src="https://www.instagram.com/reel/DVES5McDGBY/embed"
                 allowfullscreen
                 loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                referrerpolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
             </div>
           </div>
 
@@ -1219,7 +1225,8 @@
                 src="https://www.tiktok.com/embed/v2/7635627318114880786"
                 allowfullscreen
                 loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                referrerpolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
             </div>
             <div class="tt-reel-frame">
               <iframe
@@ -1227,7 +1234,8 @@
                 src="https://www.tiktok.com/embed/v2/7635438301570223368"
                 allowfullscreen
                 loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                referrerpolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
             </div>
             <div class="tt-reel-frame">
               <iframe
@@ -1235,7 +1243,8 @@
                 src="https://www.tiktok.com/embed/v2/7633478113959103762"
                 allowfullscreen
                 loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                referrerpolicy="strict-origin-when-cross-origin"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
             </div>
           </div>
 
@@ -1420,9 +1429,9 @@
             <div class="foot-col foot-col--legal">
               <div class="foot-h">Légal</div>
               <div class="foot-links">
-                <a href="#">Mentions légales</a>
-                <a href="#">Confidentialité</a>
-                <a href="#">CGU</a>
+                <a href="mentions-legales.html">Mentions légales</a>
+                <a href="confidentialite.html">Confidentialité</a>
+                <a href="cgu.html">CGU</a>
               </div>
             </div>
           </nav>
@@ -1436,10 +1445,12 @@
             </div>
             <div class="map-embed" aria-label="Carte Google Maps">
               <iframe
+                title="Carte — Galilie Scholar, Meknès"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d988!2d-5.575118!3d33.858861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDUxJzMxLjkiTiA1wrAzNCczMC40Ilc!5e1!3m2!1sfr!2sma!4v1"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen>
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin">
               </iframe>
             </div>
           </div>
@@ -1464,46 +1475,6 @@
     </svg>
   </a>
 
-  <script src="main.js" defer nonce="GS2026"></script>
-
-  <!--
-  ==============================================================================
-  GOOGLE SHEET CONNECTION — SETUP IN 3 STEPS
-  ==============================================================================
-
-  STEP 1 — Create a Google Sheet with these column headers in row 1:
-  Timestamp | Prénom | Nom | Téléphone | Email | Niveau | Filière | Service | Mode | Statut
-
-  STEP 2 — Go to Extensions > Apps Script and paste this function:
-
-  function doPost(e) {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data  = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      data.timestamp  || '',
-      data.prenom     || '',
-      data.nom        || '',
-      data.telephone  || '',
-      data.email      || '',
-      data.niveau     || '',
-      data.filiere    || '',
-      data.service    || '',
-      data.mode       || '',
-      'À contacter'    // Statut par défaut
-    ]);
-    return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  STEP 3 — Click Deploy > New Deployment > Web App
-    - Execute as: Me
-    - Who has access: Anyone
-    - Copy the Web App URL
-    - Frontend now posts to /api/lead (Vercel serverless endpoint)
-
-  DONE — every form submission will now appear as a new row in your Google Sheet.
-  ==============================================================================
-  -->
+  <script src="main.js" defer></script>
 </body>
 </html>

@@ -1,14 +1,46 @@
 /* Galilie Scholar — site scripts (linked from index.html; DOM-ready at end of <body>) */
 
-// Google Sheet connection
-// ⚠️ REQUIRED: Replace with your Google Apps Script Web App URL before launch
+/* ── 1. CONSTANTS ─────────────────────────────────────── */
 const LEAD_API_URL = "/api/lead";
 const RECAPTCHA_SITE_KEY = "6LcTitwsAAAAAKuFlJuCIyeV1ugZkUxNa3GJsdye";
 
 let lastSubmitTime = 0;
 const SUBMIT_COOLDOWN_MS = 8000;
 
-// Navbar shadow on scroll
+/** translateX (px) actuel sur un élément transformé (matrix / matrix3d). */
+function readStageTranslateX(stage) {
+  const tr = window.getComputedStyle(stage).transform;
+  if (!tr || tr === 'none') return 0;
+  const m = tr.match(/matrix(?:3d)?\(([^)]+)\)/);
+  if (!m) return 0;
+  const v = m[1].split(',').map(Number.parseFloat);
+  return v.length === 6 ? v[4] : v[12] || 0;
+}
+
+/** Centre la carte active dans outer (translateX sur stage). Même logique mobile / desktop. */
+function centerSpotlightStage(outer, stage, activeEl) {
+  if (!outer || !stage || !activeEl) return;
+
+  const apply = () => {
+    const tx = readStageTranslateX(stage);
+    const o = outer.getBoundingClientRect();
+    const c = activeEl.getBoundingClientRect();
+    const outerMid = o.left + o.width / 2;
+    const cardMid = c.left + c.width / 2;
+    const next = tx + (outerMid - cardMid);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    stage.style.transition = reduce
+      ? 'none'
+      : 'transform 0.48s cubic-bezier(0.4, 0, 0.2, 1)';
+    stage.style.transform = `translateX(${next}px)`;
+    stage.style.willChange = 'transform';
+  };
+
+  requestAnimationFrame(() => requestAnimationFrame(apply));
+  window.setTimeout(apply, 480);
+}
+
+/* ── 2. SCROLL & NAV ──────────────────────────────────── */
 const navbar = document.getElementById('navbar');
 function onScroll(){
   if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 20);
@@ -29,7 +61,7 @@ if (floatCta) {
   });
 }
 
-// Drawer
+/* ── 3. DRAWER ────────────────────────────────────────── */
 const drawer = document.getElementById('drawer');
 const overlay = document.getElementById('overlay');
 const hamb = document.getElementById('hamb');
@@ -49,7 +81,7 @@ drawerClose.addEventListener('click', closeDrawer);
 overlay.addEventListener('click', closeDrawer);
 drawer.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeDrawer));
 
-// Custom cursor (desktop only)
+/* ── 4. CUSTOM CURSOR ─────────────────────────────────── */
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
 let mx = -100, my = -100, rx = -100, ry = -100;
@@ -66,7 +98,7 @@ document.addEventListener('mousemove', (e) => {
   requestAnimationFrame(follow);
 })();
 
-// Scroll reveal + gold lines
+/* ── 5. SCROLL REVEAL ─────────────────────────────────── */
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
@@ -76,14 +108,14 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// Keep social section before FAQ in page flow
+/* ── 6. SOCIAL SECTION POSITIONING ───────────────────── */
 const socialSection = document.getElementById('social');
 const faqSection = document.getElementById('faq');
 if (socialSection && faqSection && faqSection.parentNode) {
   faqSection.parentNode.insertBefore(socialSection, faqSection);
 }
 
-// FAQ accordion (one open at a time)
+/* ── 7. FAQ ───────────────────────────────────────────── */
 const faqItems = Array.from(document.querySelectorAll('.faq-item'));
 faqItems.forEach((item) => {
   const btn = item.querySelector('.faq-q');
@@ -94,7 +126,7 @@ faqItems.forEach((item) => {
   });
 });
 
-// ── SPOTS COUNTER (localStorage) ─────────────────────────────────────
+/* ── 8. SPOTS COUNTER ─────────────────────────────────── */
 const SPOTS_KEY   = 'gs_spots';
 const SPOTS_TIME  = 'gs_spots_ts';
 const RESET_HOURS = 72;
@@ -130,7 +162,7 @@ if (spotsLeft <= 5) {
   }
 }
 
-// ── COUNTDOWN TIMER ───────────────────────────────────────────────────
+/* ── 9. COUNTDOWN TIMER ───────────────────────────────── */
 function updateCountdown() {
   const target = new Date('2026-09-01T00:00:00').getTime();
   const now    = Date.now();
@@ -152,7 +184,7 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ── FORM SUBMIT (Google Sheet via Apps Script) ───────────────────────
+/* ── 10. FORM — DEPENDENT SELECTS ────────────────────── */
 const leadForm = document.getElementById('leadForm');
 const formWrap = document.getElementById('formWrap');
 const successState = document.getElementById('successState');
@@ -240,16 +272,14 @@ if (niveauSelect){
 function val(id) {
   const el = document.getElementById(id);
   if (!el) return '';
+  /* Pas d’entités HTML ici : les valeurs vont en JSON ; le résumé utilise textContent. */
   return String(el.value || '')
     .trim()
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;')
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
     .slice(0, 500);
 }
 
+/* ── 11. FORM — VALIDATION & ERRORS ──────────────────── */
 function clearLeadSubmitError() {
   const box = document.getElementById('leadSubmitError');
   if (!box) return;
@@ -297,6 +327,7 @@ function showSuccess(){
   if (successState) successState.style.display = 'block';
 }
 
+/* ── 12. FORM — RECAPTCHA ─────────────────────────────── */
 let recaptchaScriptPromise = null;
 function isRecaptchaConfigured() {
   return Boolean(
@@ -384,7 +415,7 @@ async function getRecaptchaToken(action = 'lead_submit') {
   }
 })();
 
-// Form progress + multi-step wizard
+/* ── 13. FORM — WIZARD ────────────────────────────────── */
 const formFields = ['prenom','nom','telephone','email','niveau','filiere','service','mode'];
 const wizardStepRules = {
   1: [
@@ -519,6 +550,7 @@ if (leadForm) {
     });
   });
 
+  /* ── 14. FORM — SUBMIT HANDLER ────────────────────────── */
   leadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
@@ -617,11 +649,21 @@ if (leadForm) {
         } else if (code === 'recaptcha_failed') {
           msg =
             'Vérification de sécurité non validée (score faible ou configuration). Réessayez.';
-        } else if (code === 'server_error' && apiJson.detail) {
+        } else if (code === 'invalid_json' || code === 'unsupported_media_type') {
+          msg = 'Rechargez la page et réessayez.';
+        } else if (
+          code &&
+          /^invalid_|^missing_/.test(code)
+        ) {
           msg =
-            'Erreur serveur : ' +
-            String(apiJson.detail).slice(0, 220) +
-            (String(apiJson.detail).length > 220 ? '…' : '');
+            'Données invalides ou incomplètes. Vérifiez le formulaire ou rechargez la page.';
+        } else if (code === 'server_error') {
+          msg =
+            apiJson.detail
+              ? 'Erreur serveur : ' +
+                String(apiJson.detail).slice(0, 220) +
+                (String(apiJson.detail).length > 220 ? '…' : '')
+              : 'Une erreur serveur est survenue. Réessayez dans quelques instants.';
         }
         showLeadSubmitError(msg);
         return;
@@ -637,7 +679,7 @@ if (leadForm) {
   });
 }
 
-// Programmes — onglets (#svcLayoutRoot + services-layout.css)
+/* ── 15. PROGRAMMES TABS ──────────────────────────────── */
 (function initSvcLayout() {
   const root = document.getElementById('svcLayoutRoot');
   if (!root) return;
@@ -657,7 +699,7 @@ if (leadForm) {
     }
   };
 
-  /* CSP (nonce + script-src) bloque souvent onclick — branchement explicite */
+  /* CSP peut bloquer onclick inline — branchement explicite sur les onglets */
   root.querySelectorAll('.tab-btn[data-svc-tab]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const key = btn.getAttribute('data-svc-tab');
@@ -684,7 +726,7 @@ if (leadForm) {
   applyConcoursHash();
 })();
 
-// Réseaux sociaux — onglets (#social, sans onclick inline)
+/* ── 16. SOCIAL TABS ──────────────────────────────────── */
 (function initSocialTabs() {
   const root = document.getElementById('social');
   if (!root) return;
@@ -716,7 +758,7 @@ if (leadForm) {
   }
 })();
 
-// Nav active state (sections + carte Concours)
+/* ── 17. NAV ACTIVE STATE ─────────────────────────────── */
 const navObserveEls = [
   ...document.querySelectorAll('section[id]'),
   document.getElementById('concours')
@@ -736,42 +778,123 @@ if (navObserveEls.length && navScrollLinks.length) {
   navObserveEls.forEach((el) => navIo.observe(el));
 }
 
-// Témoignages — scroll horizontal + points + glisser-déposer (desktop)
-(function initTestiScrollTrack() {
+/* ── 18. TESTIMONIALS — spotlight carousel + swipe ───── */
+(function initTestiSpotlight() {
+  const outer = document.getElementById('testiSpotOuter');
   const track = document.getElementById('testiScrollTrack');
   const root = document.getElementById('temoignages');
   if (!track || !root || !root.classList.contains('testi-scroll')) return;
+  const useSpotlight = root.classList.contains('testi-spotlight');
 
-  const dots = () => Array.from(root.querySelectorAll('.tB-dot'));
+  const dotsAll = Array.from(root.querySelectorAll('.tB-dot'));
   const prevBtn = root.querySelector('[data-testi-prev]');
   const nextBtn = root.querySelector('[data-testi-next]');
-  const cards = () => Array.from(track.querySelectorAll('.tB-card'));
-  let activeIdx = 0;
+  const cardsEl = Array.from(track.querySelectorAll('.tB-card'));
+  if (!cardsEl.length || !dotsAll.length) return;
+
+  let activeIdx = Math.min(
+    dotsAll.findIndex((d) => d.classList.contains('on')),
+    cardsEl.length - 1
+  );
+  if (activeIdx < 0) activeIdx = 0;
 
   function setDotsActive(idx) {
-    dots().forEach((d, i) => {
+    dotsAll.forEach((d, i) => {
       const on = i === idx;
       d.classList.toggle('on', on);
       d.setAttribute('aria-selected', on ? 'true' : 'false');
     });
   }
 
-  function scrollToCardCentered(card) {
-    if (!card) return;
-    const target =
-      card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
-    track.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+  function applySpotStates(idx) {
+    const n = cardsEl.length;
+    cardsEl.forEach((card, i) => {
+      card.classList.remove('spot-active', 'spot-near');
+      const d = Math.abs(i - idx);
+      if (i === idx) card.classList.add('spot-active');
+      else if (d === 1) card.classList.add('spot-near');
+    });
+    setDotsActive(idx);
   }
 
+  function recenterTesti() {
+    const el = cardsEl[activeIdx];
+    if (el) centerSpotlightStage(outer, track, el);
+  }
+
+  function setActive(rawIdx) {
+    const n = cardsEl.length;
+    if (!n) return;
+    activeIdx = ((rawIdx % n) + n) % n;
+    if (useSpotlight && outer) {
+      applySpotStates(activeIdx);
+      recenterTesti();
+    } else {
+      const card = cardsEl[activeIdx];
+      if (card && track.scrollTo) {
+        const left =
+          card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+        track.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+      }
+      setDotsActive(activeIdx);
+    }
+  }
+
+  if (useSpotlight && outer) {
+    dotsAll.forEach((dot, i) => {
+      dot.addEventListener('click', () => setActive(i));
+    });
+    cardsEl.forEach((card, i) =>
+      card.addEventListener('click', () => {
+        if (!card.classList.contains('spot-active')) setActive(i);
+      })
+    );
+    if (prevBtn) prevBtn.addEventListener('click', () => setActive(activeIdx - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIdx + 1));
+
+    let sx = 0;
+    let sy = 0;
+    outer.addEventListener(
+      'touchstart',
+      (e) => {
+        sx = e.touches[0].clientX;
+        sy = e.touches[0].clientY;
+      },
+      { passive: true }
+    );
+    outer.addEventListener(
+      'touchend',
+      (e) => {
+        if (!e.changedTouches.length) return;
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.12) {
+          if (dx < 0) setActive(activeIdx + 1);
+          else setActive(activeIdx - 1);
+        }
+      },
+      { passive: true }
+    );
+
+    let resizeT = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeT);
+      resizeT = window.setTimeout(recenterTesti, 120);
+    });
+
+    setActive(activeIdx);
+    return;
+  }
+
+  /** Fallback horizontal scroll carousel (sans .testi-spotlight). */
   function syncDotsFromScroll() {
-    const c = cards();
-    if (!c.length) return;
+    if (!cardsEl.length) return;
     const mid = track.scrollLeft + track.clientWidth / 2;
     let best = Infinity;
     let idx = 0;
-    c.forEach((card, i) => {
-      const cardMid = card.offsetLeft + card.offsetWidth / 2;
-      const d = Math.abs(cardMid - mid);
+    cardsEl.forEach((card, i) => {
+      const cm = card.offsetLeft + card.offsetWidth / 2;
+      const d = Math.abs(cm - mid);
       if (d < best) {
         best = d;
         idx = i;
@@ -782,41 +905,31 @@ if (navObserveEls.length && navScrollLinks.length) {
   }
 
   let scrollRaf = 0;
-  track.addEventListener('scroll', () => {
-    if (scrollRaf) return;
-    scrollRaf = requestAnimationFrame(() => {
-      scrollRaf = 0;
-      syncDotsFromScroll();
-    });
-  }, { passive: true });
+  track.addEventListener(
+    'scroll',
+    () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(() => {
+        scrollRaf = 0;
+        syncDotsFromScroll();
+      });
+    },
+    { passive: true }
+  );
 
-  dots().forEach((dot, i) => {
+  dotsAll.forEach((dot, i) => {
     dot.addEventListener('click', () => {
-      const card = cards()[i];
-      if (card) scrollToCardCentered(card);
+      const c = cardsEl[i];
+      if (c)
+        track.scrollTo({
+          left: Math.max(0, c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2),
+          behavior: 'smooth',
+        });
     });
   });
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      const list = cards();
-      if (!list.length) return;
-      activeIdx = (activeIdx - 1 + list.length) % list.length;
-      const card = list[activeIdx];
-      if (!card) return;
-      scrollToCardCentered(card);
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      const list = cards();
-      if (!list.length) return;
-      activeIdx = (activeIdx + 1) % list.length;
-      const card = list[activeIdx];
-      if (!card) return;
-      scrollToCardCentered(card);
-    });
-  }
+  if (prevBtn) prevBtn.addEventListener('click', () => setActive(activeIdx - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIdx + 1));
 
   let drag = false;
   let startX = 0;
@@ -826,8 +939,12 @@ if (navObserveEls.length && navScrollLinks.length) {
     startX = e.pageX;
     startScroll = track.scrollLeft;
   });
-  track.addEventListener('mouseleave', () => { drag = false; });
-  track.addEventListener('mouseup', () => { drag = false; });
+  track.addEventListener('mouseleave', () => {
+    drag = false;
+  });
+  track.addEventListener('mouseup', () => {
+    drag = false;
+  });
   track.addEventListener('mousemove', (e) => {
     if (!drag) return;
     track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
@@ -836,7 +953,7 @@ if (navObserveEls.length && navScrollLinks.length) {
   syncDotsFromScroll();
 })();
 
-// Lycées AEFE — mobile manual carousel (dots + arrows)
+/* ── 19. LYCÉES CAROUSEL ──────────────────────────────── */
 (function initLyceesMobileCycle() {
   const section = document.getElementById('lycees-francais');
   if (!section) return;
@@ -914,81 +1031,92 @@ if (navObserveEls.length && navScrollLinks.length) {
   }
 })();
 
-// Offres — mobile manual carousel (dots + arrows)
-(function initOffersMobileCycle() {
-  const section = document.querySelector('.offers');
+/* ── 20. OFFRES — spotlight carousel + swipe ─────────── */
+(function initOffersSpotlight() {
+  const section = document.querySelector('.offers.offers-spotlight');
   if (!section) return;
 
-  const grid = section.querySelector('.offers-grid');
-  if (!grid) return;
+  const outer = document.getElementById('offSpotOuter');
+  const grid = document.getElementById('offersSpotStage');
+  if (!grid || !outer) return;
 
   const cards = Array.from(grid.querySelectorAll('.card'));
-  if (cards.length <= 1) return;
+  if (!cards.length) return;
 
   const dots = Array.from(section.querySelectorAll('.offers-dot'));
   const prevBtn = section.querySelector('[data-offer-prev]');
   const nextBtn = section.querySelector('[data-offer-next]');
-  const mobileMq = window.matchMedia('(max-width: 768px)');
-  let activeIdx = 0;
-  let syncRaf = 0;
 
-  function render() {
-    const activeCard = cards[activeIdx];
-    if (activeCard) {
-      const left = activeIdx * grid.clientWidth;
-      grid.scrollTo({ left, behavior: 'smooth' });
-    }
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('is-active', idx === activeIdx);
-    });
+  let activeIdx = dots.findIndex((d) => d.classList.contains('is-active'));
+  if (activeIdx < 0 || activeIdx >= cards.length) {
+    activeIdx = Math.min(1, cards.length - 1);
   }
 
-  function syncActiveFromScroll() {
-    const left = grid.scrollLeft;
-    const width = Math.max(1, grid.clientWidth);
-    activeIdx = Math.round(left / width) % cards.length;
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('is-active', idx === activeIdx);
+  function applySpotStates(idx) {
+    cards.forEach((card, i) => {
+      card.classList.remove('spot-active', 'spot-near');
+      const dist = Math.abs(i - idx);
+      if (i === idx) card.classList.add('spot-active');
+      else if (dist === 1) card.classList.add('spot-near');
     });
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === idx));
   }
 
-  function applyMode() {
-    if (mobileMq.matches) {
-      grid.classList.add('is-mobile-cycle');
-      render();
-    } else {
-      grid.classList.remove('is-mobile-cycle');
-      grid.scrollTo({ left: 0, behavior: 'auto' });
-      dots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === 0));
-    }
+  function recenterOffers() {
+    const el = cards[activeIdx];
+    if (el) centerSpotlightStage(outer, grid, el);
   }
 
-  applyMode();
-  window.addEventListener('resize', applyMode);
-  mobileMq.addEventListener('change', applyMode);
-  grid.addEventListener('scroll', () => {
-    if (syncRaf) return;
-    syncRaf = requestAnimationFrame(() => {
-      syncRaf = 0;
-      syncActiveFromScroll();
-    });
-  }, { passive: true });
-  dots.forEach((dot, idx) => {
-    dot.addEventListener('click', () => {
-      activeIdx = idx;
-      render();
-    });
+  function setActive(rawIdx) {
+    const n = cards.length;
+    if (!n) return;
+    activeIdx = ((rawIdx % n) + n) % n;
+    applySpotStates(activeIdx);
+    recenterOffers();
+  }
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => setActive(i)));
+
+  cards.forEach((card, i) =>
+    card.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t instanceof Element && t.closest('a')) return;
+      if (!card.classList.contains('spot-active')) setActive(i);
+    })
+  );
+
+  if (prevBtn) prevBtn.addEventListener('click', () => setActive(activeIdx - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIdx + 1));
+
+  let sx = 0;
+  let sy = 0;
+  outer.addEventListener(
+    'touchstart',
+    (e) => {
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+  outer.addEventListener(
+    'touchend',
+    (e) => {
+      if (!e.changedTouches.length) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      const dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.12) {
+        if (dx < 0) setActive(activeIdx + 1);
+        else setActive(activeIdx - 1);
+      }
+    },
+    { passive: true }
+  );
+
+  let offResizeT = 0;
+  window.addEventListener('resize', () => {
+    window.clearTimeout(offResizeT);
+    offResizeT = window.setTimeout(recenterOffers, 120);
   });
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      activeIdx = (activeIdx - 1 + cards.length) % cards.length;
-      render();
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      activeIdx = (activeIdx + 1) % cards.length;
-      render();
-    });
-  }
+
+  setActive(activeIdx);
 })();

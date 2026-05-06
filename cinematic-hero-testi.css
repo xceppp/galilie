@@ -512,26 +512,120 @@
   opacity: 0.85;
 }
 
-@media (max-width: 768px) {
-  #temoignages.testi-scroll .tB-track {
-    gap: 0;
-    padding: 10px max(16px, 5vw) 20px;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: max(16px, 5vw);
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    touch-action: auto;
+/* Legacy horizontal scroll témoignages : remplacé par spotlight (.testi-spotlight). */
+
+/* ── Témoignages — centred spotlight carousel ───────────────────────── */
+#temoignages.testi-spotlight .tB-spotlight-outer {
+  position: relative;
+  overflow: hidden;
+  margin-top: 12px;
+  touch-action: pan-y;
+}
+
+#temoignages.testi-spotlight .tB-spotlight-outer::before,
+#temoignages.testi-spotlight .tB-spotlight-outer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(48px, 10vw, 88px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+#temoignages.testi-spotlight .tB-spotlight-outer::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+
+#temoignages.testi-spotlight .tB-spotlight-outer::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+#temoignages.testi-spotlight .tB-track.testi-spot-stage {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: clamp(14px, 3vw, 22px);
+  padding: 20px clamp(52px, 10vw, 100px) 28px;
+  overflow: visible;
+  scroll-snap-type: none;
+  cursor: default;
+  transition: transform 0.48s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+#temoignages.testi-spotlight .tB-track.testi-spot-stage:active {
+  cursor: default;
+}
+
+#temoignages.testi-spotlight .tB-card {
+  width: clamp(268px, 28vw, 320px);
+  scroll-snap-align: unset;
+  transform: scale(0.82);
+  opacity: 0.42;
+  filter: blur(1.6px);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s, box-shadow 0.35s;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#temoignages.testi-spotlight .tB-card.spot-near {
+  transform: scale(0.92);
+  opacity: 0.68;
+  filter: blur(0.45px);
+  z-index: 2;
+}
+
+#temoignages.testi-spotlight .tB-card.spot-active {
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0);
+  border-color: rgba(201, 168, 76, 0.32);
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(155deg, rgba(36, 90, 60, 0.55), var(--s2));
+  cursor: default;
+  z-index: 3;
+}
+
+#temoignages.testi-spotlight .tB-card:hover {
+  transform: scale(0.82);
+  filter: blur(1.6px);
+}
+
+#temoignages.testi-spotlight .tB-card.spot-near:hover {
+  transform: scale(0.92);
+  filter: blur(0.45px);
+}
+
+#temoignages.testi-spotlight .tB-card.spot-active:hover {
+  transform: scale(1);
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #temoignages.testi-spotlight .tB-track.testi-spot-stage {
+    transition: none !important;
   }
 
-  #temoignages.testi-scroll .tB-card,
-  #temoignages.testi-scroll .tB-card.wide {
-    flex: 0 0 100%;
-    width: 100%;
-    max-width: none;
-    min-width: 0;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
+  #temoignages.testi-spotlight .tB-card,
+  #temoignages.testi-spotlight .tB-card.spot-near,
+  #temoignages.testi-spotlight .tB-card.spot-active {
+    transition-duration: 0.15s;
+    filter: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #temoignages.testi-spotlight .tB-track.testi-spot-stage {
+    padding-inline: clamp(44px, 12vw, 72px);
+    gap: 12px;
+  }
+
+  #temoignages.testi-spotlight .tB-card {
+    width: min(286px, calc(100vw - 116px));
   }
 }

@@ -684,6 +684,89 @@ body.bac-cycle-paused .bac-places-strip--cycle .bac-cycle-line{
 .offer--featured{border-color:rgba(201,168,76,0.45)}
 .offer--featured .badge{background:rgba(201,168,76,0.14);border-color:rgba(201,168,76,0.35);color:var(--goldPale)}
 
+/* Offers — centred spotlight carousel */
+.offers.offers-spotlight .offSpot-outer{
+  position:relative;
+  overflow:hidden;
+  margin-top:24px;
+  touch-action:pan-y;
+}
+.offers.offers-spotlight .offSpot-outer::before,
+.offers.offers-spotlight .offSpot-outer::after{
+  content:'';
+  position:absolute;top:0;bottom:0;
+  width:clamp(44px,8vw,80px);z-index:2;pointer-events:none;
+}
+.offers.offers-spotlight .offSpot-outer::before{
+  left:0;
+  background:linear-gradient(to right,var(--bg),transparent);
+}
+.offers.offers-spotlight .offSpot-outer::after{
+  right:0;
+  background:linear-gradient(to left,var(--bg),transparent);
+}
+.offers.offers-spotlight .offers-grid.offSpot-stage{
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  align-items:stretch;
+  gap:clamp(12px,2vw,18px);
+  margin-top:0;
+  overflow:visible;
+  transition:transform .48s cubic-bezier(.4,0,.2,1);
+  transform:translateZ(0);
+}
+.offers.offers-spotlight .offSpot-stage .card{
+  flex-shrink:0;
+  width:min(300px,78vw);
+  margin:0;
+  transform:scale(.82);
+  opacity:.44;
+  filter:blur(1.4px);
+  transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .5s cubic-bezier(.4,0,.2,1),
+    filter .5s cubic-bezier(.4,0,.2,1),border-color .35s,box-shadow .35s;
+  cursor:pointer;
+  z-index:1;
+}
+.offers.offers-spotlight .offSpot-stage .card.spot-near{
+  transform:scale(.91);
+  opacity:.66;
+  filter:blur(.4px);
+  z-index:2;
+}
+.offers.offers-spotlight .offSpot-stage .card.spot-active{
+  transform:scale(1);
+  opacity:1;
+  filter:none;
+  border-color:rgba(201,168,76,.38);
+  box-shadow:0 24px 58px rgba(0,0,0,.4);
+  background:linear-gradient(155deg,rgba(36,90,60,.35),rgba(26,71,49,.92));
+  cursor:default;
+  z-index:3;
+}
+.offers.offers-spotlight .offSpot-stage .card:not(.spot-active):hover .offer-name{color:var(--gold)}
+.offers.offers-spotlight .offers-nav,
+.offers.offers-spotlight .offers-dots{
+  display:flex;
+}
+.offers.offers-spotlight .offers-nav{
+  margin-top:16px;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .offers.offers-spotlight .offSpot-stage{
+    transition:none!important;
+  }
+  .offers.offers-spotlight .offSpot-stage .card,
+  .offers.offers-spotlight .offSpot-stage .card.spot-active{
+    transition-duration:.12s;
+    filter:none!important;
+  }
+}
+
 /* Countdown */
 .countdown-wrap{
   background:var(--s2);
@@ -1287,7 +1370,7 @@ body:has(a:hover) .cursor-ring{
   .feature-concours{grid-template-columns:1fr}
   .steps-connector{display:none}
   .steps-grid{grid-template-columns:1fr 1fr}
-  .offers-grid{grid-template-columns:1fr}
+  .offers:not(.offers-spotlight) .offers-grid{grid-template-columns:1fr}
   .foot-nav-grid{grid-template-columns:1fr 1fr;gap:24px 32px}
   .foot-col--legal{grid-column:1 / -1}
   .section-title{flex-direction:column;align-items:flex-start}
@@ -1398,7 +1481,7 @@ body:has(a:hover) .cursor-ring{
   input, select, textarea{
     font-size:16px !important;
   }
-  .offers-grid.is-mobile-cycle{
+  .offers:not(.offers-spotlight) .offers-grid.is-mobile-cycle{
     display:flex;
     overflow-x:auto;
     overflow-y:hidden;
@@ -1411,8 +1494,8 @@ body:has(a:hover) .cursor-ring{
     scrollbar-width:none;
     touch-action:auto;
   }
-  .offers-grid.is-mobile-cycle::-webkit-scrollbar{display:none}
-  .offers-grid.is-mobile-cycle .card{
+  .offers:not(.offers-spotlight) .offers-grid.is-mobile-cycle::-webkit-scrollbar{display:none}
+  .offers:not(.offers-spotlight) .offers-grid.is-mobile-cycle .card{
     flex:0 0 100%;
     width:100%;
     margin:0;
@@ -1449,6 +1532,9 @@ body:has(a:hover) .cursor-ring{
     background:rgba(255,255,255,.04);
     color:var(--cream);
     font-size:18px;line-height:1;padding:0;cursor:pointer;
+  }
+  .offers.offers-spotlight .offSpot-stage .card{
+    width:min(290px,calc(100vw - 118px));
   }
   .wiz-nav{flex-direction:column}
   .wiz-nav .wiz-back,.wiz-nav .submit{width:100%}
