@@ -313,15 +313,58 @@ async function getRecaptchaToken(action = 'lead_submit') {
   if (!window.grecaptcha || typeof window.grecaptcha.execute !== 'function') {
     throw new Error('reCAPTCHA is unavailable.');
   }
-  return await new Promise((resolve, reject) => {
-    window.grecaptcha.ready(() => {
-      window.grecaptcha
-        .execute(RECAPTCHA_SITE_KEY, { action })
-        .then(resolve)
-        .catch(() => reject(new Error('reCAPTCHA token generation failed.')));
+
+  const runExecute = () =>
+    new Promise((resolve, reject) => {
+      window.grecaptcha.ready(() => {
+        window.grecaptcha
+          .execute(RECAPTCHA_SITE_KEY, { action })
+          .then(resolve)
+          .catch(reject);
+      });
     });
-  });
+
+  try {
+    const token = await runExecute();
+    if (typeof token !== 'string' || !token.trim()) {
+      throw new Error('Empty reCAPTCHA token.');
+    }
+    return token;
+  } catch (firstErr) {
+    await new Promise((r) => setTimeout(r, 450));
+    const token = await runExecute().catch(() => {
+      throw firstErr;
+    });
+    if (typeof token !== 'string' || !token.trim()) {
+      throw firstErr;
+    }
+    return token;
+  }
 }
+
+;(function warmRecaptchaForLeadForm() {
+  if (!isRecaptchaConfigured()) return;
+  const kick = () => {
+    loadRecaptchaScript().catch(() => {});
+  };
+  const contact = document.getElementById('contact');
+  if (contact && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((en) => en.isIntersecting)) return;
+        io.disconnect();
+        kick();
+      },
+      { rootMargin: '320px', threshold: 0 }
+    );
+    io.observe(contact);
+  }
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(kick, { timeout: 6000 });
+  } else {
+    window.setTimeout(kick, 3000);
+  }
+})();
 
 // Form progress + multi-step wizard
 const formFields = ['prenom','nom','telephone','email','niveau','filiere','service','mode'];
