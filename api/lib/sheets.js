@@ -128,6 +128,19 @@ function parseJsonCredentials(jsonText) {
 }
 
 function parseServiceAccount() {
+  const simpleEmail = String(process.env.GOOGLE_CLIENT_EMAIL || '').trim();
+  const simpleKeyRaw = String(process.env.GOOGLE_PRIVATE_KEY || '').trim();
+  const simpleProjectId = String(process.env.GOOGLE_PROJECT_ID || '').trim();
+  if (simpleEmail && simpleKeyRaw) {
+    return {
+      type: 'service_account',
+      project_id: simpleProjectId || undefined,
+      client_email: simpleEmail,
+      private_key: simpleKeyRaw.replace(/\\n/g, '\n'),
+      token_uri: 'https://oauth2.googleapis.com/token',
+    };
+  }
+
   const b64 = String(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS_B64 || '').trim();
   let jsonText = '';
   if (b64) {
