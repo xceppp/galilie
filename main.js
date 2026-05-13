@@ -728,6 +728,25 @@ if (leadForm) {
 
   window.addEventListener('hashchange', applyConcoursHash);
   applyConcoursHash();
+
+  const tabsWrap = root.querySelector('.tabs-nav-wrap');
+  const tabsNav = root.querySelector('.tabs-nav');
+  if (tabsWrap && tabsNav) {
+    const EDGE = 10;
+    function syncTabsScrollHint() {
+      const maxScroll = tabsNav.scrollWidth - tabsNav.clientWidth;
+      const hasOverflow = maxScroll > EDGE;
+      tabsWrap.classList.toggle('tabs-nav-wrap--has-overflow', hasOverflow);
+      const atEnd = hasOverflow && tabsNav.scrollLeft >= maxScroll - EDGE;
+      tabsWrap.classList.toggle('tabs-nav-wrap--at-end', atEnd);
+    }
+    tabsNav.addEventListener('scroll', syncTabsScrollHint, { passive: true });
+    window.addEventListener('resize', syncTabsScrollHint, { passive: true });
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(syncTabsScrollHint).observe(tabsNav);
+    }
+    syncTabsScrollHint();
+  }
 })();
 
 /* ── 16. SOCIAL TABS ──────────────────────────────────── */

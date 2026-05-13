@@ -326,7 +326,8 @@
       <p class="sec-sub">Chaque programme est organisé pour guider l'étudiant vers un objectif précis.</p>
     </div>
 
-    <div class="tabs-nav" role="tablist" aria-label="Nos programmes">
+    <div class="tabs-nav-wrap">
+      <div class="tabs-nav" role="tablist" aria-label="Nos programmes" aria-describedby="tabs-nav-scroll-hint-sr">
       <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-svc-tab="bac">📘 Cours BAC</button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="postbac">🎓 Concours Post-Bac</button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="concours">🏛️ Emploi public</button>
@@ -334,6 +335,13 @@
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="langues">🌐 Langues</button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="coaching">🧠 Coaching</button>
       <button type="button" class="tab-btn" role="tab" aria-selected="false" data-svc-tab="clubs">♟ Clubs</button>
+    </div>
+      <span id="tabs-nav-scroll-hint-sr" class="tabs-nav-sr-hint">Faites défiler la liste horizontalement pour afficher tous les programmes.</span>
+      <div class="tabs-nav-scroll-hint" aria-hidden="true">
+        <svg class="tabs-nav-scroll-hint__svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
 
     <div class="tab-panel active" id="tab-bac">
@@ -839,7 +847,7 @@
               <div class="lycee-logo">
                 <img src="https://lpvm.org/wp-content/uploads/2023/06/logo-LPV-propre-petit.png" alt="Logo officiel — Lycée Paul Valéry Meknès" width="120" height="120" loading="lazy">
     </div>
-              <span class="lycee-tag">Meknès — même ville</span>
+              <span class="lycee-tag">Meknès</span>
               <div class="lycee-name">Lycée Paul Valéry</div>
               <div class="lycee-city">Meknès · Bd Moulay Youssef</div>
               <div class="lycee-aefe">
