@@ -1,0 +1,175 @@
+/* Programmes — navigateur à onglets uniquement (#svcLayoutRoot dans index.html) */
+#svcLayoutRoot{
+  --f1:#0D2818; --f2:#122D1E; --f3:#1A4731; --f4:#245A3C; --jade:#2E7A50;
+  --mint:#C8E6C9; --g:#C9A84C; --gl:#E2C06A; --gp:#F4E5B8;
+  --cr:#F4F9F5; --mu:rgba(200,230,201,.7); --dm:rgba(200,230,201,.42);
+  --ur:#E55A2B; --w:#fff;
+  padding:80px 0 120px;
+  font-family:"DM Sans",system-ui,sans-serif;
+}
+#svcLayoutRoot .container{max-width:1140px;margin:0 auto;padding:0 24px}
+#svcLayoutRoot .sec-intro{margin-bottom:56px}
+#svcLayoutRoot .s-lbl{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--jade);margin-bottom:12px;
+}
+#svcLayoutRoot .s-lbl::before{content:"";width:18px;height:2px;background:var(--g);border-radius:2px;display:block}
+#svcLayoutRoot .sec-h2{
+  font-family:'DM Serif Display',Georgia,serif;
+  font-size:clamp(2rem,3.5vw,2.8rem);font-weight:400;
+  color:var(--w);line-height:1.1;margin-bottom:12px;
+}
+#svcLayoutRoot .sec-h2 em{font-style:italic;color:var(--g)}
+#svcLayoutRoot .sec-sub{font-size:15px;color:var(--mu);line-height:1.8;max-width:560px}
+#svcLayoutRoot .tabs-nav{
+  display:flex;gap:4px;
+  background:rgba(26,71,49,.3);
+  border:1px solid rgba(201,168,76,.1);
+  border-radius:14px;padding:6px;
+  margin-bottom:28px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x pan-y;
+  overscroll-behavior-x:auto;
+  scrollbar-width:none;
+}
+#svcLayoutRoot .tabs-nav::-webkit-scrollbar{display:none}
+#svcLayoutRoot .tab-btn{
+  flex:1;min-width:max-content;
+  padding:10px 18px;border-radius:10px;
+  font-size:12px;font-weight:700;letter-spacing:.04em;
+  background:none;border:none;color:var(--mu);
+  cursor:pointer;transition:all .25s;white-space:nowrap;font-family:inherit;
+}
+#svcLayoutRoot .tab-btn.active{background:var(--f3);color:var(--cr);box-shadow:0 2px 12px rgba(0,0,0,.3)}
+#svcLayoutRoot .tab-btn:hover:not(.active){color:var(--cr);background:rgba(255,255,255,.05)}
+#svcLayoutRoot .tab-panel{display:none}
+#svcLayoutRoot .tab-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+#svcLayoutRoot .tab-left{
+  background:var(--f3);border:1px solid rgba(201,168,76,.14);
+  border-radius:20px;padding:32px;position:relative;overflow:hidden;
+}
+#svcLayoutRoot .tab-left::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(to right,var(--g),var(--jade));
+}
+#svcLayoutRoot .tab-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:rgba(201,168,76,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;margin-bottom:20px;
+}
+#svcLayoutRoot .tab-left h3{
+  font-family:'DM Serif Display',Georgia,serif;
+  font-size:1.8rem;color:var(--w);margin-bottom:12px;line-height:1.15;
+}
+#svcLayoutRoot .tab-left h3 em{font-style:italic;color:var(--g)}
+#svcLayoutRoot .tab-left p{font-size:14px;color:var(--mu);line-height:1.85;margin-bottom:24px}
+#svcLayoutRoot .tab-postbac-names-wrap{
+  margin-bottom:22px;padding:14px 16px;border-radius:12px;
+  background:rgba(13,40,24,.35);border:1px solid rgba(201,168,76,.12);
+}
+#svcLayoutRoot .tab-postbac-names-label{
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gl);margin-bottom:10px;
+}
+#svcLayoutRoot .tab-postbac-names-body{
+  font-size:12px;line-height:1.65;color:var(--mu);
+  column-count:2;column-gap:22px;
+}
+@media(max-width:720px){
+  #svcLayoutRoot .tab-postbac-names-body{column-count:1}
+}
+#svcLayoutRoot .tab-feat-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+#svcLayoutRoot .tab-feat{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mu)}
+#svcLayoutRoot .tab-feat::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--g);flex-shrink:0;
+}
+#svcLayoutRoot .tab-cta{
+  background:var(--g);color:var(--f1);
+  padding:12px 24px;border-radius:10px;
+  font-size:13px;font-weight:800;border:none;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+  transition:all .25s;font-family:inherit;
+}
+#svcLayoutRoot .tab-cta:hover{background:var(--gl);transform:translateY(-2px)}
+#svcLayoutRoot .tab-right{display:flex;flex-direction:column;gap:14px}
+#svcLayoutRoot .tab-kpi{
+  background:var(--f2);border:1px solid rgba(201,168,76,.1);
+  border-radius:14px;padding:20px 22px;
+  display:flex;align-items:center;gap:16px;
+}
+#svcLayoutRoot .tab-kpi-val{
+  font-family:'DM Serif Display',Georgia,serif;
+  font-size:2.4rem;color:var(--g);line-height:1;flex-shrink:0;min-width:80px;
+}
+#svcLayoutRoot .tab-kpi-lbl{font-size:13px;font-weight:700;color:var(--cr);margin-bottom:3px}
+#svcLayoutRoot .tab-kpi-sub{font-size:12px;color:var(--mu)}
+#svcLayoutRoot .tab-modes{background:var(--f2);border:1px solid rgba(201,168,76,.1);border-radius:14px;padding:20px 22px}
+#svcLayoutRoot .tab-mode-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--jade);margin-bottom:14px}
+#svcLayoutRoot .tab-mode-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);
+}
+#svcLayoutRoot .tab-mode-row:last-child{border-bottom:none}
+#svcLayoutRoot .tab-mode-dot{width:8px;height:8px;border-radius:50%;background:var(--g);flex-shrink:0}
+#svcLayoutRoot .tab-mode-text{font-size:13px;color:var(--mu)}
+#svcLayoutRoot .tab-mode-badge{margin-left:auto;background:rgba(201,168,76,.12);color:var(--g);font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px}
+
+@media(max-width:768px){
+  #svcLayoutRoot .tab-panel.active{
+    grid-template-columns:1fr;
+    width:100%;
+    min-width:0;
+  }
+  /* Marquee + cards share one column: children must shrink with the container */
+  #svcLayoutRoot .tab-panel.active > .tab-left,
+  #svcLayoutRoot .tab-panel.active > .tab-right,
+  #svcLayoutRoot .tab-panel.active > .conc-min-marquee-wrap{
+    min-width:0;
+  }
+  /* Match horizontal rhythm with global .container on small screens */
+  #svcLayoutRoot .container{padding-left:14px;padding-right:14px}
+}
+
+#svcLayoutRoot #tab-concours.tab-panel,
+#svcLayoutRoot #tab-postbac.tab-panel{scroll-margin-top:calc(62px + 24px)}
+
+/* Petits écrans — lisibilité onglets, cartes et bandeaux */
+@media(max-width:480px){
+  #svcLayoutRoot{padding:52px 0 64px}
+  #svcLayoutRoot .sec-h2{font-size:clamp(1.45rem,6vw,2rem)}
+  #svcLayoutRoot .tabs-nav{
+    padding:5px;
+    gap:3px;
+    margin-bottom:20px;
+    -webkit-overflow-scrolling:touch;
+  }
+  #svcLayoutRoot .tab-btn{padding:9px 12px;font-size:11px}
+  #svcLayoutRoot .tab-left{padding:20px 16px;border-radius:16px}
+  #svcLayoutRoot .tab-left h3{font-size:clamp(1.2rem,5.2vw,1.55rem)}
+  #svcLayoutRoot .tab-icon{width:48px;height:48px;font-size:22px;margin-bottom:16px;border-radius:12px}
+  #svcLayoutRoot .tab-left p{font-size:13px;margin-bottom:18px}
+  #svcLayoutRoot .tab-postbac-names-wrap{padding:12px 12px}
+  #svcLayoutRoot .tab-postbac-names-body{
+    font-size:11.5px;
+    line-height:1.6;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  #svcLayoutRoot .tab-feat{font-size:12.5px;align-items:flex-start}
+  #svcLayoutRoot .tab-cta{
+    width:100%;
+    box-sizing:border-box;
+    justify-content:center;
+    text-align:center;
+    padding:12px 16px;
+  }
+  #svcLayoutRoot .tab-kpi{padding:16px 14px;gap:12px;flex-wrap:wrap}
+  #svcLayoutRoot .tab-kpi-val{font-size:1.95rem;min-width:0}
+  #svcLayoutRoot .tab-modes{padding:16px 14px}
+  #svcLayoutRoot .tab-mode-text{font-size:12.5px}
+  #svcLayoutRoot .tab-mode-badge{flex-shrink:0}
+}
