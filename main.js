@@ -845,7 +845,7 @@ if (navObserveEls.length && navScrollLinks.length) {
     if (el) centerSpotlightStage(outer, track, el);
   }
 
-  function setActive(rawIdx) {
+  function setActive(rawIdx, fromAuto) {
     const n = cardsEl.length;
     if (!n) return;
     activeIdx = ((rawIdx % n) + n) % n;
@@ -861,6 +861,66 @@ if (navObserveEls.length && navScrollLinks.length) {
       }
       setDotsActive(activeIdx);
     }
+    if (!fromAuto) onTestiUserNav();
+  }
+
+  const TESTI_AUTO_MS = 5500;
+  const TESTI_AUTO_RESUME_MS = 8000;
+  const testiReduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let testiAutoId = 0;
+  let testiResumeT = 0;
+  let testiSectionVisible = false;
+  const testiAutoHost = outer || root;
+
+  function stopTestiAuto() {
+    if (testiAutoId) window.clearInterval(testiAutoId);
+    testiAutoId = 0;
+  }
+
+  function startTestiAuto() {
+    stopTestiAuto();
+    if (testiReduceMq.matches || !testiSectionVisible || cardsEl.length < 2) return;
+    testiAutoId = window.setInterval(() => {
+      setActive(activeIdx + 1, true);
+    }, TESTI_AUTO_MS);
+  }
+
+  function onTestiUserNav() {
+    stopTestiAuto();
+    window.clearTimeout(testiResumeT);
+    testiResumeT = window.setTimeout(startTestiAuto, TESTI_AUTO_RESUME_MS);
+  }
+
+  function wireTestiAutoplay() {
+    const testiIo = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          testiSectionVisible = e.isIntersecting;
+          if (testiSectionVisible) startTestiAuto();
+          else stopTestiAuto();
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -8% 0px' }
+    );
+    testiIo.observe(root);
+
+    testiAutoHost.addEventListener('mouseenter', stopTestiAuto);
+    testiAutoHost.addEventListener('mouseleave', () => {
+      if (testiSectionVisible) startTestiAuto();
+    });
+    testiAutoHost.addEventListener('focusin', stopTestiAuto);
+    testiAutoHost.addEventListener('focusout', () => {
+      window.setTimeout(() => {
+        if (!testiAutoHost.contains(document.activeElement) && testiSectionVisible) {
+          startTestiAuto();
+        }
+      }, 80);
+    });
+
+    testiReduceMq.addEventListener('change', () => {
+      if (testiReduceMq.matches) stopTestiAuto();
+      else if (testiSectionVisible) startTestiAuto();
+    });
   }
 
   if (useSpotlight && outer) {
@@ -898,6 +958,8 @@ if (navObserveEls.length && navScrollLinks.length) {
       },
       { passive: true }
     );
+    outer.addEventListener('touchstart', stopTestiAuto, { passive: true });
+    outer.addEventListener('touchend', onTestiUserNav, { passive: true });
 
     let resizeT = 0;
     window.addEventListener('resize', () => {
@@ -905,7 +967,8 @@ if (navObserveEls.length && navScrollLinks.length) {
       resizeT = window.setTimeout(recenterTesti, 120);
     });
 
-    setActive(activeIdx);
+    setActive(activeIdx, true);
+    wireTestiAutoplay();
     return;
   }
 
@@ -972,8 +1035,13 @@ if (navObserveEls.length && navScrollLinks.length) {
     if (!drag) return;
     track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
   });
+  track.addEventListener('mousedown', stopTestiAuto);
+  track.addEventListener('mouseup', onTestiUserNav);
+  track.addEventListener('touchstart', stopTestiAuto, { passive: true });
+  track.addEventListener('touchend', onTestiUserNav, { passive: true });
 
   syncDotsFromScroll();
+  wireTestiAutoplay();
 })();
 
 /* ── 19. LYCÉES CAROUSEL ──────────────────────────────── */
