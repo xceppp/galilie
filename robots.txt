@@ -2,6 +2,5 @@ User-agent: *
 Allow: /
 
 Disallow: /api/
-Disallow: /nc-preview.html
 
 Sitemap: https://www.ncconsulting.ma/sitemap.xml
