@@ -1,0 +1,84 @@
+/* NC Consulting — styles du formulaire multi-étapes (wizard) et états.
+   Conserve les IDs/classes attendus par main.js. Thème clair premium. */
+
+.form-topline{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-lt),transparent)}
+.form-pad{padding:28px 26px}
+@media(max-width:560px){.form-pad{padding:22px 18px}}
+
+/* Wizard header */
+.wiz-head{display:flex;align-items:center;gap:8px;margin-bottom:22px}
+.wiz-step{display:flex;align-items:center;gap:9px}
+.wiz-dot{width:30px;height:30px;border-radius:50%;background:var(--pearl);border:1px solid var(--line);color:var(--ink-dim);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:all .3s}
+.wiz-dot.active{background:var(--gold);border-color:var(--gold);color:#1a1408;box-shadow:0 6px 16px rgba(201,162,75,.3)}
+.wiz-dot.done{background:var(--ok);border-color:var(--ok);color:#fff}
+.wiz-lbl{font-size:12px;font-weight:600;color:var(--ink-dim);transition:color .3s}
+.wiz-lbl.active{color:var(--charcoal)}
+.wiz-line{flex:1;height:2px;background:var(--line);border-radius:2px;position:relative;overflow:hidden}
+.wiz-line.done::after{content:"";position:absolute;inset:0;background:var(--gold)}
+@media(max-width:560px){.wiz-lbl{display:none}}
+
+/* Panels */
+.wiz-panel{display:none;animation:fadeIn .35s ease}
+.wiz-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.wiz-title{font-family:"Fraunces",serif;font-size:1.15rem;font-weight:600;color:var(--charcoal)}
+.wiz-sub{font-size:12.5px;color:var(--ink-dim);margin-top:4px;margin-bottom:14px}
+
+/* Fields */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:600;color:var(--ink-dim)}
+.field input,.field select{
+  width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--line);background:var(--white);
+  color:var(--ink);font-size:15px;transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus,.field select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.14)}
+.field input::placeholder{color:var(--steel)}
+.fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.fgrid2{grid-template-columns:1fr}}
+
+/* Field error */
+.field-error{color:var(--ur);font-size:12px;margin-top:6px}
+.field.invalid input,.field.invalid select{border-color:var(--ur);box-shadow:0 0 0 3px rgba(224,91,59,.12)}
+.lead-submit-error{background:rgba(224,91,59,.08);border:1px solid rgba(224,91,59,.24);border-radius:10px;padding:10px 12px;margin-top:12px}
+
+/* Buttons */
+.submit{
+  margin-top:16px;width:100%;border:none;border-radius:11px;background:var(--gold);color:#1a1408;
+  padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+  transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 10px 26px rgba(201,162,75,.3);
+}
+.submit:hover{transform:translateY(-2px);background:var(--gold-lt);box-shadow:0 14px 34px rgba(201,162,75,.4)}
+.submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.wiz-nav{display:flex;align-items:center;gap:10px;margin-top:14px}
+.wiz-nav .wiz-next{flex:1;margin-top:0}
+.wiz-back{
+  border:1px solid var(--line);border-radius:11px;background:var(--white);color:var(--ink-dim);
+  padding:12px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:border-color .2s,color .2s;
+}
+.wiz-back:hover{border-color:var(--gold);color:var(--charcoal)}
+
+/* Summary */
+.wiz-summary{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--pearl);padding:12px 14px}
+.wiz-row{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;line-height:1.7;padding:3px 0}
+.wiz-row span{color:var(--ink-dim)}
+.wiz-row strong{color:var(--charcoal);font-weight:700;text-align:right}
+
+/* Progress */
+.form-progress{margin-top:14px;height:7px;border-radius:999px;background:var(--line);overflow:hidden}
+.form-progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-lt));transition:width .4s ease}
+.form-progress-label{font-size:11px;color:var(--ink-dim);margin-top:6px}
+
+/* Honeypot */
+.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+
+/* Locknote */
+.locknote{margin-top:12px;font-size:10.5px;color:var(--steel);line-height:1.6}
+.locknote a{color:var(--gold-deep);text-decoration:underline;text-underline-offset:2px}
+.locknote a:hover{color:var(--gold)}
+
+/* Success */
+.success{display:none;padding:40px 26px;text-align:center}
+.success.show{display:block;animation:fadeIn .4s ease}
+.success .ok{width:56px;height:56px;border-radius:50%;background:rgba(58,122,82,.14);border:1px solid rgba(58,122,82,.4);color:var(--ok);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;margin:0 auto 16px}
+.success h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.4rem;color:var(--charcoal)}
+.success p{margin-top:8px;color:var(--ink-dim);font-size:14px;line-height:1.8}

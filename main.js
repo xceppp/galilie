@@ -76,10 +76,10 @@ function closeDrawer(){
   overlay.classList.remove('open');
   document.body.style.overflow = '';
 }
-hamb.addEventListener('click', openDrawer);
-drawerClose.addEventListener('click', closeDrawer);
-overlay.addEventListener('click', closeDrawer);
-drawer.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeDrawer));
+if (hamb) hamb.addEventListener('click', openDrawer);
+if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+if (overlay) overlay.addEventListener('click', closeDrawer);
+if (drawer) drawer.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeDrawer));
 
 window.addEventListener('resize', () => {
   if (drawer && !drawer.classList.contains('open')) document.body.style.overflow = '';
@@ -88,19 +88,21 @@ window.addEventListener('resize', () => {
 /* ── 4. CUSTOM CURSOR ─────────────────────────────────── */
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
-let mx = -100, my = -100, rx = -100, ry = -100;
-document.addEventListener('mousemove', (e) => {
-  mx = e.clientX; my = e.clientY;
-  cursorDot.style.left = mx + 'px';
-  cursorDot.style.top = my + 'px';
-});
-(function follow(){
-  rx += (mx - rx) * 0.18;
-  ry += (my - ry) * 0.18;
-  cursorRing.style.left = rx + 'px';
-  cursorRing.style.top = ry + 'px';
-  requestAnimationFrame(follow);
-})();
+if (cursorDot && cursorRing) {
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  document.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    cursorDot.style.left = mx + 'px';
+    cursorDot.style.top = my + 'px';
+  });
+  (function follow(){
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    cursorRing.style.left = rx + 'px';
+    cursorRing.style.top = ry + 'px';
+    requestAnimationFrame(follow);
+  })();
+}
 
 /* ── 5. SCROLL REVEAL ─────────────────────────────────── */
 const revealObserver = new IntersectionObserver((entries) => {

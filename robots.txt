@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 
 Disallow: /api/
+Disallow: /nc-preview.html
 
-Sitemap: https://www.galiliescholar.ma/sitemap.xml
+Sitemap: https://www.ncconsulting.ma/sitemap.xml
