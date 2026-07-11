@@ -47,41 +47,12 @@
     }, 22);
   }
   var counters = document.querySelectorAll('.nc-count');
-  var heroCounters = document.querySelectorAll('.nc-hero .nc-count');
   var hero = document.querySelector('.nc-hero');
-  var splash = document.getElementById('ncSplash');
-  var mobileSplash = window.matchMedia('(max-width:768px)').matches;
-  var splashActive = document.documentElement.classList.contains('nc-splash-active');
-
-  function startHeroCounters() {
-    heroCounters.forEach(function (el) {
-      if (!el.dataset.counted) {
-        el.dataset.counted = '1';
-        runCount(el);
-      }
-    });
-  }
-
-  function finishSplash() {
-    document.documentElement.classList.remove('nc-splash-active');
-    if (splash) splash.remove();
-    startHeroCounters();
-  }
-
-  if (splash && mobileSplash) {
-    var splashHold = reduce ? 700 : 2200;
-    var splashEnd = reduce ? 1000 : 2850;
-    setTimeout(function () { splash.classList.add('is-exit'); }, splashHold);
-    setTimeout(finishSplash, splashEnd);
-  } else if (splash) {
-    splash.remove();
-  }
 
   if ('IntersectionObserver' in window && counters.length) {
     var cio = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
         if (e.isIntersecting) {
-          if (splashActive && e.target.closest('.nc-hero') && !e.target.dataset.counted) return;
           if (!e.target.dataset.counted) {
             e.target.dataset.counted = '1';
             runCount(e.target);

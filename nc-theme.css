@@ -218,74 +218,6 @@ button,input,select,textarea{font-family:inherit}
   .nc-hero-cover-img,.nc-hero-cover-glow,.nc-hero-cover-ring{animation:none}
 }
 
-/* Mobile splash loader */
-.nc-splash{display:none}
-html.nc-splash-active{overflow:hidden}
-html.nc-splash-active body{overflow:hidden}
-html.nc-splash-active .nc-splash{
-  display:flex;align-items:center;justify-content:center;
-  position:fixed;inset:0;z-index:9999;
-  background:#040508;
-  transition:opacity .7s ease,visibility .7s;
-}
-.nc-splash-core{
-  position:relative;width:164px;height:164px;
-  animation:splashCoreIn .9s cubic-bezier(.22,1,.36,1) both;
-}
-.nc-splash-ring{
-  position:absolute;inset:0;width:100%;height:100%;
-  transform:rotate(-90deg);
-}
-.nc-splash-ring-bg{
-  fill:none;stroke:rgba(201,162,75,.22);stroke-width:3;
-}
-.nc-splash-ring-progress{
-  fill:none;stroke:var(--gold-lt);stroke-width:3;
-  stroke-linecap:round;
-  stroke-dasharray:339.292;
-  stroke-dashoffset:339.292;
-  animation:splashRingDraw 2.1s cubic-bezier(.4,0,.2,1) forwards;
-  filter:drop-shadow(0 0 8px rgba(201,162,75,.5));
-}
-.nc-splash-logo{
-  position:absolute;inset:14px;border-radius:50%;overflow:hidden;
-  background:#0a0c11;
-  border:2px solid rgba(201,162,75,.45);
-  box-shadow:
-    0 0 0 3px rgba(201,162,75,.1),
-    0 0 36px rgba(201,162,75,.22),
-    inset 0 0 28px rgba(0,0,0,.55);
-}
-.nc-splash-logo::after{
-  content:"";position:absolute;inset:0;border-radius:50%;z-index:2;pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
-}
-.nc-splash-logo img{
-  display:block;width:100%;height:100%;
-  border-radius:50%;
-  object-fit:cover;object-position:center center;
-  animation:splashLogoPulse 2.1s ease-in-out infinite;
-}
-.nc-splash.is-exit{opacity:0;visibility:hidden;pointer-events:none}
-.nc-splash.is-exit .nc-splash-core{animation:splashCoreOut .55s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes splashCoreIn{
-  from{opacity:0;transform:scale(.82)}
-  to{opacity:1;transform:scale(1)}
-}
-@keyframes splashRingDraw{to{stroke-dashoffset:0}}
-@keyframes splashLogoPulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.04)}
-}
-@keyframes splashCoreOut{
-  to{opacity:0;transform:scale(.88)}
-}
-@media(prefers-reduced-motion:reduce){
-  .nc-splash-ring-progress{animation:none;stroke-dashoffset:0}
-  .nc-splash-logo img{animation:none}
-  .nc-splash-core{animation:none}
-}
-
 /* Trust marquee */
 .nc-trust{background:var(--white);border-bottom:1px solid var(--line);overflow:hidden}
 .nc-trust-mask{padding:20px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -543,36 +475,10 @@ html.nc-splash-active .nc-splash{
 .nc-step-chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
 .nc-chip{font-size:11px;font-weight:600;color:var(--ink-dim);background:var(--pearl);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
 
-/* Mobile / tablette — triptyque visible d'un coup (01 · 02 · 03) */
+/* Mobile / tablette — pôles pleine largeur (méthode/pôles v2 gérés plus bas) */
 @media(max-width:768px){
-  .nc-steps{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:10px;margin-top:28px;
-  }
-  .nc-step{padding:18px 10px 16px;text-align:center}
-  .nc-step-num{font-size:clamp(1.5rem,5vw,1.85rem);margin-bottom:6px;color:var(--gold)}
-  .nc-step-tag{
-    font-size:9px;letter-spacing:.08em;margin-bottom:8px;
-    justify-content:center;width:100%;
-  }
-  .nc-step h3{font-size:clamp(.72rem,2.8vw,.88rem);line-height:1.35;margin-bottom:0}
-  .nc-step p,.nc-step-chips{display:none}
   #methode .nc-head{text-align:center}
   #methode .nc-head .nc-label{justify-content:center}
-  #methode.nc-section{padding-top:48px;padding-bottom:48px}
-
-  .nc-expert-pillars{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:10px;
-  }
-  .nc-expert-pillar{padding:16px 10px;text-align:center}
-  .nc-expert-pillar .ico{font-size:1.25rem;margin-bottom:8px}
-  .nc-expert-pillar h3{font-size:clamp(.72rem,2.8vw,.85rem);line-height:1.3}
-  .nc-expert-pillar p{display:none}
-  .nc-expert-inner{gap:28px}
-  .nc-expert-copy{text-align:center}
-  .nc-expert-copy .nc-label{justify-content:center}
-  .nc-expert-copy p{margin-inline:auto}
 
   #poles.nc-section{padding-top:56px;padding-bottom:56px}
   #poles .nc-head{margin-bottom:8px}
@@ -874,4 +780,261 @@ html.nc-splash-active .nc-splash{
 /* Zone tactile min. pour les liens de nav du tiroir */
 @media(max-width:980px){
   .nc-drawer a{min-height:44px;display:flex;align-items:center}
+}
+
+/* ============================================================
+   REDESIGN 2026 — "Alive" dark-luxe layer (overrides)
+   Bigger rhythm, motion, glow, higher-conversion structure.
+   ============================================================ */
+
+/* Larger buttons */
+.btn-lg{padding:16px 30px;font-size:15px}
+@media(max-width:560px){.btn-lg{width:100%}}
+
+/* ---------- HERO V2 ---------- */
+.nc-hero--v2{
+  min-height:calc(100svh - 72px);min-height:calc(100vh - 72px);
+  color:#fff;overflow:hidden;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(201,162,75,.16), transparent 60%),
+    radial-gradient(900px 700px at 8% 110%, rgba(80,110,170,.14), transparent 60%),
+    linear-gradient(165deg,#12151d 0%,#0d1016 46%,#070a0f 100%);
+  display:flex;align-items:center;
+}
+.nc-hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.nc-hero-orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:heroOrb 16s ease-in-out infinite alternate}
+.nc-hero-orb--1{width:520px;height:520px;top:-140px;right:-120px;background:radial-gradient(circle,rgba(201,162,75,.5),transparent 68%)}
+.nc-hero-orb--2{width:460px;height:460px;bottom:-160px;left:-120px;background:radial-gradient(circle,rgba(90,120,190,.38),transparent 68%);animation-delay:-6s}
+@keyframes heroOrb{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(30px,-24px,0) scale(1.12)}}
+.nc-hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 75% at 50% 40%,#000 20%,transparent 78%);
+  mask-image:radial-gradient(ellipse 90% 75% at 50% 40%,#000 20%,transparent 78%);
+  opacity:.5;
+}
+.nc-hero-v2-inner{
+  position:relative;z-index:3;width:min(var(--maxw),calc(100% - 48px));margin:0 auto;
+  display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;
+  padding:clamp(56px,9vh,110px) 0;
+}
+.nc-hero--v2 .nc-eyebrow{color:var(--gold-lt);border-color:rgba(201,162,75,.32);background:rgba(201,162,75,.08)}
+.nc-hero-title{
+  font-family:"Fraunces",serif;font-weight:600;
+  font-size:clamp(2.4rem,4.8vw,4.1rem);line-height:1.05;letter-spacing:-.015em;color:#fff;
+}
+.nc-hero-title em{font-style:italic;color:var(--gold-lt);position:relative;white-space:nowrap}
+.nc-hero--v2 .nc-lead{color:var(--steel-lt);max-width:34rem}
+.nc-hero--v2 .nc-hero-ctas{margin-top:34px}
+.nc-hero-assure{
+  margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:13px;color:var(--steel-lt);
+}
+.nc-hero-assure-sep{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.6}
+.nc-hero--v2 .nc-hero-metrics{margin-top:40px;gap:38px}
+.nc-hero--v2 .nc-metric .num{color:#fff}
+.nc-hero--v2 .nc-metric .num b{color:var(--gold-lt)}
+
+/* Hero quick-action card */
+.nc-hero-card{
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;padding:30px 28px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 30px 70px rgba(0,0,0,.4);
+}
+.nc-hero-card-glow{position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,75,.35),transparent 65%);pointer-events:none}
+.nc-hero-card-badge{
+  position:relative;display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#1a1408;background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  padding:7px 13px;border-radius:999px;margin-bottom:18px;box-shadow:0 8px 22px rgba(201,162,75,.35);
+}
+.nc-hero-card-title{font-family:"Fraunces",serif;font-weight:600;font-size:1.5rem;color:#fff;margin-bottom:8px}
+.nc-hero-card-sub{font-size:14px;color:var(--steel-lt);line-height:1.7;font-weight:300}
+.nc-hero-card-list{margin:20px 0 22px;display:flex;flex-direction:column;gap:11px;list-style:none}
+.nc-hero-card-list li{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:#eef1f6}
+.nc-hero-card-list .chk{color:#1a1408;background:var(--gold);width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
+.nc-hero-card-cta{width:100%}
+.nc-hero-card-foot{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--steel-lt)}
+.nc-hero-card-stars{color:var(--gold);letter-spacing:2px;font-size:13px}
+
+/* scroll cue */
+.nc-hero-scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:3;width:26px;height:42px;border:2px solid rgba(255,255,255,.28);border-radius:999px;display:flex;justify-content:center;padding-top:8px}
+.nc-hero-scroll span{width:4px;height:8px;border-radius:2px;background:var(--gold-lt);animation:scrollCue 1.6s ease-in-out infinite}
+@keyframes scrollCue{0%{opacity:0;transform:translateY(-4px)}40%{opacity:1}100%{opacity:0;transform:translateY(10px)}}
+
+@media(max-width:960px){
+  .nc-hero-v2-inner{grid-template-columns:1fr;gap:34px;text-align:center}
+  .nc-hero--v2 .nc-eyebrow,.nc-hero-assure,.nc-hero--v2 .nc-hero-metrics,.nc-hero--v2 .nc-hero-ctas{justify-content:center}
+  .nc-hero--v2 .nc-lead{margin-inline:auto}
+  .nc-hero-card{text-align:left;max-width:460px;margin-inline:auto;width:100%}
+  .nc-hero-scroll{display:none}
+}
+
+/* ---------- SECTION RHYTHM ---------- */
+.nc-section{padding:104px 0}
+.nc-section .nc-title em{color:var(--gold-deep)}
+.nc-head .nc-label{color:var(--gold)}
+
+/* Pôles cards — lively hover */
+.nc-svc-card{border-radius:24px;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s,border-color .4s}
+.nc-svc-card:hover{transform:translateY(-12px)}
+.nc-svc-ico{background:linear-gradient(155deg,var(--charcoal),#31384a)}
+
+/* Méthode — connected timeline v2 */
+.nc-steps--v2{position:relative;margin-top:52px}
+.nc-steps--v2::before{
+  content:"";position:absolute;top:56px;left:12%;right:12%;height:2px;z-index:0;
+  background:linear-gradient(90deg,transparent,var(--gold-pale),var(--gold),var(--gold-pale),transparent);
+}
+.nc-steps--v2 .nc-step{position:relative;z-index:1;text-align:center;border-radius:22px;transition:transform .35s,box-shadow .35s,border-color .35s}
+.nc-steps--v2 .nc-step-num{
+  width:64px;height:64px;margin:0 auto 16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;color:var(--gold-deep);
+  background:linear-gradient(180deg,#fff,var(--gold-pale));
+  border:1px solid var(--gold-pale);box-shadow:0 10px 26px rgba(201,162,75,.22);
+}
+.nc-steps--v2 .nc-step-tag{justify-content:center;width:100%}
+.nc-steps--v2 .nc-step-chips{justify-content:center}
+.nc-steps--v2 .nc-step:hover{transform:translateY(-8px);box-shadow:var(--shadow-md);border-color:var(--gold-pale)}
+@media(max-width:768px){
+  .nc-steps--v2::before{display:none}
+  .nc-steps--v2 .nc-step-num{width:auto;height:auto;background:none;border:none;box-shadow:none;margin-bottom:6px}
+}
+
+/* Positioning band CTA */
+.nc-expert-cta{margin-top:26px}
+@media(max-width:560px){.nc-expert-cta{width:100%}}
+
+/* Testimonials — richer cards */
+.nc-testi-card{border-radius:22px;padding:32px 28px;position:relative;overflow:hidden}
+.nc-testi-card::before{content:"“";position:absolute;top:-8px;right:18px;font-family:"Fraunces",serif;font-size:6rem;line-height:1;color:var(--gold-pale);opacity:.6}
+.nc-testi-card:hover{transform:translateY(-8px)}
+
+/* Booking scarcity — brighter */
+.nc-booking{padding:100px 0}
+.nc-booking-copy h2 em{color:var(--gold-lt)}
+
+/* Reveal — richer entrance */
+.reveal{transform:translateY(34px)}
+
+/* ============================================================
+   MOBILE — redesign 2026, propre de bout en bout
+   ============================================================ */
+@media(max-width:768px){
+  .nc-section{padding:60px 0}
+
+  /* ---- HERO v2 ---- */
+  .nc-hero--v2{min-height:auto}
+  .nc-hero-v2-inner{
+    padding:36px 0 44px;gap:28px;grid-template-columns:1fr;text-align:center;
+  }
+  .nc-hero--v2 .nc-hero-copy{display:flex;flex-direction:column;align-items:center}
+  .nc-hero--v2 .nc-eyebrow{margin-inline:auto;font-size:10.5px;padding:7px 14px}
+  .nc-hero-title{font-size:clamp(2rem,8.6vw,2.75rem);line-height:1.08}
+  .nc-hero-title em{white-space:normal}
+  .nc-hero--v2 .nc-lead{font-size:15px;margin-inline:auto;max-width:32rem}
+  .nc-hero--v2 .nc-hero-ctas{
+    margin-top:26px;width:100%;flex-direction:column;gap:12px;
+  }
+  .nc-hero--v2 .nc-hero-ctas .btn{width:100%}
+  .nc-hero-assure{
+    justify-content:center;flex-direction:column;gap:8px;
+    margin-top:18px;font-size:12.5px;
+  }
+  .nc-hero-assure-sep{display:none}
+  .nc-hero--v2 .nc-hero-metrics{
+    margin-top:28px;gap:0;width:100%;
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border:1px solid rgba(255,255,255,.1);border-radius:16px;
+    background:rgba(255,255,255,.03);overflow:hidden;
+  }
+  .nc-hero--v2 .nc-metric{
+    flex:none;min-width:0;padding:16px 6px;
+    border-right:1px solid rgba(255,255,255,.08);
+  }
+  .nc-hero--v2 .nc-metric:last-child{border-right:none}
+  .nc-hero--v2 .nc-metric .num{font-size:1.4rem}
+  .nc-hero--v2 .nc-metric .lbl{font-size:9px;letter-spacing:.03em;margin-top:5px}
+
+  /* Hero quick-action card */
+  .nc-hero-card{
+    text-align:left;width:100%;max-width:none;margin:0;
+    padding:24px 22px;border-radius:20px;
+  }
+  .nc-hero-card-title{font-size:1.35rem}
+  .nc-hero-card-sub{font-size:13.5px}
+  .nc-hero-card-list li{font-size:13.5px}
+
+  /* ---- SECTION HEADS ---- */
+  .nc-head,.nc-head.center{text-align:center;margin-inline:auto}
+  .nc-head .nc-label{justify-content:center}
+  .nc-title{font-size:clamp(1.7rem,6.5vw,2.2rem)}
+  .nc-sub{font-size:14.5px}
+
+  /* ---- MÉTHODE v2 : pile verticale lisible ---- */
+  .nc-steps.nc-steps--v2{
+    grid-template-columns:1fr;gap:14px;margin-top:34px;
+  }
+  .nc-steps--v2 .nc-step{
+    padding:24px 22px;text-align:left;
+    display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:center;
+  }
+  .nc-steps--v2 .nc-step-num{
+    grid-row:span 2;width:52px;height:52px;margin:0;font-size:1.35rem;
+    background:linear-gradient(180deg,#fff,var(--gold-pale));
+    border:1px solid var(--gold-pale);box-shadow:0 8px 20px rgba(201,162,75,.2);
+  }
+  .nc-steps--v2 .nc-step-tag{
+    grid-column:2;width:auto;justify-content:flex-start;margin-bottom:0;
+    font-size:9.5px;
+  }
+  .nc-steps--v2 .nc-step h3{
+    grid-column:2;font-size:1.1rem;margin-bottom:0;
+  }
+  .nc-steps--v2 .nc-step p{
+    grid-column:1 / -1;display:block;font-size:13.5px;line-height:1.7;margin-top:8px;
+  }
+  .nc-steps--v2 .nc-step-chips{
+    grid-column:1 / -1;display:flex;justify-content:flex-start;margin-top:12px;
+  }
+
+  /* ---- POURQUOI NC ---- */
+  .nc-expert-inner{grid-template-columns:1fr;gap:26px}
+  .nc-expert-copy{text-align:center}
+  .nc-expert-copy .nc-label{justify-content:center}
+  .nc-expert-copy p{margin-inline:auto}
+  .nc-expert-cta{margin-inline:auto}
+  .nc-expert-pillars{grid-template-columns:1fr;gap:12px}
+  .nc-expert-pillar{padding:20px 18px;text-align:left}
+  .nc-expert-pillar .ico{font-size:1.5rem;margin-bottom:8px}
+  .nc-expert-pillar h3{font-size:1.05rem}
+  .nc-expert-pillar p{display:block;font-size:13px;line-height:1.65}
+
+  /* ---- TÉMOIGNAGES : carrousel propre ---- */
+  .nc-testi-card{padding:22px 18px 20px}
+  .nc-testi-card::before{font-size:3.4rem;top:-2px;right:12px;opacity:.5}
+  .nc-testi-card p{font-size:13px;line-height:1.7}
+
+  /* ---- FORMATIONS ---- */
+  .nc-prog.nc-prog-compact{grid-template-columns:1fr;gap:12px;margin-top:30px}
+  .nc-prog-card{padding:22px 20px}
+  .nc-prog-top{margin-bottom:12px}
+  .nc-prog-card h3{font-size:1.08rem;margin-bottom:6px}
+  .nc-prog-card p{font-size:13.5px;line-height:1.65;display:block}
+  .nc-prog-link{display:inline-block;margin-top:12px;font-size:13.5px}
+
+  /* ---- BOOKING ---- */
+  .nc-booking{padding:60px 0}
+}
+
+@media(max-width:400px){
+  .nc-hero-title{font-size:1.85rem}
+  .nc-hero--v2 .nc-metric .num{font-size:1.2rem}
+  .nc-hero--v2 .nc-metric .lbl{font-size:8px}
+  .nc-hero-card-title{font-size:1.25rem}
 }

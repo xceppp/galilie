@@ -69,27 +69,9 @@
 
 <link rel="stylesheet" href="nc-theme.css">
 <link rel="stylesheet" href="nc-form.css">
-<script>
-(function () {
-  if (window.matchMedia('(max-width:768px)').matches) {
-    document.documentElement.classList.add('nc-splash-active');
-  }
-})();
-</script>
 </head>
 
 <body>
-<div class="nc-splash" id="ncSplash" role="status" aria-live="polite" aria-label="Chargement NC Consulting">
-  <div class="nc-splash-core">
-    <svg class="nc-splash-ring" viewBox="0 0 120 120" aria-hidden="true">
-      <circle class="nc-splash-ring-bg" cx="60" cy="60" r="54"></circle>
-      <circle class="nc-splash-ring-progress" cx="60" cy="60" r="54"></circle>
-    </svg>
-    <div class="nc-splash-logo">
-      <img src="assets/nc-logo-hero.png" alt="">
-    </div>
-  </div>
-</div>
 <div class="nc-progress" id="ncProgress"></div>
 
   <!-- NAVBAR -->
@@ -132,36 +114,59 @@
   <main id="top">
 
 <!-- HERO -->
-<section class="nc-hero" aria-label="Accueil">
-  <div class="nc-hero-cover" aria-hidden="true">
-    <div class="nc-hero-cover-stage">
-      <span class="nc-hero-cover-ring"></span>
-      <img class="nc-hero-cover-glow" src="assets/nc-logo-hero.png" alt="" aria-hidden="true">
-      <img class="nc-hero-cover-img" src="assets/nc-logo-hero.png" alt="">
-    </div>
-    <span class="nc-hero-gold-sheen"></span>
-    <span class="nc-hero-gold-sheen nc-hero-gold-sheen--soft"></span>
-    <div class="nc-hero-cover-scrim"></div>
+<section class="nc-hero nc-hero--v2" aria-label="Accueil">
+  <div class="nc-hero-bg" aria-hidden="true">
+    <span class="nc-hero-orb nc-hero-orb--1"></span>
+    <span class="nc-hero-orb nc-hero-orb--2"></span>
+    <span class="nc-hero-grid"></span>
   </div>
   <div class="nc-hero-glow" id="ncHeroGlow"></div>
-  <div class="container nc-hero-inner">
+  <div class="container nc-hero-v2-inner">
     <div class="nc-hero-copy">
-      <span class="nc-eyebrow reveal in"><span class="dot"></span>Conseil · Coaching · Excellence</span>
-      <h1 class="reveal in d1">Votre partenaire vers <em>l'excellence professionnelle</em>.</h1>
-      <p class="nc-lead reveal in d2">Conseil stratégique, coaching exécutif et accompagnement 1-à-1 — pour dirigeants, cadres et profils ambitieux qui veulent des décisions claires et des résultats mesurables. Présentiel à Meknès ou entièrement à distance.</p>
+      <span class="nc-eyebrow reveal in"><span class="dot"></span>Conseil · Coaching · Meknès &amp; à distance</span>
+      <h1 class="nc-hero-title reveal in d1">Prenez de meilleures décisions.<br><em>Atteignez vos objectifs</em> plus vite.</h1>
+      <p class="nc-lead reveal in d2">NC Consulting accompagne dirigeants, cadres et profils ambitieux avec un conseil franc et un coaching sur mesure — des décisions claires, des résultats mesurables.</p>
+
       <div class="nc-hero-ctas reveal in d3">
-        <a class="btn btn-gold" href="#contact">Réserver un appel découverte →</a>
-        <a class="btn btn-ghost-light" href="#poles">Découvrir nos pôles</a>
-  </div>
+        <a class="btn btn-gold btn-lg" href="#contact">Réserver mon appel gratuit →</a>
+        <a class="btn btn-ghost-light btn-lg" href="#poles">Voir les pôles</a>
+      </div>
+
+      <div class="nc-hero-assure reveal in d3">
+        <span><span class="nc-live-dot"></span>3 créneaux restants cette semaine</span>
+        <span class="nc-hero-assure-sep" aria-hidden="true"></span>
+        <span>Réponse sous 24 h · Sans engagement</span>
+      </div>
+
       <div class="nc-hero-metrics reveal in d3">
         <div class="nc-metric"><div class="num"><b class="nc-count" data-to="97">0</b>%</div><div class="lbl">Satisfaction client</div></div>
         <div class="nc-metric"><div class="num"><b class="nc-count" data-to="1500">0</b>+</div><div class="lbl">Profils accompagnés</div></div>
         <div class="nc-metric"><div class="num"><b class="nc-count" data-to="15">0</b>+</div><div class="lbl">Ans d'expertise</div></div>
-  </div>
-      <p class="nc-hero-tag reveal in d3">« Votre partenaire vers l'excellence. »</p>
-        </div>
       </div>
-    </section>
+    </div>
+
+    <aside class="nc-hero-card reveal in d2" aria-label="Réserver rapidement">
+      <div class="nc-hero-card-glow" aria-hidden="true"></div>
+      <div class="nc-hero-card-badge">Appel découverte offert</div>
+      <h2 class="nc-hero-card-title">Parlons de votre objectif</h2>
+      <p class="nc-hero-card-sub">20 minutes, gratuit et sans engagement. On clarifie votre besoin et on définit la meilleure façon d'avancer.</p>
+      <ul class="nc-hero-card-list">
+        <li><span class="chk">✓</span>Diagnostic clair de votre situation</li>
+        <li><span class="chk">✓</span>Recommandation ciblée, pas générique</li>
+        <li><span class="chk">✓</span>Confidentialité totale</li>
+      </ul>
+      <a class="btn btn-gold nc-hero-card-cta" href="#contact">Je réserve mon appel →</a>
+      <div class="nc-hero-card-foot">
+        <div class="nc-hero-card-stars">★★★★★</div>
+        <span>Noté 4,9/5 par nos clients</span>
+      </div>
+    </aside>
+  </div>
+
+  <a class="nc-hero-scroll" href="#poles" aria-label="Découvrir">
+    <span></span>
+  </a>
+</section>
 
 <!-- TRUST -->
 <div class="nc-trust">
@@ -183,41 +188,13 @@
       </div>
     </div>
 
-<!-- POSITIONNEMENT -->
-<section class="nc-expert" aria-labelledby="expert-title">
-  <div class="container nc-expert-inner">
-    <div class="nc-expert-copy reveal">
-      <div class="nc-label light">Notre pôle</div>
-      <h2 class="nc-title light" id="expert-title">Un consultant <em>dédié</em>, une exigence premium.</h2>
-      <p>NC Consulting place le conseil et le coaching au centre : relation directe, diagnostic franc et accompagnement sur mesure — sans intermédiaire, sans formule générique.</p>
-  </div>
-    <div class="nc-expert-pillars">
-      <div class="nc-expert-pillar reveal d1">
-        <div class="ico">01</div>
-        <h3>Clarté stratégique</h3>
-        <p>Décisions éclairées, priorités nettes et plans d'action concrets dès les premiers échanges.</p>
-    </div>
-      <div class="nc-expert-pillar reveal d2">
-        <div class="ico">02</div>
-        <h3>Performance durable</h3>
-        <p>Leadership, posture et discipline de résultats pour performer dans la durée.</p>
-    </div>
-      <div class="nc-expert-pillar reveal d3">
-        <div class="ico">03</div>
-        <h3>Confiance absolue</h3>
-        <p>Échanges confidentiels, écoute exigeante et suivi réel entre chaque séance.</p>
-      </div>
-    </div>
-    </div>
-</section>
-
 <!-- PÔLES D'EXPERTISE -->
-<section class="nc-section" id="poles" aria-labelledby="poles-title">
+<section class="nc-section alt" id="poles" aria-labelledby="poles-title">
   <div class="container">
     <div class="nc-head center">
-      <div class="nc-label reveal">Pôles d'expertise</div>
-      <h2 class="nc-title reveal d1" id="poles-title">Trois pôles, <em>un même niveau d'exigence</em>.</h2>
-      <p class="nc-sub reveal d2">Du conseil ponctuel au partenariat stratégique — chaque pôle répond à un besoin précis, avec un livrable clair et un suivi réel.</p>
+      <div class="nc-label reveal">Trois façons de travailler ensemble</div>
+      <h2 class="nc-title reveal d1" id="poles-title">Choisissez le pôle qui <em>répond à votre besoin</em>.</h2>
+      <p class="nc-sub reveal d2">Du conseil ponctuel au partenariat stratégique — cliquez sur un pôle pour découvrir le détail, le déroulement et les livrables.</p>
     </div>
 
     <div class="nc-svc">
@@ -297,11 +274,12 @@
 <!-- MÉTHODE -->
 <section class="nc-section alt" id="methode" aria-labelledby="methode-title">
   <div class="container">
-    <div class="nc-head">
-      <div class="nc-label reveal">Méthode</div>
-      <h2 class="nc-title reveal d1" id="methode-title">Trois étapes vers <em>votre objectif</em>.</h2>
+    <div class="nc-head center">
+      <div class="nc-label reveal">Comment ça marche</div>
+      <h2 class="nc-title reveal d1" id="methode-title">De la prise de contact aux <em>résultats</em>, en 3 étapes.</h2>
+      <p class="nc-sub reveal d2">Un parcours simple et cadré — vous savez exactement ce qui se passe à chaque étape.</p>
         </div>
-    <div class="nc-steps">
+    <div class="nc-steps nc-steps--v2">
       <div class="nc-step reveal d1">
         <div class="nc-step-num">01</div>
         <div class="nc-step-tag">Simple &amp; rapide</div>
@@ -327,10 +305,73 @@
   </div>
 </section>
 
+<!-- POURQUOI NC (positionnement) -->
+<section class="nc-expert" aria-labelledby="expert-title">
+  <div class="container nc-expert-inner">
+    <div class="nc-expert-copy reveal">
+      <div class="nc-label light">Pourquoi NC Consulting</div>
+      <h2 class="nc-title light" id="expert-title">Un consultant <em>dédié</em>, une exigence premium.</h2>
+      <p>NC Consulting place le conseil et le coaching au centre : relation directe, diagnostic franc et accompagnement sur mesure — sans intermédiaire, sans formule générique.</p>
+      <a class="btn btn-gold nc-expert-cta" href="#contact">Discuter de mon projet →</a>
+  </div>
+    <div class="nc-expert-pillars">
+      <div class="nc-expert-pillar reveal d1">
+        <div class="ico">01</div>
+        <h3>Clarté stratégique</h3>
+        <p>Décisions éclairées, priorités nettes et plans d'action concrets dès les premiers échanges.</p>
+    </div>
+      <div class="nc-expert-pillar reveal d2">
+        <div class="ico">02</div>
+        <h3>Performance durable</h3>
+        <p>Leadership, posture et discipline de résultats pour performer dans la durée.</p>
+    </div>
+      <div class="nc-expert-pillar reveal d3">
+        <div class="ico">03</div>
+        <h3>Confiance absolue</h3>
+        <p>Échanges confidentiels, écoute exigeante et suivi réel entre chaque séance.</p>
+      </div>
+    </div>
+    </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section class="nc-section alt" id="temoignages" aria-labelledby="temoignages-title">
+  <div class="container">
+    <div class="nc-head center">
+      <div class="nc-label reveal">Résultats &amp; témoignages</div>
+      <h2 class="nc-title reveal d1" id="temoignages-title">Des résultats concrets, <em>pas des promesses</em>.</h2>
+      <p class="nc-sub reveal d2">Ce que disent celles et ceux que nous avons accompagnés.</p>
+    </div>
+    <div class="nc-testi-wrap">
+      <div class="nc-testi" id="ncTesti">
+      <div class="nc-testi-card reveal d1">
+        <div class="nc-stars">★★★★★</div>
+        <p>« Une méthode claire et une vraie discipline. J'ai été admis à l'ENSA à la première tentative — les simulations et corrections m'ont fait gagner un temps énorme. »</p>
+        <span class="nc-res">✓ Admis 1re tentative · ENSA</span>
+        <div class="nc-who"><div class="nc-av">YB</div><div><div class="nc-nm">Youssef B.</div><div class="nc-rl">Lauréat ENSA</div></div></div>
+      </div>
+      <div class="nc-testi-card reveal d2">
+        <div class="nc-stars">★★★★★</div>
+        <p>« Mon fils a gagné en confiance et en organisation. Mention Bien au bac. L'équipe est sérieuse et le suivi est réel. »</p>
+        <span class="nc-res">✓ Mention Bien · Parent d'élève</span>
+        <div class="nc-who"><div class="nc-av">MH</div><div><div class="nc-nm">M. Hassan</div><div class="nc-rl">Parent d'élève BAC</div></div></div>
+      </div>
+      <div class="nc-testi-card reveal d3">
+        <div class="nc-stars">★★★★★</div>
+        <p>« Préparation concours Finance solide : culture générale, droit, rédaction… et surtout l'oral. Admis. »</p>
+        <span class="nc-res">✓ Admis Finance · Emploi public</span>
+        <div class="nc-who"><div class="nc-av">KM</div><div><div class="nc-nm">Karim M.</div><div class="nc-rl">Candidat emploi public</div></div></div>
+      </div>
+      </div>
+      <p class="nc-testi-hint" aria-hidden="true">← Glissez pour lire les avis →</p>
+    </div>
+  </div>
+</section>
+
 <!-- FORMATIONS COMPLÉMENTAIRES -->
 <section class="nc-section" id="formations" aria-labelledby="formations-title">
       <div class="container">
-    <div class="nc-head">
+    <div class="nc-head center">
       <div class="nc-label reveal">Formations complémentaires</div>
       <h2 class="nc-title reveal d1" id="formations-title">Un socle académique <em>quand il le faut</em>.</h2>
       <p class="nc-sub reveal d2">Au-delà du conseil, des parcours de formation ciblés — version condensée, même exigence premium.</p>
@@ -360,39 +401,6 @@
         <p>Français, anglais et coaching mental — expression professionnelle, confiance et prise de parole.</p>
         <a class="nc-prog-link" href="#contact">En savoir plus →</a>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- TÉMOIGNAGES -->
-<section class="nc-section alt" id="temoignages" aria-labelledby="temoignages-title">
-  <div class="container">
-    <div class="nc-head">
-      <div class="nc-label reveal">Témoignages</div>
-      <h2 class="nc-title reveal d1" id="temoignages-title">Ils nous font <em>confiance</em>.</h2>
-    </div>
-    <div class="nc-testi-wrap">
-      <div class="nc-testi" id="ncTesti">
-      <div class="nc-testi-card reveal d1">
-        <div class="nc-stars">★★★★★</div>
-        <p>« Une méthode claire et une vraie discipline. J'ai été admis à l'ENSA à la première tentative — les simulations et corrections m'ont fait gagner un temps énorme. »</p>
-        <span class="nc-res">✓ Admis 1re tentative · ENSA</span>
-        <div class="nc-who"><div class="nc-av">YB</div><div><div class="nc-nm">Youssef B.</div><div class="nc-rl">Lauréat ENSA</div></div></div>
-      </div>
-      <div class="nc-testi-card reveal d2">
-        <div class="nc-stars">★★★★★</div>
-        <p>« Mon fils a gagné en confiance et en organisation. Mention Bien au bac. L'équipe est sérieuse et le suivi est réel. »</p>
-        <span class="nc-res">✓ Mention Bien · Parent d'élève</span>
-        <div class="nc-who"><div class="nc-av">MH</div><div><div class="nc-nm">M. Hassan</div><div class="nc-rl">Parent d'élève BAC</div></div></div>
-      </div>
-      <div class="nc-testi-card reveal d3">
-        <div class="nc-stars">★★★★★</div>
-        <p>« Préparation concours Finance solide : culture générale, droit, rédaction… et surtout l'oral. Admis. »</p>
-        <span class="nc-res">✓ Admis Finance · Emploi public</span>
-        <div class="nc-who"><div class="nc-av">KM</div><div><div class="nc-nm">Karim M.</div><div class="nc-rl">Candidat emploi public</div></div></div>
-      </div>
-      </div>
-      <p class="nc-testi-hint" aria-hidden="true">← Glissez pour lire les avis →</p>
     </div>
   </div>
 </section>
@@ -434,7 +442,7 @@
       <div class="container">
     <div class="nc-booking-inner">
       <div class="nc-booking-copy reveal">
-        <div class="nc-scarcity"><span class="nc-live-dot"></span>3 créneaux réservés cette semaine</div>
+        <div class="nc-scarcity"><span class="nc-live-dot"></span>Plus que 3 créneaux cette semaine</div>
         <h2 id="contact-title">Prêt à passer au <em>niveau supérieur</em> ?</h2>
         <p class="lead">Réservez un appel découverte gratuit de 20 minutes, ou envoyez votre demande. Nous clarifions votre besoin et définissons ensemble la meilleure façon d'avancer.</p>
         <ul class="nc-booking-benefits">
