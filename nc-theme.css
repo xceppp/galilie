@@ -484,43 +484,35 @@ button,input,select,textarea{font-family:inherit}
   #poles .nc-head{margin-bottom:8px}
   #poles .nc-sub{font-size:15px;line-height:1.75;max-width:34rem;margin-inline:auto}
 
-  .nc-svc{
-    grid-template-columns:1fr;
-    gap:22px;margin-top:36px;
-  }
+  /* pôles : carte centrale, contenu essentiel visible */
   .nc-svc-card{
-    padding:28px 22px 24px;text-align:left;
+    padding:26px 22px 22px;text-align:left;
     display:flex;flex-direction:column;
   }
   .nc-svc-index{
     position:absolute;top:20px;right:22px;
-    font-size:2.2rem;margin-bottom:0;display:block;text-align:right;
+    font-size:2rem;margin-bottom:0;display:block;text-align:right;
   }
   .nc-svc-badge{
     position:static;display:inline-flex;align-self:flex-start;
     margin:0 0 14px;font-size:10px;padding:6px 12px;
   }
   .nc-svc-ico{
-    width:56px;height:56px;margin:0 0 18px;border-radius:14px;
+    width:52px;height:52px;margin:0 0 16px;border-radius:14px;
   }
-  .nc-svc-ico svg{width:26px;height:26px}
-  .nc-svc-tagline{
-    display:block;font-size:11px;margin-bottom:10px;
-  }
+  .nc-svc-ico svg{width:24px;height:24px}
+  .nc-svc-tagline{display:block;font-size:11px;margin-bottom:10px}
   .nc-svc-card h3{
-    font-size:clamp(1.2rem,5vw,1.45rem);line-height:1.25;margin-bottom:12px;
+    font-size:clamp(1.2rem,5vw,1.4rem);line-height:1.25;margin-bottom:10px;
   }
-  .nc-svc-card .desc{
-    display:block;font-size:14px;line-height:1.75;margin-bottom:4px;
-  }
-  .nc-svc-ul{display:flex;margin-top:18px}
-  .nc-svc-ul li{font-size:13.5px}
-  .nc-svc-deliver{display:flex;margin-top:18px}
+  .nc-svc-card .desc{display:block;font-size:13.5px;line-height:1.7;margin-bottom:0}
+  .nc-svc-ul{display:none}
+  .nc-svc-deliver{display:none}
   .nc-svc-foot{
-    margin-top:auto;padding-top:20px;border-top:1px solid var(--line);
+    margin-top:auto;padding-top:18px;border-top:1px solid var(--line);
     flex-direction:row;gap:12px;align-items:center;justify-content:space-between;
   }
-  .nc-svc-price{display:block;font-size:1.1rem}
+  .nc-svc-price{display:block;font-size:1.05rem}
   .nc-svc-cta{font-size:13px;justify-content:flex-start}
   .nc-svc-card.featured{
     box-shadow:0 20px 50px rgba(201,162,75,.16);
@@ -884,6 +876,82 @@ button,input,select,textarea{font-family:inherit}
 .nc-svc-card:hover{transform:translateY(-12px)}
 .nc-svc-ico{background:linear-gradient(155deg,var(--charcoal),#31384a)}
 
+/* ---------- PÔLES : carrousel 3D premium ---------- */
+.nc-carousel{position:relative;margin-top:52px;display:flex;align-items:center;justify-content:center;gap:12px}
+.nc-carousel-stage{
+  position:relative;flex:1;min-width:0;
+  perspective:1600px;
+}
+.nc-svc--carousel{
+  display:block;margin-top:0;position:relative;
+  height:var(--carousel-h,600px);
+  transform-style:preserve-3d;
+}
+.nc-svc--carousel .nc-svc-card{
+  position:absolute;top:0;left:50%;
+  width:min(400px,84%);
+  margin:0;
+  transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .5s ease,filter .5s ease,box-shadow .5s ease;
+  will-change:transform,opacity;
+  backface-visibility:hidden;
+}
+/* center */
+.nc-svc--carousel .nc-svc-card.is-center{
+  transform:translateX(-50%) translateZ(60px) scale(1);
+  opacity:1;z-index:5;
+  box-shadow:0 40px 90px rgba(20,24,32,.22),0 0 0 1px var(--gold-pale);
+}
+.nc-svc--carousel .nc-svc-card.is-center:hover{transform:translateX(-50%) translateZ(80px) scale(1.01)}
+/* left */
+.nc-svc--carousel .nc-svc-card.is-left{
+  transform:translateX(-104%) translateZ(-140px) rotateY(26deg) scale(.9);
+  opacity:.55;z-index:3;filter:saturate(.85) brightness(.96);
+  cursor:pointer;
+}
+/* right */
+.nc-svc--carousel .nc-svc-card.is-right{
+  transform:translateX(4%) translateZ(-140px) rotateY(-26deg) scale(.9);
+  opacity:.55;z-index:3;filter:saturate(.85) brightness(.96);
+  cursor:pointer;
+}
+.nc-svc--carousel .nc-svc-card.is-left:hover{
+  transform:translateX(-104%) translateZ(-110px) rotateY(22deg) scale(.92);opacity:.85;
+}
+.nc-svc--carousel .nc-svc-card.is-right:hover{
+  transform:translateX(4%) translateZ(-110px) rotateY(-22deg) scale(.92);opacity:.85;
+}
+/* hidden (>1 away, only relevant if more cards later) */
+.nc-svc--carousel .nc-svc-card.is-hidden{opacity:0;transform:translateX(-50%) translateZ(-260px) scale(.8);pointer-events:none;z-index:1}
+
+/* premium arrows */
+.nc-carousel-arrow{
+  flex-shrink:0;width:56px;height:56px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:linear-gradient(180deg,#fff,var(--pearl));
+  border:1px solid var(--gold-pale);
+  color:var(--gold-deep);
+  box-shadow:0 12px 30px rgba(20,24,32,.1),inset 0 0 0 1px rgba(255,255,255,.6);
+  transition:transform .25s,box-shadow .25s,background .25s,color .25s;
+  z-index:8;
+}
+.nc-carousel-arrow svg{width:24px;height:24px}
+.nc-carousel-arrow:hover{
+  transform:translateY(-2px) scale(1.06);
+  background:linear-gradient(180deg,var(--gold),var(--gold-lt));
+  color:#1a1408;
+  box-shadow:0 16px 38px rgba(201,162,75,.4);
+}
+.nc-carousel-arrow:active{transform:scale(.96)}
+.nc-carousel-arrow:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* dots */
+.nc-carousel-dots{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:26px}
+.nc-carousel-dot{
+  width:8px;height:8px;border-radius:999px;border:none;cursor:pointer;padding:0;
+  background:var(--line);transition:width .3s,background .3s;
+}
+.nc-carousel-dot.is-active{width:26px;background:linear-gradient(90deg,var(--gold),var(--gold-lt))}
+
 /* Méthode — connected timeline v2 */
 .nc-steps--v2{position:relative;margin-top:52px}
 .nc-steps--v2::before{
@@ -976,6 +1044,14 @@ button,input,select,textarea{font-family:inherit}
   .nc-title{font-size:clamp(1.7rem,6.5vw,2.2rem)}
   .nc-sub{font-size:14.5px}
 
+  /* ---- PÔLES carrousel 3D — mobile ---- */
+  .nc-carousel{gap:6px;margin-top:38px}
+  .nc-carousel-arrow{width:44px;height:44px}
+  .nc-carousel-arrow svg{width:20px;height:20px}
+  .nc-svc--carousel .nc-svc-card{width:min(300px,80%)}
+  .nc-svc--carousel .nc-svc-card.is-left{transform:translateX(-118%) translateZ(-120px) rotateY(20deg) scale(.86);opacity:.4}
+  .nc-svc--carousel .nc-svc-card.is-right{transform:translateX(18%) translateZ(-120px) rotateY(-20deg) scale(.86);opacity:.4}
+
   /* ---- MÉTHODE v2 : pile verticale lisible ---- */
   .nc-steps.nc-steps--v2{
     grid-template-columns:1fr;gap:14px;margin-top:34px;
@@ -1015,10 +1091,14 @@ button,input,select,textarea{font-family:inherit}
   .nc-expert-pillar h3{font-size:1.05rem}
   .nc-expert-pillar p{display:block;font-size:13px;line-height:1.65}
 
-  /* ---- TÉMOIGNAGES : carrousel propre ---- */
-  .nc-testi-card{padding:22px 18px 20px}
-  .nc-testi-card::before{font-size:3.4rem;top:-2px;right:12px;opacity:.5}
-  .nc-testi-card p{font-size:13px;line-height:1.7}
+  /* ---- TÉMOIGNAGES : restaure la carte carrousel lisible ---- */
+  .nc-testi-card{
+    flex:0 0 min(90vw,340px);
+    scroll-snap-align:center;
+    border-radius:18px;padding:20px 18px;text-align:left;
+  }
+  .nc-testi-card::before{font-size:3rem;top:0;right:12px;opacity:.45}
+  .nc-testi-card p{font-size:13px;line-height:1.7;font-style:italic}
 
   /* ---- FORMATIONS ---- */
   .nc-prog.nc-prog-compact{grid-template-columns:1fr;gap:12px;margin-top:30px}

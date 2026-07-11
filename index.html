@@ -197,7 +197,12 @@
       <p class="nc-sub reveal d2">Du conseil ponctuel au partenariat stratégique — cliquez sur un pôle pour découvrir le détail, le déroulement et les livrables.</p>
     </div>
 
-    <div class="nc-svc">
+    <div class="nc-carousel" id="ncPoleCarousel">
+    <button type="button" class="nc-carousel-arrow nc-carousel-arrow--prev" id="ncPolePrev" aria-label="Pôle précédent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="nc-carousel-stage">
+    <div class="nc-svc nc-svc--carousel">
       <!-- 1 -->
       <article class="nc-svc-card nc-svc-card--clickable reveal d1" data-pole="consultation" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Consultation 1-à-1 — voir le détail">
         <div class="nc-svc-index" aria-hidden="true">01</div>
@@ -258,6 +263,12 @@
         </div>
       </article>
       </div>
+    </div>
+    <button type="button" class="nc-carousel-arrow nc-carousel-arrow--next" id="ncPoleNext" aria-label="Pôle suivant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    </div>
+    <div class="nc-carousel-dots" id="ncPoleDots" aria-hidden="true"></div>
 
     <div class="nc-svc-note reveal d2">
       <span><b>1er échange gratuit</b> de 20 minutes</span>
