@@ -69,9 +69,27 @@
 
 <link rel="stylesheet" href="nc-theme.css">
 <link rel="stylesheet" href="nc-form.css">
+<script>
+(function () {
+  if (window.matchMedia('(max-width:768px)').matches) {
+    document.documentElement.classList.add('nc-splash-active');
+  }
+})();
+</script>
 </head>
 
 <body>
+<div class="nc-splash" id="ncSplash" role="status" aria-live="polite" aria-label="Chargement NC Consulting">
+  <div class="nc-splash-core">
+    <svg class="nc-splash-ring" viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="nc-splash-ring-bg" cx="60" cy="60" r="54"></circle>
+      <circle class="nc-splash-ring-progress" cx="60" cy="60" r="54"></circle>
+    </svg>
+    <div class="nc-splash-logo">
+      <img src="assets/nc-logo-hero.png" alt="">
+    </div>
+  </div>
+</div>
 <div class="nc-progress" id="ncProgress"></div>
 
   <!-- NAVBAR -->
