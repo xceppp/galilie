@@ -116,11 +116,15 @@
 <!-- HERO -->
 <section class="nc-hero" aria-label="Accueil">
   <div class="nc-hero-cover" aria-hidden="true">
-    <img class="nc-hero-cover-img" src="assets/nc-logo-hero.png" alt="">
+    <div class="nc-hero-cover-stage">
+      <span class="nc-hero-cover-ring"></span>
+      <img class="nc-hero-cover-glow" src="assets/nc-logo-hero.png" alt="" aria-hidden="true">
+      <img class="nc-hero-cover-img" src="assets/nc-logo-hero.png" alt="">
+    </div>
     <span class="nc-hero-gold-sheen"></span>
     <span class="nc-hero-gold-sheen nc-hero-gold-sheen--soft"></span>
     <div class="nc-hero-cover-scrim"></div>
-    </div>
+  </div>
   <div class="nc-hero-glow" id="ncHeroGlow"></div>
   <div class="container nc-hero-inner">
     <div class="nc-hero-copy">
@@ -200,7 +204,7 @@
 
     <div class="nc-svc">
       <!-- 1 -->
-      <article class="nc-svc-card reveal d1">
+      <article class="nc-svc-card nc-svc-card--clickable reveal d1" data-pole="consultation" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Consultation 1-à-1 — voir le détail">
         <div class="nc-svc-index" aria-hidden="true">01</div>
         <div class="nc-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8M8 8h8M8 16h5"/><path d="M4 4h16v13H8l-4 4V4z"/></svg></div>
         <div class="nc-svc-tagline">Ponctuel · Ciblé</div>
@@ -212,6 +216,7 @@
           <li><span class="chk">✓</span><span>Confidentialité totale, zéro jugement</span></li>
         </ul>
         <div class="nc-svc-deliver"><span>1 séance</span><span>Compte-rendu écrit</span><span>Présentiel / visio</span></div>
+        <div class="nc-svc-explore" aria-hidden="true"><span>Explorer le pôle</span><span class="nc-svc-explore-ico">→</span></div>
         <div class="nc-svc-foot">
           <div class="nc-svc-price">Sur devis <small>/ séance</small></div>
           <a class="nc-svc-cta" href="#contact">Réserver →</a>
@@ -219,7 +224,7 @@
       </article>
 
       <!-- 2 featured -->
-      <article class="nc-svc-card featured reveal d2">
+      <article class="nc-svc-card nc-svc-card--clickable featured reveal d2" data-pole="coaching" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Coaching exécutif — voir le détail">
         <div class="nc-svc-badge">Le plus demandé</div>
         <div class="nc-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.3L21 9l-5 4.2L17.5 20 12 16.4 6.5 20 8 13.2 3 9l6.6-.7L12 2z"/></svg></div>
         <div class="nc-svc-tagline">Programme · Dans la durée</div>
@@ -231,6 +236,7 @@
           <li><span class="chk">✓</span><span>Leadership, posture &amp; prise de décision</span></li>
         </ul>
         <div class="nc-svc-deliver"><span>Programme sur mesure</span><span>Suivi continu</span><span>Bilan d'étape</span></div>
+        <div class="nc-svc-explore" aria-hidden="true"><span>Explorer le pôle</span><span class="nc-svc-explore-ico">→</span></div>
         <div class="nc-svc-foot">
           <div class="nc-svc-price">Programme <small>/ sur mesure</small></div>
           <a class="nc-svc-cta" href="#contact">En savoir plus →</a>
@@ -238,7 +244,7 @@
       </article>
 
       <!-- 3 -->
-      <article class="nc-svc-card reveal d3">
+      <article class="nc-svc-card nc-svc-card--clickable reveal d3" data-pole="conseil" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Accompagnement &amp; Conseil — voir le détail">
         <div class="nc-svc-index" aria-hidden="true">03</div>
         <div class="nc-svc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-6a4 4 0 014-4h4"/><circle cx="9" cy="7" r="3"/><path d="M16 11l2 2 4-4"/></svg></div>
         <div class="nc-svc-tagline">Partenariat · Stratégique</div>
@@ -250,6 +256,7 @@
           <li><span class="chk">✓</span><span>Disponibilité &amp; réactivité privilégiées</span></li>
         </ul>
         <div class="nc-svc-deliver"><span>Mission sur mesure</span><span>Points réguliers</span><span>Support prioritaire</span></div>
+        <div class="nc-svc-explore" aria-hidden="true"><span>Explorer le pôle</span><span class="nc-svc-explore-ico">→</span></div>
         <div class="nc-svc-foot">
           <div class="nc-svc-price">Sur devis <small>/ mission</small></div>
           <a class="nc-svc-cta" href="#contact">Discutons →</a>
@@ -604,6 +611,146 @@
         </div>
       </div>
     </footer>
+
+<!-- Pôle detail modal -->
+<div class="nc-pole-modal" id="ncPoleModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="nc-pole-modal-bg" id="ncPoleModalBg"></div>
+  <div class="nc-pole-modal-dialog">
+    <button type="button" class="nc-pole-modal-close" id="ncPoleModalClose" aria-label="Fermer le détail">×</button>
+
+    <article class="nc-pole-panel" data-pole="consultation" hidden>
+      <header class="nc-pole-head">
+        <div class="nc-pole-head-top">
+          <span class="nc-pole-num">01</span>
+          <span class="nc-pole-tag">Ponctuel · Ciblé</span>
+        </div>
+        <h2 class="nc-pole-title" id="pole-title-consultation">Consultation 1-à-1</h2>
+        <p class="nc-pole-lead">Une séance premium, entièrement dédiée à votre situation — pour trancher, clarifier et repartir avec un plan d'action concret.</p>
+      </header>
+      <div class="nc-pole-body">
+        <section class="nc-pole-block">
+          <h3>Pour qui ?</h3>
+          <p>Dirigeants, entrepreneurs et professionnels qui font face à une décision importante, un blocage ou un tournant de carrière et souhaitent un regard expert, direct et confidentiel.</p>
+        </section>
+        <section class="nc-pole-block">
+          <h3>Ce que vous obtenez</h3>
+          <ul class="nc-pole-list">
+            <li><span class="nc-pole-dot"></span>Écoute active et cadrage précis de votre enjeu en début de séance</li>
+            <li><span class="nc-pole-dot"></span>Analyse structurée avec angles de lecture que vous n'avez pas encore explorés</li>
+            <li><span class="nc-pole-dot"></span>Recommandations priorisées, réalistes et actionnables immédiatement</li>
+            <li><span class="nc-pole-dot"></span>Compte-rendu écrit synthétique envoyé sous 48 h</li>
+            <li><span class="nc-pole-dot"></span>Espace de parole totalement confidentiel, sans jugement</li>
+          </ul>
+        </section>
+        <section class="nc-pole-block">
+          <h3>Déroulement</h3>
+          <ol class="nc-pole-steps">
+            <li><span>1</span>Préparation courte par questionnaire (5 min) pour maximiser le temps utile</li>
+            <li><span>2</span>Séance intensive 60 à 90 min — présentiel à Meknès ou visio sécurisée</li>
+            <li><span>3</span>Synthèse écrite + prochaines étapes concrètes à appliquer dès le lendemain</li>
+          </ol>
+        </section>
+        <div class="nc-pole-meta">
+          <div><span class="lbl">Format</span><span class="val">Présentiel · Visio</span></div>
+          <div><span class="lbl">Durée</span><span class="val">60 – 90 min</span></div>
+          <div><span class="lbl">Tarif</span><span class="val">Sur devis</span></div>
+        </div>
+        <div class="nc-pole-cta">
+          <a class="btn btn-gold" href="#contact" data-pole-close>Réserver une consultation →</a>
+          <p class="nc-pole-note">1er échange gratuit de 20 minutes · Réponse sous 24 h</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="nc-pole-panel" data-pole="coaching" hidden>
+      <header class="nc-pole-head featured">
+        <div class="nc-pole-head-top">
+          <span class="nc-pole-badge">Le plus demandé</span>
+          <span class="nc-pole-tag">Programme · Dans la durée</span>
+        </div>
+        <h2 class="nc-pole-title" id="pole-title-coaching">Coaching exécutif</h2>
+        <p class="nc-pole-lead">Un programme sur mesure pour renforcer votre leadership, votre posture et votre impact — avec un suivi régulier et des objectifs mesurables.</p>
+      </header>
+      <div class="nc-pole-body">
+        <section class="nc-pole-block">
+          <h3>Pour qui ?</h3>
+          <p>Managers, dirigeants et talents en progression qui veulent gagner en clarté, en influence et en performance durable — pas un coup d'éclair, une transformation maîtrisée.</p>
+        </section>
+        <section class="nc-pole-block">
+          <h3>Ce que vous obtenez</h3>
+          <ul class="nc-pole-list">
+            <li><span class="nc-pole-dot"></span>Programme personnalisé co-construit autour de vos objectifs réels</li>
+            <li><span class="nc-pole-dot"></span>Séances régulières + points de suivi entre les sessions</li>
+            <li><span class="nc-pole-dot"></span>Travail sur leadership, communication, prise de décision et gestion de la pression</li>
+            <li><span class="nc-pole-dot"></span>Feedback structuré et indicateurs de progression à chaque étape</li>
+            <li><span class="nc-pole-dot"></span>Bilan d'étape formalisé en milieu et fin de parcours</li>
+          </ul>
+        </section>
+        <section class="nc-pole-block">
+          <h3>Déroulement</h3>
+          <ol class="nc-pole-steps">
+            <li><span>1</span>Appel découverte gratuit pour cadrer vos enjeux et définir le format</li>
+            <li><span>2</span>Lancement : objectifs, feuille de route et rythme des séances (4 à 12 semaines)</li>
+            <li><span>3</span>Accompagnement continu, ajustements en temps réel et bilan final mesurable</li>
+          </ol>
+        </section>
+        <div class="nc-pole-meta">
+          <div><span class="lbl">Format</span><span class="val">Programme sur mesure</span></div>
+          <div><span class="lbl">Durée</span><span class="val">4 – 12 semaines</span></div>
+          <div><span class="lbl">Tarif</span><span class="val">Sur devis</span></div>
+        </div>
+        <div class="nc-pole-cta">
+          <a class="btn btn-gold" href="#contact" data-pole-close>Démarrer mon coaching →</a>
+          <p class="nc-pole-note">Sans engagement · Premier échange offert</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="nc-pole-panel" data-pole="conseil" hidden>
+      <header class="nc-pole-head">
+        <div class="nc-pole-head-top">
+          <span class="nc-pole-num">03</span>
+          <span class="nc-pole-tag">Partenariat · Stratégique</span>
+        </div>
+        <h2 class="nc-pole-title" id="pole-title-conseil">Accompagnement &amp; Conseil</h2>
+        <p class="nc-pole-lead">Un partenaire de confiance aux côtés de vos décisions majeures — disponible, réactif et engagé sur la durée de vos projets et transitions.</p>
+      </header>
+      <div class="nc-pole-body">
+        <section class="nc-pole-block">
+          <h3>Pour qui ?</h3>
+          <p>Dirigeants et professionnels en phase de croissance, de restructuration ou de transition qui ont besoin d'un conseil stratégique continu, pas d'une intervention ponctuelle.</p>
+        </section>
+        <section class="nc-pole-block">
+          <h3>Ce que vous obtenez</h3>
+          <ul class="nc-pole-list">
+            <li><span class="nc-pole-dot"></span>Vision stratégique et aide à la décision sur vos enjeux critiques</li>
+            <li><span class="nc-pole-dot"></span>Accompagnement des transitions : poste, projet, organisation, pivot</li>
+            <li><span class="nc-pole-dot"></span>Points réguliers planifiés + accès prioritaire entre les rendez-vous</li>
+            <li><span class="nc-pole-dot"></span>Préparation de dossiers, arbitrages, comités et moments de vérité</li>
+            <li><span class="nc-pole-dot"></span>Confidentialité absolue sur l'ensemble de la mission</li>
+          </ul>
+        </section>
+        <section class="nc-pole-block">
+          <h3>Déroulement</h3>
+          <ol class="nc-pole-steps">
+            <li><span>1</span>Cadrage de la mission : périmètre, enjeux, livrables et modalités</li>
+            <li><span>2</span>Rythme de travail défini ensemble (hebdo, bi-mensuel ou à la demande)</li>
+            <li><span>3</span>Suivi actif jusqu'à l'atteinte des objectifs fixés, avec points d'étape formels</li>
+          </ol>
+        </section>
+        <div class="nc-pole-meta">
+          <div><span class="lbl">Format</span><span class="val">Mission continue</span></div>
+          <div><span class="lbl">Durée</span><span class="val">Sur mesure</span></div>
+          <div><span class="lbl">Tarif</span><span class="val">Sur devis</span></div>
+        </div>
+        <div class="nc-pole-cta">
+          <a class="btn btn-gold" href="#contact" data-pole-close>Discuter de votre mission →</a>
+          <p class="nc-pole-note">Réponse sous 24 h · Présentiel Meknès ou à distance</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
 
 <!-- Floating widgets -->
 <div class="nc-toast" id="ncToast">

@@ -58,14 +58,21 @@
     counters.forEach(runCount);
   }
 
-  /* Hero cursor glow */
+  /* Hero cursor / touch glow */
   var hero = document.querySelector('.nc-hero');
   var glow = document.getElementById('ncHeroGlow');
-  if (hero && glow && window.matchMedia('(hover:hover)').matches) {
-    hero.addEventListener('mousemove', function (e) {
+  if (hero && glow) {
+    function moveHeroGlow(clientX, clientY) {
       var r = hero.getBoundingClientRect();
-      glow.style.transform = 'translate(' + (e.clientX - r.left - 240) + 'px,' + (e.clientY - r.top - 240) + 'px)';
-    });
+      glow.style.transform = 'translate(' + (clientX - r.left - 240) + 'px,' + (clientY - r.top - 240) + 'px)';
+    }
+    if (window.matchMedia('(hover:hover)').matches) {
+      hero.addEventListener('mousemove', function (e) { moveHeroGlow(e.clientX, e.clientY); });
+    } else {
+      hero.addEventListener('touchmove', function (e) {
+        if (e.touches[0]) moveHeroGlow(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+    }
   }
 
   /* Service + program cards: cursor-follow radial glow */
@@ -76,6 +83,65 @@
       card.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
+
+  /* Pôle detail modal */
+  var poleModal = document.getElementById('ncPoleModal');
+  var poleModalBg = document.getElementById('ncPoleModalBg');
+  var poleModalClose = document.getElementById('ncPoleModalClose');
+  var polePanels = poleModal ? poleModal.querySelectorAll('.nc-pole-panel') : [];
+  var poleCards = document.querySelectorAll('.nc-svc-card[data-pole]');
+  var lastPoleTrigger = null;
+
+  function openPoleModal(id, trigger) {
+    if (!poleModal || !id) return;
+    lastPoleTrigger = trigger || null;
+    polePanels.forEach(function (panel) {
+      var match = panel.getAttribute('data-pole') === id;
+      panel.hidden = !match;
+      if (match) {
+        var title = panel.querySelector('.nc-pole-title');
+        if (title) poleModal.setAttribute('aria-labelledby', title.id);
+      }
+    });
+    poleModal.classList.add('open');
+    poleModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (poleModalClose) poleModalClose.focus();
+  }
+
+  function closePoleModal() {
+    if (!poleModal) return;
+    poleModal.classList.remove('open');
+    poleModal.setAttribute('aria-hidden', 'true');
+    polePanels.forEach(function (panel) { panel.hidden = true; });
+    document.body.style.overflow = '';
+    if (lastPoleTrigger) lastPoleTrigger.focus();
+    lastPoleTrigger = null;
+  }
+
+  poleCards.forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return;
+      openPoleModal(card.getAttribute('data-pole'), card);
+    });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPoleModal(card.getAttribute('data-pole'), card);
+      }
+    });
+  });
+
+  if (poleModalClose) poleModalClose.addEventListener('click', closePoleModal);
+  if (poleModalBg) poleModalBg.addEventListener('click', closePoleModal);
+  if (poleModal) {
+    poleModal.querySelectorAll('[data-pole-close]').forEach(function (link) {
+      link.addEventListener('click', closePoleModal);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && poleModal.classList.contains('open')) closePoleModal();
+    });
+  }
 
   /* FAQ accordion */
   document.querySelectorAll('.nc-faq-item .nc-faq-q').forEach(function (q) {
