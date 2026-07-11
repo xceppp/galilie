@@ -64,7 +64,7 @@
   if (hero && glow && window.matchMedia('(hover:hover)').matches) {
     hero.addEventListener('mousemove', function (e) {
       var r = hero.getBoundingClientRect();
-      glow.style.transform = 'translate(' + (e.clientX - r.left - 210) + 'px,' + (e.clientY - r.top - 210) + 'px)';
+      glow.style.transform = 'translate(' + (e.clientX - r.left - 240) + 'px,' + (e.clientY - r.top - 240) + 'px)';
     });
   }
 
