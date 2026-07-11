@@ -125,16 +125,11 @@
   poleCards.forEach(function (card) {
     card.addEventListener('click', function (e) {
       if (e.target.closest('a')) return;
-      /* In carousel mode, a side card navigates instead of opening the modal */
-      if (card.classList.contains('is-left')) { e.preventDefault(); poleGo(-1); return; }
-      if (card.classList.contains('is-right')) { e.preventDefault(); poleGo(1); return; }
       openPoleModal(card.getAttribute('data-pole'), card);
     });
     card.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        if (card.classList.contains('is-left')) { poleGo(-1); return; }
-        if (card.classList.contains('is-right')) { poleGo(1); return; }
         openPoleModal(card.getAttribute('data-pole'), card);
       }
     });
@@ -151,103 +146,26 @@
     });
   }
 
-  /* ---- Pôles : carrousel 3D ---- */
-  var carousel = document.getElementById('ncPoleCarousel');
-  var track = carousel ? carousel.querySelector('.nc-svc--carousel') : null;
-  var slides = track ? Array.prototype.slice.call(track.querySelectorAll('.nc-svc-card')) : [];
-  var poleGo = function () {};
-
-  if (carousel && track && slides.length) {
-    var stage = carousel.querySelector('.nc-carousel-stage');
-    var prevBtn = document.getElementById('ncPolePrev');
-    var nextBtn = document.getElementById('ncPoleNext');
-    var dotsWrap = document.getElementById('ncPoleDots');
-    var n = slides.length;
-    /* start centered on the "featured" (most recommended) card if present */
-    var featuredIdx = slides.findIndex(function (s) { return s.classList.contains('featured'); });
-    var current = featuredIdx > -1 ? featuredIdx : 0;
-
-    /* build dots */
-    var dots = [];
-    if (dotsWrap) {
-      slides.forEach(function (s, i) {
-        var d = document.createElement('button');
-        d.type = 'button';
-        d.className = 'nc-carousel-dot';
-        d.setAttribute('aria-label', 'Pôle ' + (i + 1));
-        d.addEventListener('click', function () { current = i; render(); });
-        dotsWrap.appendChild(d);
-        dots.push(d);
-      });
-    }
-
-    function mod(i) { return ((i % n) + n) % n; }
-
-    function measureHeight() {
-      var max = 0;
-      slides.forEach(function (s) {
-        var prev = s.style.cssText;
-        /* temporarily reset to natural flow to measure */
-        s.style.position = 'relative';
-        s.style.transform = 'none';
-        s.style.opacity = '1';
-        var h = s.offsetHeight;
-        s.style.cssText = prev;
-        if (h > max) max = h;
-      });
-      if (max && track) track.style.setProperty('--carousel-h', max + 'px');
-    }
-
-    function render() {
-      slides.forEach(function (s, i) {
-        s.classList.remove('is-center', 'is-left', 'is-right', 'is-hidden');
-        if (i === current) s.classList.add('is-center');
-        else if (i === mod(current - 1)) s.classList.add('is-left');
-        else if (i === mod(current + 1)) s.classList.add('is-right');
-        else s.classList.add('is-hidden');
-        s.setAttribute('aria-hidden', i === current ? 'false' : 'true');
-        s.tabIndex = i === current ? 0 : -1;
-      });
-      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === current); });
-    }
-
-    poleGo = function (dir) { current = mod(current + dir); render(); };
-
-    if (prevBtn) prevBtn.addEventListener('click', function () { poleGo(-1); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { poleGo(1); });
-
-    /* swipe support */
-    var sx = 0, sy = 0, swiping = false;
-    if (stage) {
-      stage.addEventListener('touchstart', function (e) {
-        if (!e.touches[0]) return;
-        sx = e.touches[0].clientX; sy = e.touches[0].clientY; swiping = true;
-      }, { passive: true });
-      stage.addEventListener('touchend', function (e) {
-        if (!swiping || !e.changedTouches[0]) return;
-        swiping = false;
-        var dx = e.changedTouches[0].clientX - sx;
-        var dy = e.changedTouches[0].clientY - sy;
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) poleGo(dx < 0 ? 1 : -1);
-      }, { passive: true });
-    }
-
-    /* keyboard on the stage */
-    carousel.addEventListener('keydown', function (e) {
-      if (poleModal && poleModal.classList.contains('open')) return;
-      if (e.key === 'ArrowLeft') poleGo(-1);
-      else if (e.key === 'ArrowRight') poleGo(1);
+  /* Theme toggle (light / dark) */
+  var themeBtns = [document.getElementById('ncThemeToggle'), document.getElementById('ncThemeToggleM')].filter(Boolean);
+  function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+  function syncThemeBtns() {
+    themeBtns.forEach(function (b) {
+      b.setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+      b.setAttribute('title', isDark() ? 'Passer au thème clair' : 'Passer au thème sombre');
     });
-
-    measureHeight();
-    render();
-    window.addEventListener('resize', function () {
-      clearTimeout(window.__ncPoleRz);
-      window.__ncPoleRz = setTimeout(measureHeight, 200);
-    });
-    /* re-measure once fonts/images settle */
-    window.addEventListener('load', measureHeight);
   }
+  function toggleTheme() {
+    var dark = !isDark();
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('nc-theme', dark ? 'dark' : 'light'); } catch (e) {}
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#0f131a' : '#0E1116');
+    syncThemeBtns();
+  }
+  themeBtns.forEach(function (b) { b.addEventListener('click', toggleTheme); });
+  syncThemeBtns();
 
   /* FAQ accordion */
   document.querySelectorAll('.nc-faq-item .nc-faq-q').forEach(function (q) {

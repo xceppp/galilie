@@ -13,6 +13,68 @@
   --shadow-md:0 18px 50px rgba(20,24,32,.10);
   --shadow-lg:0 30px 80px rgba(0,0,0,.45);
 }
+
+/* ---------- DARK THEME ---------- */
+:root[data-theme="dark"]{
+  --pearl:#0f131a;         /* page background */
+  --white:#161b24;         /* card / surface */
+  --charcoal:#eef1f6;      /* headings (was dark) -> now light */
+  --charcoal-deep:#0a0d12;
+  --charcoal-soft:#20262f;
+  --steel:#8a93a3; --steel-lt:#aab2bf;
+  --line:#2a313c;          /* borders */
+  --ink:#e6e9ef;           /* body text */
+  --ink-dim:#a9b1bd;       /* muted text */
+  --gold-pale:#3a3216;     /* pale gold surfaces -> deep on dark */
+  --shadow-sm:0 4px 18px rgba(0,0,0,.4);
+  --shadow-md:0 18px 50px rgba(0,0,0,.5);
+}
+/* Dark-mode fine-tuning for spots that assume a light surface */
+:root[data-theme="dark"] body{background:var(--pearl)}
+:root[data-theme="dark"] .nc-nav{background:rgba(16,20,27,.82);border-bottom-color:var(--line)}
+:root[data-theme="dark"] .nc-nav.scrolled{background:rgba(16,20,27,.95)}
+:root[data-theme="dark"] .nc-section.alt{background:#12161e}
+:root[data-theme="dark"] .nc-trust{background:var(--white);border-bottom-color:var(--line)}
+:root[data-theme="dark"] .nc-trust-item b{color:var(--steel-lt)}
+:root[data-theme="dark"] .nc-title em{color:var(--gold-lt)}
+:root[data-theme="dark"] .nc-hamb,
+:root[data-theme="dark"] .nc-drawer-close{background:var(--white);color:var(--ink);border-color:var(--line)}
+:root[data-theme="dark"] .nc-drawer{background:#12161e;border-left-color:var(--line)}
+:root[data-theme="dark"] .nc-svc-ico{background:linear-gradient(155deg,#232a35,#39424f)}
+:root[data-theme="dark"] .nc-svc-deliver span{background:#1d232c}
+:root[data-theme="dark"] .nc-chip{background:#1d232c}
+:root[data-theme="dark"] .nc-prog-emoji{background:#1d232c}
+:root[data-theme="dark"] .nc-steps--v2 .nc-step-num{background:linear-gradient(180deg,#232a35,#1a1f28);color:var(--gold-lt);border-color:var(--line)}
+:root[data-theme="dark"] .nc-testi-res,
+:root[data-theme="dark"] .nc-res{background:rgba(58,122,82,.16)}
+:root[data-theme="dark"] .nc-form-card{background:var(--white)}
+:root[data-theme="dark"] .nc-carousel-arrow{background:linear-gradient(180deg,#20262f,#161b24);color:var(--gold-lt);border-color:var(--line)}
+:root[data-theme="dark"] .nc-pole-modal-dialog{background:var(--white)}
+:root[data-theme="dark"] .nc-pole-body{color:var(--ink)}
+:root[data-theme="dark"] .nc-pole-steps li{background:#1d232c;border-color:var(--line)}
+:root[data-theme="dark"] .nc-pole-meta{background:linear-gradient(180deg,#1d232c,#161b24);border-color:var(--line)}
+:root[data-theme="dark"] .nc-faq-item{background:var(--white)}
+/* Smooth theme transition */
+body,.nc-nav,.nc-section,.nc-svc-card,.nc-testi-card,.nc-faq-item,.nc-step,.nc-prog-card,.nc-expert-pillar{
+  transition:background-color .4s ease,border-color .4s ease,color .4s ease;
+}
+
+/* Theme toggle button */
+.nc-theme-toggle{
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  background:var(--white);border:1px solid var(--line);color:var(--charcoal);
+  transition:background .25s,color .25s,border-color .25s,transform .2s;
+  padding:0;
+}
+.nc-theme-toggle:hover{border-color:var(--gold);color:var(--gold-deep);transform:translateY(-1px)}
+.nc-theme-toggle svg{width:20px;height:20px}
+.nc-theme-ico--moon{display:none}
+:root[data-theme="dark"] .nc-theme-ico--sun{display:none}
+:root[data-theme="dark"] .nc-theme-ico--moon{display:block}
+:root[data-theme="dark"] .nc-theme-toggle{color:var(--gold-lt)}
+:root[data-theme="dark"] .nc-theme-toggle:hover{color:var(--gold-lt);border-color:var(--gold)}
+
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--pearl);color:var(--ink);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -484,35 +546,37 @@ button,input,select,textarea{font-family:inherit}
   #poles .nc-head{margin-bottom:8px}
   #poles .nc-sub{font-size:15px;line-height:1.75;max-width:34rem;margin-inline:auto}
 
-  /* pôles : carte centrale, contenu essentiel visible */
+  /* pôles : cartes pleine largeur empilées, contenu complet */
+  .nc-svc{grid-template-columns:1fr;gap:22px;margin-top:36px}
   .nc-svc-card{
-    padding:26px 22px 22px;text-align:left;
+    padding:28px 22px 24px;text-align:left;
     display:flex;flex-direction:column;
   }
   .nc-svc-index{
     position:absolute;top:20px;right:22px;
-    font-size:2rem;margin-bottom:0;display:block;text-align:right;
+    font-size:2.2rem;margin-bottom:0;display:block;text-align:right;
   }
   .nc-svc-badge{
     position:static;display:inline-flex;align-self:flex-start;
     margin:0 0 14px;font-size:10px;padding:6px 12px;
   }
   .nc-svc-ico{
-    width:52px;height:52px;margin:0 0 16px;border-radius:14px;
+    width:56px;height:56px;margin:0 0 18px;border-radius:14px;
   }
-  .nc-svc-ico svg{width:24px;height:24px}
+  .nc-svc-ico svg{width:26px;height:26px}
   .nc-svc-tagline{display:block;font-size:11px;margin-bottom:10px}
   .nc-svc-card h3{
-    font-size:clamp(1.2rem,5vw,1.4rem);line-height:1.25;margin-bottom:10px;
+    font-size:clamp(1.2rem,5vw,1.45rem);line-height:1.25;margin-bottom:12px;
   }
-  .nc-svc-card .desc{display:block;font-size:13.5px;line-height:1.7;margin-bottom:0}
-  .nc-svc-ul{display:none}
-  .nc-svc-deliver{display:none}
+  .nc-svc-card .desc{display:block;font-size:14px;line-height:1.75;margin-bottom:4px}
+  .nc-svc-ul{display:flex;margin-top:18px}
+  .nc-svc-ul li{font-size:13.5px}
+  .nc-svc-deliver{display:flex;margin-top:18px}
   .nc-svc-foot{
-    margin-top:auto;padding-top:18px;border-top:1px solid var(--line);
+    margin-top:auto;padding-top:20px;border-top:1px solid var(--line);
     flex-direction:row;gap:12px;align-items:center;justify-content:space-between;
   }
-  .nc-svc-price{display:block;font-size:1.05rem}
+  .nc-svc-price{display:block;font-size:1.1rem}
   .nc-svc-cta{font-size:13px;justify-content:flex-start}
   .nc-svc-card.featured{
     box-shadow:0 20px 50px rgba(201,162,75,.16);
@@ -528,52 +592,7 @@ button,input,select,textarea{font-family:inherit}
   .nc-prog-card h3{font-size:.95rem}
   .nc-prog-card p{font-size:12px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
-  .nc-testi-wrap{
-    margin-inline:-16px;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-    mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-  }
-  .nc-testi{
-    display:flex;gap:14px;
-    overflow-x:auto;overflow-y:hidden;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    padding:4px 16px 10px;
-    scroll-padding-inline:16px;
-    margin-top:28px;
-    scrollbar-width:none;
-  }
-  .nc-testi::-webkit-scrollbar{display:none}
-  .nc-testi-card{
-    flex:0 0 min(90vw,340px);
-    scroll-snap-align:center;
-    padding:18px 16px;text-align:left;
-  }
-  .nc-stars{font-size:12px;margin-bottom:8px;letter-spacing:1px}
-  .nc-testi-card p{
-    font-size:12.5px;line-height:1.65;font-style:italic;
-    display:block;
-  }
-  .nc-res{font-size:10px;padding:4px 9px;margin-top:10px;white-space:nowrap}
-  .nc-who{justify-content:flex-start;margin-top:14px;padding-top:12px;gap:10px}
-  .nc-who>div:not(.nc-av){min-width:0;flex:1}
-  .nc-av{width:36px;height:36px;font-size:12px;flex-shrink:0}
-  .nc-nm{
-    font-size:12px;line-height:1.2;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  }
-  .nc-rl{
-    font-size:9.5px;line-height:1.2;margin-top:3px;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    letter-spacing:.04em;
-  }
-  .nc-testi-hint{
-    display:block;text-align:center;
-    font-size:12px;color:var(--steel);margin-top:10px;
-    letter-spacing:.04em;
-  }
-  #temoignages .nc-head{text-align:center}
-  #temoignages .nc-head .nc-label{justify-content:center}
+  /* Témoignages mobiles gérés dans le bloc redesign plus bas */
 }
 
 /* Programmes */
@@ -876,81 +895,6 @@ button,input,select,textarea{font-family:inherit}
 .nc-svc-card:hover{transform:translateY(-12px)}
 .nc-svc-ico{background:linear-gradient(155deg,var(--charcoal),#31384a)}
 
-/* ---------- PÔLES : carrousel 3D premium ---------- */
-.nc-carousel{position:relative;margin-top:52px;display:flex;align-items:center;justify-content:center;gap:12px}
-.nc-carousel-stage{
-  position:relative;flex:1;min-width:0;
-  perspective:1600px;
-}
-.nc-svc--carousel{
-  display:block;margin-top:0;position:relative;
-  height:var(--carousel-h,600px);
-  transform-style:preserve-3d;
-}
-.nc-svc--carousel .nc-svc-card{
-  position:absolute;top:0;left:50%;
-  width:min(400px,84%);
-  margin:0;
-  transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .5s ease,filter .5s ease,box-shadow .5s ease;
-  will-change:transform,opacity;
-  backface-visibility:hidden;
-}
-/* center */
-.nc-svc--carousel .nc-svc-card.is-center{
-  transform:translateX(-50%) translateZ(60px) scale(1);
-  opacity:1;z-index:5;
-  box-shadow:0 40px 90px rgba(20,24,32,.22),0 0 0 1px var(--gold-pale);
-}
-.nc-svc--carousel .nc-svc-card.is-center:hover{transform:translateX(-50%) translateZ(80px) scale(1.01)}
-/* left */
-.nc-svc--carousel .nc-svc-card.is-left{
-  transform:translateX(-104%) translateZ(-140px) rotateY(26deg) scale(.9);
-  opacity:.55;z-index:3;filter:saturate(.85) brightness(.96);
-  cursor:pointer;
-}
-/* right */
-.nc-svc--carousel .nc-svc-card.is-right{
-  transform:translateX(4%) translateZ(-140px) rotateY(-26deg) scale(.9);
-  opacity:.55;z-index:3;filter:saturate(.85) brightness(.96);
-  cursor:pointer;
-}
-.nc-svc--carousel .nc-svc-card.is-left:hover{
-  transform:translateX(-104%) translateZ(-110px) rotateY(22deg) scale(.92);opacity:.85;
-}
-.nc-svc--carousel .nc-svc-card.is-right:hover{
-  transform:translateX(4%) translateZ(-110px) rotateY(-22deg) scale(.92);opacity:.85;
-}
-/* hidden (>1 away, only relevant if more cards later) */
-.nc-svc--carousel .nc-svc-card.is-hidden{opacity:0;transform:translateX(-50%) translateZ(-260px) scale(.8);pointer-events:none;z-index:1}
-
-/* premium arrows */
-.nc-carousel-arrow{
-  flex-shrink:0;width:56px;height:56px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  background:linear-gradient(180deg,#fff,var(--pearl));
-  border:1px solid var(--gold-pale);
-  color:var(--gold-deep);
-  box-shadow:0 12px 30px rgba(20,24,32,.1),inset 0 0 0 1px rgba(255,255,255,.6);
-  transition:transform .25s,box-shadow .25s,background .25s,color .25s;
-  z-index:8;
-}
-.nc-carousel-arrow svg{width:24px;height:24px}
-.nc-carousel-arrow:hover{
-  transform:translateY(-2px) scale(1.06);
-  background:linear-gradient(180deg,var(--gold),var(--gold-lt));
-  color:#1a1408;
-  box-shadow:0 16px 38px rgba(201,162,75,.4);
-}
-.nc-carousel-arrow:active{transform:scale(.96)}
-.nc-carousel-arrow:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
-/* dots */
-.nc-carousel-dots{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:26px}
-.nc-carousel-dot{
-  width:8px;height:8px;border-radius:999px;border:none;cursor:pointer;padding:0;
-  background:var(--line);transition:width .3s,background .3s;
-}
-.nc-carousel-dot.is-active{width:26px;background:linear-gradient(90deg,var(--gold),var(--gold-lt))}
 
 /* Méthode — connected timeline v2 */
 .nc-steps--v2{position:relative;margin-top:52px}
@@ -1044,14 +988,6 @@ button,input,select,textarea{font-family:inherit}
   .nc-title{font-size:clamp(1.7rem,6.5vw,2.2rem)}
   .nc-sub{font-size:14.5px}
 
-  /* ---- PÔLES carrousel 3D — mobile ---- */
-  .nc-carousel{gap:6px;margin-top:38px}
-  .nc-carousel-arrow{width:44px;height:44px}
-  .nc-carousel-arrow svg{width:20px;height:20px}
-  .nc-svc--carousel .nc-svc-card{width:min(300px,80%)}
-  .nc-svc--carousel .nc-svc-card.is-left{transform:translateX(-118%) translateZ(-120px) rotateY(20deg) scale(.86);opacity:.4}
-  .nc-svc--carousel .nc-svc-card.is-right{transform:translateX(18%) translateZ(-120px) rotateY(-20deg) scale(.86);opacity:.4}
-
   /* ---- MÉTHODE v2 : pile verticale lisible ---- */
   .nc-steps.nc-steps--v2{
     grid-template-columns:1fr;gap:14px;margin-top:34px;
@@ -1091,14 +1027,51 @@ button,input,select,textarea{font-family:inherit}
   .nc-expert-pillar h3{font-size:1.05rem}
   .nc-expert-pillar p{display:block;font-size:13px;line-height:1.65}
 
-  /* ---- TÉMOIGNAGES : restaure la carte carrousel lisible ---- */
-  .nc-testi-card{
-    flex:0 0 min(90vw,340px);
-    scroll-snap-align:center;
-    border-radius:18px;padding:20px 18px;text-align:left;
+  /* ---- TÉMOIGNAGES : carrousel horizontal, carte propre ---- */
+  .nc-testi-wrap{
+    margin-inline:-16px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
   }
-  .nc-testi-card::before{font-size:3rem;top:0;right:12px;opacity:.45}
-  .nc-testi-card p{font-size:13px;line-height:1.7;font-style:italic}
+  .nc-testi{
+    display:flex;gap:14px;margin-top:28px;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:4px 16px 10px;scroll-padding-inline:16px;
+    scrollbar-width:none;
+  }
+  .nc-testi::-webkit-scrollbar{display:none}
+  .nc-testi-card{
+    flex:0 0 min(86vw,320px);
+    scroll-snap-align:center;
+    border-radius:18px;padding:22px 20px;text-align:left;
+  }
+  .nc-testi-card::before{font-size:3rem;top:0;right:14px;opacity:.4}
+  .nc-stars{font-size:12px;margin-bottom:10px;letter-spacing:1px}
+  .nc-testi-card p{font-size:13.5px;line-height:1.7;font-style:italic}
+  .nc-res{font-size:10px;padding:4px 10px;margin-top:12px;white-space:nowrap}
+
+  /* auteur : avatar + (nom sur 1 ligne / rôle sur 1 ligne) */
+  .nc-who{
+    display:flex;align-items:center;gap:12px;
+    margin-top:16px;padding-top:14px;
+  }
+  .nc-who>div:not(.nc-av){min-width:0;flex:1}
+  .nc-av{width:40px;height:40px;font-size:13px;flex-shrink:0}
+  .nc-nm{
+    font-size:13px;font-weight:600;line-height:1.2;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .nc-rl{
+    font-size:10px;line-height:1.2;margin-top:3px;letter-spacing:.04em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .nc-testi-hint{
+    display:block;text-align:center;
+    font-size:12px;color:var(--steel);margin-top:10px;letter-spacing:.04em;
+  }
+  #temoignages .nc-head{text-align:center}
+  #temoignages .nc-head .nc-label{justify-content:center}
 
   /* ---- FORMATIONS ---- */
   .nc-prog.nc-prog-compact{grid-template-columns:1fr;gap:12px;margin-top:30px}

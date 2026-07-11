@@ -69,6 +69,14 @@
 
 <link rel="stylesheet" href="nc-theme.css">
 <link rel="stylesheet" href="nc-form.css">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('nc-theme');
+    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  } catch (e) {}
+})();
+</script>
 </head>
 
 <body>
@@ -88,6 +96,10 @@
       <a href="#faq">FAQ</a>
       </nav>
     <div class="nc-nav-actions">
+      <button class="nc-theme-toggle" id="ncThemeToggle" type="button" aria-label="Changer le thème" aria-pressed="false" title="Changer le thème">
+        <svg class="nc-theme-ico nc-theme-ico--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="nc-theme-ico nc-theme-ico--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
       <a class="btn btn-gold nc-nav-cta" href="#contact">Réserver un appel</a>
       <button class="nc-hamb" id="ncHamb" type="button" aria-label="Ouvrir le menu">☰</button>
       </div>
@@ -101,6 +113,10 @@
     <div class="nc-brand">
       <span class="nc-wordmark">NC <span>Consulting</span></span>
   </div>
+    <button class="nc-theme-toggle" id="ncThemeToggleM" type="button" aria-label="Changer le thème" aria-pressed="false" title="Changer le thème">
+      <svg class="nc-theme-ico nc-theme-ico--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="nc-theme-ico nc-theme-ico--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
     <button class="nc-drawer-close" id="ncDrawerClose" aria-label="Fermer">×</button>
   </div>
   <a href="#poles" data-close>Pôles</a>
@@ -197,12 +213,7 @@
       <p class="nc-sub reveal d2">Du conseil ponctuel au partenariat stratégique — cliquez sur un pôle pour découvrir le détail, le déroulement et les livrables.</p>
     </div>
 
-    <div class="nc-carousel" id="ncPoleCarousel">
-    <button type="button" class="nc-carousel-arrow nc-carousel-arrow--prev" id="ncPolePrev" aria-label="Pôle précédent">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <div class="nc-carousel-stage">
-    <div class="nc-svc nc-svc--carousel">
+    <div class="nc-svc">
       <!-- 1 -->
       <article class="nc-svc-card nc-svc-card--clickable reveal d1" data-pole="consultation" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Consultation 1-à-1 — voir le détail">
         <div class="nc-svc-index" aria-hidden="true">01</div>
@@ -263,12 +274,6 @@
         </div>
       </article>
       </div>
-    </div>
-    <button type="button" class="nc-carousel-arrow nc-carousel-arrow--next" id="ncPoleNext" aria-label="Pôle suivant">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
-    </div>
-    <div class="nc-carousel-dots" id="ncPoleDots" aria-hidden="true"></div>
 
     <div class="nc-svc-note reveal d2">
       <span><b>1er échange gratuit</b> de 20 minutes</span>
@@ -357,19 +362,19 @@
       <div class="nc-testi" id="ncTesti">
       <div class="nc-testi-card reveal d1">
         <div class="nc-stars">★★★★★</div>
-        <p>« Une méthode claire et une vraie discipline. J'ai été admis à l'ENSA à la première tentative — les simulations et corrections m'ont fait gagner un temps énorme. »</p>
+        <p>« Méthode claire, résultats rapides. Admis à l'ENSA du premier coup. »</p>
         <span class="nc-res">✓ Admis 1re tentative · ENSA</span>
         <div class="nc-who"><div class="nc-av">YB</div><div><div class="nc-nm">Youssef B.</div><div class="nc-rl">Lauréat ENSA</div></div></div>
       </div>
       <div class="nc-testi-card reveal d2">
         <div class="nc-stars">★★★★★</div>
-        <p>« Mon fils a gagné en confiance et en organisation. Mention Bien au bac. L'équipe est sérieuse et le suivi est réel. »</p>
+        <p>« Plus de confiance, plus d'organisation. Mention Bien au bac. »</p>
         <span class="nc-res">✓ Mention Bien · Parent d'élève</span>
         <div class="nc-who"><div class="nc-av">MH</div><div><div class="nc-nm">M. Hassan</div><div class="nc-rl">Parent d'élève BAC</div></div></div>
       </div>
       <div class="nc-testi-card reveal d3">
         <div class="nc-stars">★★★★★</div>
-        <p>« Préparation concours Finance solide : culture générale, droit, rédaction… et surtout l'oral. Admis. »</p>
+        <p>« Préparation solide, surtout l'oral. Résultat : admis. »</p>
         <span class="nc-res">✓ Admis Finance · Emploi public</span>
         <div class="nc-who"><div class="nc-av">KM</div><div><div class="nc-nm">Karim M.</div><div class="nc-rl">Candidat emploi public</div></div></div>
       </div>
