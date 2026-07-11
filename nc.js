@@ -104,9 +104,9 @@
   var people = [
     ['R', 'Rachid', 'un appel découverte'],
     ['S', 'Sanae', 'une consultation 1-à-1'],
-    ['Y', 'Youssef', 'une prépa concours'],
-    ['K', 'Khadija', 'un appel découverte'],
-    ['M', 'Mehdi', 'un accompagnement']
+    ['N', 'Nadia', 'un coaching exécutif'],
+    ['K', 'Khadija', 'un accompagnement conseil'],
+    ['M', 'Mehdi', 'un appel découverte']
   ];
   var toast = document.getElementById('ncToast');
   if (toast && !reduce) {

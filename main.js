@@ -1,4 +1,4 @@
-/* Galilie Scholar — site scripts (linked from index.html; DOM-ready at end of <body>) */
+/* NC Consulting — site scripts (formulaire lead, wizard, reCAPTCHA) */
 
 /* ── 1. CONSTANTS ─────────────────────────────────────── */
 const LEAD_API_URL = "/api/lead";

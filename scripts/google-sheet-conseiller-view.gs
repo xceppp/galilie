@@ -1,5 +1,5 @@
 /**
- * Galilie Scholar — vue conseiller : filtre léger + colonnes techniques masquées
+ * NC Consulting — vue conseiller : filtre léger + colonnes techniques masquées
  * ----------------------------------------------------------------------------
  * À coller dans Extensions > Apps Script (même fichier que l’autre script si
  * vous voulez), puis exécutez `setupConseillerFriendlySheets`.

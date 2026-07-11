@@ -1,8 +1,8 @@
 {
-  "name": "galilie",
+  "name": "nc-consulting",
   "private": true,
   "version": "1.0.0",
-  "description": "Galilie Scholar site with secure lead API",
+  "description": "NC Consulting site with secure lead API",
   "engines": {
     "node": ">=18.x"
   },

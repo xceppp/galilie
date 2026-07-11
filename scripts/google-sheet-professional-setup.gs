@@ -1,5 +1,5 @@
 /**
- * Galilie Scholar — mise en forme professionnelle du classeur leads
+ * NC Consulting — mise en forme professionnelle du classeur leads
  * -----------------------------------------------------------------
  * 1) Ouvrez le Google Sheet concerné (même fichier que le backend).
  * 2) Extensions > Apps Script — collez tout ce fichier.
