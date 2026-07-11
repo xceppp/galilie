@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /api/
 
-Sitemap: https://www.ncconsulting.ma/sitemap.xml
+Sitemap: https://nconsulting.vercel.app/sitemap.xml

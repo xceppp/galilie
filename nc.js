@@ -146,6 +146,38 @@
     });
   }
 
+  /* Pôles : onglets Formation / Accompagnement / Conseil */
+  var polesRoot = document.getElementById('ncPoles');
+  if (polesRoot) {
+    var polTabs = Array.prototype.slice.call(polesRoot.querySelectorAll('.nc-poles-tab'));
+    var polPanels = Array.prototype.slice.call(polesRoot.querySelectorAll('.nc-poles-panel'));
+    function activatePole(idx) {
+      polTabs.forEach(function (t, i) {
+        var on = i === idx;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+      polPanels.forEach(function (p, i) {
+        var on = i === idx;
+        p.classList.toggle('is-active', on);
+        p.hidden = !on;
+      });
+    }
+    polTabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { activatePole(i); });
+      tab.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          var ni = (i + 1) % polTabs.length; activatePole(ni); polTabs[ni].focus();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          var pi = (i - 1 + polTabs.length) % polTabs.length; activatePole(pi); polTabs[pi].focus();
+        }
+      });
+    });
+  }
+
   /* Theme toggle (light / dark) */
   var themeBtns = [document.getElementById('ncThemeToggle'), document.getElementById('ncThemeToggleM')].filter(Boolean);
   function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
