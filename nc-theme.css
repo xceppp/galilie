@@ -485,70 +485,101 @@ button,input,select,textarea{font-family:inherit}
 /* ============================================================
    PRÉPARATION CONCOURS (URGENT)
    ============================================================ */
+/* Urgent scrolling band */
 .nc-alert-bar {
-  background: var(--ur);
-  color: var(--white);
-  text-align: center;
-  padding: 10px 16px;
-  font-size: 13px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  z-index: 100;
-  position: relative;
+  gap: 12px;
+  background: var(--ur);
+  color: #fff;
+  padding: 0 14px;
+  min-height: 38px;
+  overflow: hidden;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.18);
 }
 .nc-alert-badge {
-  background: rgba(255,255,255,0.25);
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 11px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 9px;
+  border-radius: 5px;
+  font-size: 10.5px;
   font-weight: 800;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-}
-.nc-alert-bar a {
-  color: var(--white);
-  text-decoration: underline;
-  font-weight: 700;
   white-space: nowrap;
 }
-.nc-alert-bar a:hover {
-  text-decoration: none;
+.nc-alert-marquee {
+  flex: 1 1 auto;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
-@media(max-width: 768px) {
-  .nc-alert-bar {
-    font-size: 12px;
-    flex-wrap: wrap;
-    line-height: 1.4;
-    padding: 8px 12px;
-  }
+.nc-alert-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 34px;
+  width: max-content;
+  animation: marquee 26s linear infinite;
+}
+.nc-alert-bar:hover .nc-alert-track { animation-play-state: paused; }
+.nc-alert-item {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: .01em;
+}
+.nc-alert-item::before {
+  content: "◆";
+  margin-right: 12px;
+  font-size: 7px;
+  vertical-align: middle;
+  opacity: .75;
+}
+.nc-alert-cta {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 6px;
+  transition: background .2s;
+}
+.nc-alert-bar:hover .nc-alert-cta { background: rgba(255,255,255,.18); }
+@media(prefers-reduced-motion: reduce) {
+  .nc-alert-track { animation: none; }
+}
+@media(max-width: 560px) {
+  .nc-alert-bar { gap: 8px; padding: 0 10px; min-height: 36px; }
+  .nc-alert-badge { font-size: 9.5px; padding: 3px 7px; }
+  .nc-alert-item { font-size: 11.5px; }
+  .nc-alert-cta { display: none; }
 }
 
+/* Concours slider */
 .nc-concours-slider {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: 24px;
-  padding: 10px 0 30px;
+  gap: 22px;
+  padding: 6px 4px 28px;
+  margin: 0 -4px;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
-.nc-concours-slider::-webkit-scrollbar {
-  display: none;
-}
+.nc-concours-slider::-webkit-scrollbar { display: none; }
 .nc-concours-card {
   scroll-snap-align: start;
   flex: 0 0 340px;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 32px 28px;
+  padding: 30px 26px;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-sm);
   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-}
-:root[data-theme="dark"] .nc-concours-card {
-  background: var(--charcoal-soft);
 }
 .nc-concours-card:hover {
   transform: translateY(-4px);
@@ -559,33 +590,29 @@ button,input,select,textarea{font-family:inherit}
   display: inline-flex;
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--gold-deep);
-  background: rgba(201,163,86,0.15);
+  background: rgba(201,163,86,0.14);
   padding: 6px 12px;
   border-radius: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   width: fit-content;
 }
-:root[data-theme="dark"] .nc-concours-card-tag {
-  color: var(--gold-lt);
-}
+:root[data-theme="dark"] .nc-concours-card-tag { color: var(--gold-lt); }
 .nc-concours-card h3 {
   font-family: "Fraunces", serif;
-  font-size: 1.4rem;
-  color: var(--text-on-dark);
-  line-height: 1.25;
-  margin-bottom: 12px;
-}
-:root[data-theme="light"] .nc-concours-card h3 {
+  font-weight: 600;
+  font-size: 1.35rem;
   color: var(--charcoal);
+  line-height: 1.25;
+  margin-bottom: 10px;
 }
 .nc-concours-card p {
-  font-size: 14.5px;
-  color: var(--silver);
+  font-size: 14px;
+  color: var(--ink-dim);
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 .nc-concours-card ul {
   list-style: none;
@@ -593,27 +620,24 @@ button,input,select,textarea{font-family:inherit}
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 13px;
   flex-grow: 1;
 }
 .nc-concours-card li {
   font-size: 14px;
-  color: var(--text-on-dark);
+  color: var(--charcoal);
   line-height: 1.5;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-}
-:root[data-theme="light"] .nc-concours-card li {
-  color: var(--charcoal);
+  gap: 11px;
 }
 .nc-concours-card li::before {
   content: "✓";
-  color: var(--gold);
+  color: var(--gold-deep);
   font-weight: 800;
-  font-size: 13px;
+  font-size: 12px;
   margin-top: 1px;
-  background: rgba(201,163,86,0.15);
+  background: rgba(201,163,86,0.16);
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -622,18 +646,34 @@ button,input,select,textarea{font-family:inherit}
   justify-content: center;
   flex-shrink: 0;
 }
+:root[data-theme="dark"] .nc-concours-card li::before { color: var(--gold-lt); }
 .nc-concours-cta {
-  margin-top: 32px;
+  margin-top: 28px;
   width: 100%;
   text-align: center;
 }
-@media(max-width: 768px) {
+/* Swipe hint on touch */
+.nc-concours-hint {
+  display: none;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+@media(max-width: 860px) {
+  .nc-concours-slider {
+    gap: 16px;
+    padding: 6px 20px 26px;
+    margin: 0 -20px;
+    scroll-padding-left: 20px;
+  }
   .nc-concours-card {
-    flex: 0 0 280px;
-    padding: 28px 20px;
+    flex: 0 0 82%;
+    max-width: 340px;
+    padding: 26px 22px;
   }
   .nc-concours-card h3 { font-size: 1.25rem; }
-  .nc-concours-card p, .nc-concours-card li { font-size: 13.5px; }
+  .nc-concours-hint { display: block; }
 }
 
 /* Floating widgets */
