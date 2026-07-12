@@ -20,14 +20,8 @@
  */
 
 var LEAD_TAB_NAMES = [
-  'Bac',
-  'Prepa',
-  'Concours',
-  'Langues',
-  'Coaching',
-  'BacPlus',
-  'Professionnels',
-  'Parents',
+  'Conseil',
+  'Formation',
   'General'
 ];
 
@@ -65,8 +59,8 @@ var COL_MARQUEUR = 14;
 var COL_NOTES = 15;
 var MAX_ROWS_VALIDATION = 3000;
 
-var HEADER_BG = '#0d2818';
-var HEADER_FG = '#f4e5b8';
+var HEADER_BG = '#0E1116';
+var HEADER_FG = '#E2C06A';
 
 function setupConseillerFriendlySheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();

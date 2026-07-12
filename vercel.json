@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "ncconsulting.ma" }],
+      "destination": "https://www.ncconsulting.ma/:path*",
+      "permanent": true
+    }
+  ],
   "functions": {
     "api/**/*.js": {
       "memory": 1024,

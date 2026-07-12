@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nconsulting.vercel.app/</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://www.ncconsulting.ma/</loc>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nconsulting.vercel.app/mentions-legales.html</loc>
+    <loc>https://www.ncconsulting.ma/mentions-legales.html</loc>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nconsulting.vercel.app/confidentialite.html</loc>
+    <loc>https://www.ncconsulting.ma/confidentialite.html</loc>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nconsulting.vercel.app/cgu.html</loc>
+    <loc>https://www.ncconsulting.ma/cgu.html</loc>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

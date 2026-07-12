@@ -1,27 +1,21 @@
 /**
  * NC Consulting — mise en forme professionnelle du classeur leads
  * -----------------------------------------------------------------
- * 1) Ouvrez le Google Sheet concerné (même fichier que le backend).
+ * 1) Ouvrez le Google Sheet utilisé par le backend.
  * 2) Extensions > Apps Script — collez tout ce fichier.
- * 3) Enregistrez, puis exécutez `setupProfessionalLeadsSheets`.
- * 4) Autorisez l’accès au classeur.
+ * 3) Exécutez `setupProfessionalLeadsSheets`.
+ * 4) Autorisez l'accès au classeur.
  *
- * Les onglets correspondent au routage backend (Bac, Prepa, Concours, …).
+ * Onglets : Conseil (profils consulting), Formation, General.
  */
 
 var LEAD_TAB_NAMES = [
-  'Bac',
-  'Prepa',
-  'Concours',
-  'Langues',
-  'Coaching',
-  'BacPlus',
-  'Professionnels',
-  'Parents',
+  'Conseil',
+  'Formation',
   'General'
 ];
 
-/** Même ordre que api/lib/sheets.js — ne pas réordonner sans changer le backend. */
+/** Même ordre que api/lib/sheets.js */
 var LEAD_HEADERS = [
   'Date demande (ISO)',
   'Reçu le (serveur)',
@@ -45,8 +39,8 @@ var COL_MARQUEUR = 14;
 var COL_NOTES = 15;
 var MAX_ROWS_VALIDATION = 3000;
 
-var HEADER_BG = '#0d2818';
-var HEADER_FG = '#f4e5b8';
+var HEADER_BG = '#0E1116';
+var HEADER_FG = '#E2C06A';
 
 function setupProfessionalLeadsSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -64,7 +58,6 @@ function setupProfessionalLeadsSheets() {
   }
 }
 
-/** Ligne 1 = toujours alignée sur LEAD_HEADERS (ne modifie pas les lignes de données). */
 function writeHeadersRow_(sh) {
   sh.getRange(1, 1, 1, LEAD_HEADERS.length).setValues([LEAD_HEADERS]);
 }
@@ -81,44 +74,34 @@ function styleHeaderRow_(sh) {
 
 function freezeAndColumnWidths_(sh) {
   sh.setFrozenRows(1);
-  var widths = [152, 158, 100, 120, 120, 220, 120, 150, 160, 120, 100, 120, 130, 150, 280];
-  for (var c = 0; c < widths.length; c++) {
-    sh.setColumnWidth(c + 1, widths[c]);
-  }
-}
-
-function applyFilter_(sh) {
-  var filt = sh.getFilter();
-  if (filt !== null) {
-    filt.remove();
-  }
-  var numCols = LEAD_HEADERS.length;
-  var lastRow = Math.max(sh.getLastRow(), 500);
-  sh.getRange(1, 1, lastRow, numCols).createFilter();
+  sh.setColumnWidth(1, 160);
+  sh.setColumnWidth(2, 160);
+  sh.setColumnWidth(3, 110);
+  sh.setColumnWidth(4, 110);
+  sh.setColumnWidth(5, 130);
+  sh.setColumnWidth(6, 200);
+  sh.setColumnWidth(7, 140);
+  sh.setColumnWidth(8, 180);
+  sh.setColumnWidth(9, 200);
+  sh.setColumnWidth(10, 120);
+  sh.setColumnWidth(11, 90);
+  sh.setColumnWidth(12, 120);
+  sh.setColumnWidth(13, 120);
+  sh.setColumnWidth(14, 110);
+  sh.setColumnWidth(15, 240);
 }
 
 function applyValidations_(sh) {
-  var lastRow = Math.max(Math.max(sh.getLastRow(), 2), MAX_ROWS_VALIDATION);
-
-  var statuts = ['Nouveau', 'Contacté', 'À rappeler', 'RDV fixé', 'Qualifié', 'Hors cible'];
-  var dvStatut = SpreadsheetApp.newDataValidation()
-    .requireValueInList(statuts, true)
-    .setAllowInvalid(true)
+  var statutRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['Nouveau', 'En cours', 'Contacté', 'Qualifié', 'Perdu', 'Gagné'], true)
+    .setAllowInvalid(false)
     .build();
+  sh.getRange(2, COL_STATUT, MAX_ROWS_VALIDATION, 1).setDataValidation(statutRule);
+}
 
-  var marqueurs = [
-    '',
-    '☎ Appel effectué',
-    '⊘ Pas de réponse',
-    '✓ Message (SMS/WhatsApp)',
-    '📧 Mail envoyé'
-  ];
-  var dvMarqueur = SpreadsheetApp.newDataValidation()
-    .requireValueInList(marqueurs, true)
-    .setAllowInvalid(true)
-    .build();
-
-  sh.getRange(2, COL_STATUT, lastRow, COL_STATUT).setDataValidation(dvStatut);
-  sh.getRange(2, COL_MARQUEUR, lastRow, COL_MARQUEUR).setDataValidation(dvMarqueur);
-  sh.getRange(2, COL_NOTES, lastRow, COL_NOTES).setWrapStrategy(SpreadsheetApp.WrapStrategy.WRAP);
+function applyFilter_(sh) {
+  var range = sh.getRange(1, 1, Math.max(2, sh.getLastRow()), LEAD_HEADERS.length);
+  if (!sh.getFilter()) {
+    range.createFilter();
+  }
 }

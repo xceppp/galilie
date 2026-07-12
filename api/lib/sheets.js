@@ -1,12 +1,6 @@
 const DEFAULT_TABS = {
-  bac: 'Bac',
-  prepa: 'Prepa',
-  concours: 'Concours',
-  langues: 'Langues',
-  coaching: 'Coaching',
-  bacplus: 'BacPlus',
-  pro: 'Professionnels',
-  parent: 'Parents',
+  consulting: 'Conseil',
+  formation: 'Formation',
   general: 'General',
 };
 
@@ -51,16 +45,12 @@ function getEnvTabName(key) {
 
 function getTabForNiveau(niveau = '') {
   const map = {
-    bac1: 'bac',
-    bac2: 'bac',
-    prepa_sci: 'prepa',
-    prepa_eco: 'prepa',
-    concours_public: 'concours',
-    langues: 'langues',
-    coaching: 'coaching',
-    bacplus: 'bacplus',
-    pro: 'pro',
-    parent: 'parent',
+    dirigeant: 'consulting',
+    cadre: 'consulting',
+    professionnel: 'consulting',
+    transition: 'consulting',
+    formation: 'formation',
+    autre: 'general',
   };
   const key = map[niveau] || 'general';
   return getEnvTabName(key);

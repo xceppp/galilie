@@ -1,196 +1,11 @@
-/* NC Consulting — site scripts (formulaire lead, wizard, reCAPTCHA) */
+/* NC Consulting — lead form wizard, validation, reCAPTCHA */
 
-/* ── 1. CONSTANTS ─────────────────────────────────────── */
-const LEAD_API_URL = "/api/lead";
-const RECAPTCHA_SITE_KEY = "6LcTitwsAAAAAKuFlJuCIyeV1ugZkUxNa3GJsdye";
+const LEAD_API_URL = '/api/lead';
+const RECAPTCHA_SITE_KEY = '6LcTitwsAAAAAKuFlJuCIyeV1ugZkUxNa3GJsdye';
 
 let lastSubmitTime = 0;
 const SUBMIT_COOLDOWN_MS = 8000;
 
-/** translateX (px) actuel sur un élément transformé (matrix / matrix3d). */
-function readStageTranslateX(stage) {
-  const tr = window.getComputedStyle(stage).transform;
-  if (!tr || tr === 'none') return 0;
-  const m = tr.match(/matrix(?:3d)?\(([^)]+)\)/);
-  if (!m) return 0;
-  const v = m[1].split(',').map(Number.parseFloat);
-  return v.length === 6 ? v[4] : v[12] || 0;
-}
-
-/** Centre la carte active dans outer (translateX sur stage). Même logique mobile / desktop. */
-function centerSpotlightStage(outer, stage, activeEl) {
-  if (!outer || !stage || !activeEl) return;
-
-  const apply = () => {
-    const tx = readStageTranslateX(stage);
-    const o = outer.getBoundingClientRect();
-    const c = activeEl.getBoundingClientRect();
-    const outerMid = o.left + o.width / 2;
-    const cardMid = c.left + c.width / 2;
-    const next = tx + (outerMid - cardMid);
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    stage.style.transition = reduce
-      ? 'none'
-      : 'transform 0.48s cubic-bezier(0.4, 0, 0.2, 1)';
-    stage.style.transform = `translateX(${next}px)`;
-    stage.style.willChange = 'transform';
-  };
-
-  requestAnimationFrame(() => requestAnimationFrame(apply));
-  window.setTimeout(apply, 480);
-}
-
-/* ── 2. SCROLL & NAV ──────────────────────────────────── */
-const navbar = document.getElementById('navbar');
-function onScroll(){
-  if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 20);
-  const fc = document.getElementById('floatCta');
-  if (fc) fc.classList.toggle('visible', window.scrollY > 500);
-  const wa = document.getElementById('waFloat');
-  if (wa) wa.classList.toggle('visible', window.scrollY > 300);
-}
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-
-// Floating CTA scroll to form
-const floatCta = document.getElementById('floatCta');
-if (floatCta) {
-  floatCta.addEventListener('click', () => {
-    const c = document.getElementById('contact');
-    if (c) c.scrollIntoView({ behavior: 'smooth' });
-  });
-}
-
-/* ── 3. DRAWER ────────────────────────────────────────── */
-const drawer = document.getElementById('drawer');
-const overlay = document.getElementById('overlay');
-const hamb = document.getElementById('hamb');
-const drawerClose = document.getElementById('drawerClose');
-function openDrawer(){
-  drawer.classList.add('open');
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeDrawer(){
-  drawer.classList.remove('open');
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-}
-if (hamb) hamb.addEventListener('click', openDrawer);
-if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-if (overlay) overlay.addEventListener('click', closeDrawer);
-if (drawer) drawer.querySelectorAll('[data-close]').forEach(a => a.addEventListener('click', closeDrawer));
-
-window.addEventListener('resize', () => {
-  if (drawer && !drawer.classList.contains('open')) document.body.style.overflow = '';
-});
-
-/* ── 4. CUSTOM CURSOR ─────────────────────────────────── */
-const cursorDot = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-if (cursorDot && cursorRing) {
-  let mx = -100, my = -100, rx = -100, ry = -100;
-  document.addEventListener('mousemove', (e) => {
-    mx = e.clientX; my = e.clientY;
-    cursorDot.style.left = mx + 'px';
-    cursorDot.style.top = my + 'px';
-  });
-  (function follow(){
-    rx += (mx - rx) * 0.18;
-    ry += (my - ry) * 0.18;
-    cursorRing.style.left = rx + 'px';
-    cursorRing.style.top = ry + 'px';
-    requestAnimationFrame(follow);
-  })();
-}
-
-/* ── 5. SCROLL REVEAL ─────────────────────────────────── */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.classList.add('on');
-    revealObserver.unobserve(e.target);
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* ── 6. SOCIAL SECTION POSITIONING ───────────────────── */
-const socialSection = document.getElementById('social');
-const faqSection = document.getElementById('faq');
-if (socialSection && faqSection && faqSection.parentNode) {
-  faqSection.parentNode.insertBefore(socialSection, faqSection);
-}
-
-/* ── 7. FAQ ───────────────────────────────────────────── */
-const faqItems = Array.from(document.querySelectorAll('.faq-item'));
-faqItems.forEach((item) => {
-  const btn = item.querySelector('.faq-q');
-  btn.addEventListener('click', () => {
-    const wasOpen = item.classList.contains('open');
-    faqItems.forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  });
-});
-
-/* ── 8. SPOTS COUNTER ─────────────────────────────────── */
-const SPOTS_KEY   = 'gs_spots';
-const SPOTS_TIME  = 'gs_spots_ts';
-const RESET_HOURS = 72;
-
-function getSpots() {
-  const ts    = parseInt(localStorage.getItem(SPOTS_TIME) || '0', 10);
-  const now   = Date.now();
-  const hours = (now - ts) / 3600000;
-  if (!localStorage.getItem(SPOTS_KEY) || hours > RESET_HOURS) {
-    const fresh = Math.floor(Math.random() * 5) + 8; // 8–12
-    localStorage.setItem(SPOTS_KEY, String(fresh));
-    localStorage.setItem(SPOTS_TIME, String(now));
-    return fresh;
-  }
-  const spots = Math.max(3, (parseInt(localStorage.getItem(SPOTS_KEY) || '8', 10) - 1));
-  localStorage.setItem(SPOTS_KEY, String(spots));
-  return spots;
-}
-
-const spotsLeft = getSpots();
-
-const heroUrgMobile = document.getElementById('heroUrgMobile');
-if (heroUrgMobile) {
-  heroUrgMobile.textContent = spotsLeft + ' places restantes';
-}
-
-// Floating CTA urgency mode
-if (spotsLeft <= 5) {
-  const fc = document.getElementById('floatCta');
-  if (fc) {
-    fc.textContent = '⚡ Dernières places — Réserver';
-    fc.classList.add('float-cta--urgent');
-  }
-}
-
-/* ── 9. COUNTDOWN TIMER ───────────────────────────────── */
-function updateCountdown() {
-  const target = new Date('2026-09-01T00:00:00').getTime();
-  const now    = Date.now();
-  const diff   = Math.max(0, target - now);
-  const days   = Math.floor(diff / 86400000);
-  const hours  = Math.floor((diff % 86400000) / 3600000);
-  const mins   = Math.floor((diff % 3600000)  / 60000);
-  const secs   = Math.floor((diff % 60000)    / 1000);
-  const pad    = n => String(n).padStart(2, '0');
-  const d = document.getElementById('cd-days');
-  const h = document.getElementById('cd-hours');
-  const m = document.getElementById('cd-mins');
-  const s = document.getElementById('cd-secs');
-  if (d) d.textContent = String(days);
-  if (h) h.textContent = pad(hours);
-  if (m) m.textContent = pad(mins);
-  if (s) s.textContent = pad(secs);
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-/* ── 10. FORM — DEPENDENT SELECTS ────────────────────── */
 const leadForm = document.getElementById('leadForm');
 const formWrap = document.getElementById('formWrap');
 const successState = document.getElementById('successState');
@@ -198,58 +13,51 @@ const niveauSelect = document.getElementById('niveau');
 const filiereSelect = document.getElementById('filiere');
 const serviceSelect = document.getElementById('service');
 
-const dependentOptions = {
-  bac1: {
-    filieres: ['Sciences Maths', 'Sciences PC', 'Sciences SVT', 'Sciences Éco'],
-    services: ['Cours de soutien (sur site)', 'Cours à distance', 'Capsule personnalisée', 'Langues', 'Coaching & Développement']
-  },
-  bac2: {
-    filieres: ['Sciences Maths', 'Sciences PC', 'Sciences SVT', 'Sciences Éco'],
-    services: ['Cours de soutien (sur site)', 'Cours à distance', 'Capsule personnalisée', 'Langues', 'Coaching & Développement']
-  },
-  prepa_sci: {
-    filieres: ['MP', 'PCSI', 'Maths niveau prépa', 'Physique niveau prépa'],
-    services: ['Classes Préparatoires', 'Langues', 'Coaching & Développement']
-  },
-  prepa_eco: {
-    filieres: ['ECG', 'ECT', 'Économie', 'Gestion', 'Culture générale'],
-    services: ['Classes Préparatoires', 'Langues', 'Coaching & Développement']
-  },
-  concours_public: {
-    filieres: ['Technicien', 'Administrateur', 'Ingénieur', 'Cadre A', 'Cadre B', 'Cadre C', 'Autre grade'],
-    services: ['Concours Emploi Public', 'Coaching & Développement', 'Langues']
-  },
-  langues: {
-    filieres: ['Français', 'Anglais', 'Français + Anglais'],
-    services: ['Langues', 'Coaching & Développement']
-  },
-  coaching: {
-    filieres: ['Coaching mental', 'Communication professionnelle', 'Construction de caractère'],
-    services: ['Coaching & Développement']
-  },
-  bacplus: {
-    filieres: ['Sciences', 'Économie', 'Langues', 'Autre'],
-    services: ['Cours à distance', 'Langues', 'Concours Emploi Public', 'Coaching & Développement', 'Plusieurs services']
-  },
-  pro: {
-    filieres: ['Concours', 'Évolution professionnelle', 'Communication', 'Autre'],
-    services: ['Concours Emploi Public', 'Langues', 'Coaching & Développement', 'Plusieurs services']
-  },
-  parent: {
-    filieres: ['Enfant en 1ère BAC', 'Enfant en 2ème BAC', 'Prépa', 'Concours', 'Autre situation'],
-    services: ['Cours de soutien (sur site)', 'Cours à distance', 'Capsule personnalisée', 'Classes Préparatoires', 'Concours Emploi Public', 'Langues', 'Coaching & Développement', 'Club parascolaire', 'Plusieurs services']
-  }
+const NIVEAU_LABELS = {
+  dirigeant: 'Dirigeant / Entrepreneur',
+  cadre: 'Cadre supérieur / Manager',
+  professionnel: 'Professionnel',
+  transition: 'En transition de carrière',
+  formation: 'Formation professionnelle',
+  autre: 'Autre profil',
 };
 
-function fillSelect(selectEl, values, placeholder){
+const dependentOptions = {
+  dirigeant: {
+    filieres: ['PME / Startup', 'Institution', 'Croissance & scale-up', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
+  },
+  cadre: {
+    filieres: ['Management', 'Poste de direction', 'Performance & équipe', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
+  },
+  professionnel: {
+    filieres: ['Évolution de carrière', 'Communication', 'Leadership', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Formation sur mesure'],
+  },
+  transition: {
+    filieres: ['Changement de poste', 'Reconversion', 'Création d\'activité', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
+  },
+  formation: {
+    filieres: ['Leadership & management', 'Finance & stratégie', 'Communication & posture', 'Gestion de projet', 'Digital & data', 'Autre'],
+    services: ['Formation sur mesure', 'Consultation 1-à-1', 'Coaching exécutif'],
+  },
+  autre: {
+    filieres: ['À préciser en échange'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil', 'Formation sur mesure'],
+  },
+};
+
+function fillSelect(selectEl, values, placeholder) {
   if (!selectEl) return;
   selectEl.innerHTML = '';
-  const first = document.createElement('option');
-  first.value = '';
-  first.textContent = placeholder;
-  first.disabled = true;
-  first.selected = true;
-  selectEl.appendChild(first);
+  const ph = document.createElement('option');
+  ph.value = '';
+  ph.disabled = true;
+  ph.selected = true;
+  ph.textContent = placeholder;
+  selectEl.appendChild(ph);
   values.forEach((v) => {
     const opt = document.createElement('option');
     opt.value = v;
@@ -258,49 +66,37 @@ function fillSelect(selectEl, values, placeholder){
   });
 }
 
-function updateDependentSelects(){
+function updateDependentSelects() {
   const key = niveauSelect ? niveauSelect.value : '';
-  const cfg = dependentOptions[key];
-  if (!cfg){
+  const dep = dependentOptions[key];
+  if (!dep) {
     fillSelect(filiereSelect, [], 'Choisissez d\'abord le profil');
     fillSelect(serviceSelect, [], 'Choisissez d\'abord le profil');
     return;
   }
-  fillSelect(filiereSelect, cfg.filieres, 'Sélectionnez une option');
-  fillSelect(serviceSelect, cfg.services, 'Sélectionnez un service');
-}
-
-if (niveauSelect){
-  niveauSelect.addEventListener('change', updateDependentSelects);
-  updateDependentSelects();
+  fillSelect(filiereSelect, dep.filieres, 'Sélectionnez une option');
+  fillSelect(serviceSelect, dep.services, 'Sélectionnez un service');
 }
 
 function val(id) {
   const el = document.getElementById(id);
   if (!el) return '';
-  /* Pas d’entités HTML ici : les valeurs vont en JSON ; le résumé utilise textContent. */
-  return String(el.value || '')
-    .trim()
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
-    .slice(0, 500);
+  return String(el.value || '').trim();
 }
 
-/* ── 11. FORM — VALIDATION & ERRORS ──────────────────── */
 function clearLeadSubmitError() {
   const box = document.getElementById('leadSubmitError');
   if (!box) return;
-  box.textContent = '';
   box.hidden = true;
+  box.textContent = '';
 }
 
 function showLeadSubmitError(msg) {
   const box = document.getElementById('leadSubmitError');
-  if (!box || !msg) return;
-  box.textContent = msg;
+  if (!box) return;
   box.hidden = false;
-  try {
-    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  } catch (_) {}
+  box.textContent = msg;
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function clearErrors() {
@@ -315,26 +111,22 @@ function showFieldError(id, msg) {
   const el = document.getElementById(id);
   if (!el) return;
   el.classList.add('field-err-border');
+  const field = el.closest('.field');
+  if (!field || field.querySelector('.field-error')) return;
   const err = document.createElement('div');
   err.className = 'field-error';
-  err.textContent = msg;
   err.setAttribute('role', 'alert');
-  el.parentNode.insertBefore(err, el.nextSibling);
-  const clear = () => {
-    el.classList.remove('field-err-border');
-    err.remove();
-  };
-  el.addEventListener('input', clear, { once: true });
-  el.addEventListener('change', clear, { once: true });
+  err.textContent = msg;
+  field.appendChild(err);
 }
 
-function showSuccess(){
+function showSuccess() {
   if (formWrap) formWrap.style.display = 'none';
   if (successState) successState.style.display = 'block';
 }
 
-/* ── 12. FORM — RECAPTCHA ─────────────────────────────── */
 let recaptchaScriptPromise = null;
+
 function isRecaptchaConfigured() {
   return Boolean(
     RECAPTCHA_SITE_KEY &&
@@ -421,25 +213,24 @@ async function getRecaptchaToken(action = 'lead_submit') {
   }
 })();
 
-/* ── 13. FORM — WIZARD ────────────────────────────────── */
-const formFields = ['prenom','nom','telephone','email','niveau','filiere','service','mode'];
+const formFields = ['prenom', 'nom', 'telephone', 'email', 'niveau', 'filiere', 'service', 'mode'];
 const wizardStepRules = {
   1: [
     { id: 'prenom', msg: 'Veuillez entrer votre prénom.' },
     { id: 'nom', msg: 'Veuillez entrer votre nom.' },
     { id: 'telephone', msg: 'Veuillez entrer votre téléphone.' },
-    { id: 'email', msg: 'Veuillez entrer votre email.' }
+    { id: 'email', msg: 'Veuillez entrer votre email.' },
   ],
   2: [
     { id: 'niveau', msg: 'Veuillez sélectionner votre profil.' },
     { id: 'filiere', msg: 'Veuillez sélectionner une option.' },
     { id: 'service', msg: 'Veuillez sélectionner un service.' },
-    { id: 'mode', msg: 'Veuillez sélectionner un mode.' }
-  ]
+    { id: 'mode', msg: 'Veuillez sélectionner un mode.' },
+  ],
 };
 let wizardStep = 1;
 
-function updateProgress(){
+function updateProgress() {
   const filled = formFields.filter((id) => {
     const el = document.getElementById(id);
     return el && el.value && String(el.value).trim() !== '';
@@ -451,12 +242,11 @@ function updateProgress(){
   if (lbl) lbl.textContent = filled + ' / ' + formFields.length + ' champs remplis';
 }
 
-function validateStep(step){
+function validateStep(step) {
   let hasError = false;
   const rules = wizardStepRules[step] || [];
   rules.forEach(({ id, msg }) => {
-    const v = val(id);
-    if (!v) {
+    if (!val(id)) {
       showFieldError(id, msg);
       hasError = true;
     }
@@ -481,7 +271,7 @@ function validateStep(step){
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
       first.scrollIntoView({
         behavior: reduce.matches ? 'auto' : 'smooth',
-        block: 'center'
+        block: 'center',
       });
     }
     return false;
@@ -492,6 +282,7 @@ function validateStep(step){
 function updateWizardSummary() {
   const name = `${val('prenom')} ${val('nom')}`.trim();
   const serviceMode = [val('service'), val('mode')].filter(Boolean).join(' / ');
+  const niveauKey = val('niveau');
   const setText = (id, text) => {
     const el = document.getElementById(id);
     if (el) el.textContent = text || '—';
@@ -499,7 +290,7 @@ function updateWizardSummary() {
   setText('sumName', name);
   setText('sumPhone', val('telephone'));
   setText('sumEmail', val('email'));
-  setText('sumNiveau', val('niveau'));
+  setText('sumNiveau', NIVEAU_LABELS[niveauKey] || niveauKey);
   setText('sumFiliere', val('filiere'));
   setText('sumServiceMode', serviceMode);
 }
@@ -534,6 +325,11 @@ function setWizardStep(nextStep) {
   if (wizardStep === 3) updateWizardSummary();
 }
 
+if (niveauSelect) {
+  niveauSelect.addEventListener('change', updateDependentSelects);
+  updateDependentSelects();
+}
+
 if (leadForm) {
   leadForm.addEventListener('input', updateProgress);
   leadForm.addEventListener('change', updateProgress);
@@ -548,6 +344,7 @@ if (leadForm) {
       setWizardStep(target);
     });
   });
+
   leadForm.querySelectorAll('[data-wiz-prev]').forEach((btn) => {
     btn.addEventListener('click', () => {
       clearErrors();
@@ -556,12 +353,10 @@ if (leadForm) {
     });
   });
 
-  /* ── 14. FORM — SUBMIT HANDLER ────────────────────────── */
   leadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
 
-    // Ensure all steps valid before final submit
     if (!validateStep(1)) { setWizardStep(1); return; }
     if (!validateStep(2)) { setWizardStep(2); return; }
 
@@ -582,9 +377,7 @@ if (leadForm) {
     let recaptchaToken = '';
     try {
       recaptchaToken = await getRecaptchaToken('lead_submit');
-      if (!recaptchaToken) {
-        throw new Error('Empty reCAPTCHA token.');
-      }
+      if (!recaptchaToken) throw new Error('Empty reCAPTCHA token.');
     } catch (_) {
       showFieldError('prenom', 'Vérification anti-spam indisponible. Réessayez dans quelques secondes.');
       setWizardStep(1);
@@ -608,7 +401,7 @@ if (leadForm) {
       service: val('service'),
       mode: val('mode'),
       recaptchaToken,
-      recaptchaAction: 'lead_submit'
+      recaptchaAction: 'lead_submit',
     };
 
     try {
@@ -623,13 +416,11 @@ if (leadForm) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
-          credentials: 'same-origin'
+          credentials: 'same-origin',
         });
       } catch (_) {
         lastSubmitTime = 0;
-        showLeadSubmitError(
-          'Impossible de joindre le serveur. Vérifiez la connexion et réessayez.'
-        );
+        showLeadSubmitError('Impossible de joindre le serveur. Vérifiez la connexion et réessayez.');
         return;
       }
 
@@ -648,28 +439,17 @@ if (leadForm) {
         const code = apiJson && apiJson.error ? String(apiJson.error) : '';
         let msg = 'Erreur à l’envoi. Réessayez dans quelques instants.';
         if (!apiJson) {
-          msg =
-            'Réponse serveur invalide (HTTP ' +
-            res.status +
-            '). Vérifiez les logs Vercel pour /api/lead.';
+          msg = 'Réponse serveur invalide (HTTP ' + res.status + '). Vérifiez les logs Vercel pour /api/lead.';
         } else if (code === 'recaptcha_failed') {
-          msg =
-            'Vérification de sécurité non validée (score faible ou configuration). Réessayez.';
+          msg = 'Vérification de sécurité non validée (score faible ou configuration). Réessayez.';
         } else if (code === 'invalid_json' || code === 'unsupported_media_type') {
           msg = 'Rechargez la page et réessayez.';
-        } else if (
-          code &&
-          /^invalid_|^missing_/.test(code)
-        ) {
-          msg =
-            'Données invalides ou incomplètes. Vérifiez le formulaire ou rechargez la page.';
+        } else if (code && /^invalid_|^missing_/.test(code)) {
+          msg = 'Données invalides ou incomplètes. Vérifiez le formulaire ou rechargez la page.';
         } else if (code === 'server_error') {
-          msg =
-            apiJson.detail
-              ? 'Erreur serveur : ' +
-                String(apiJson.detail).slice(0, 220) +
-                (String(apiJson.detail).length > 220 ? '…' : '')
-              : 'Une erreur serveur est survenue. Réessayez dans quelques instants.';
+          msg = apiJson.detail
+            ? 'Erreur serveur : ' + String(apiJson.detail).slice(0, 220) + (String(apiJson.detail).length > 220 ? '…' : '')
+            : 'Une erreur serveur est survenue. Réessayez dans quelques instants.';
         }
         showLeadSubmitError(msg);
         return;
@@ -684,532 +464,3 @@ if (leadForm) {
     }
   });
 }
-
-/* ── 15. PROGRAMMES TABS ──────────────────────────────── */
-(function initSvcLayout() {
-  const root = document.getElementById('svcLayoutRoot');
-  if (!root) return;
-
-  window.showSvcTab = function (panelKey, btn) {
-    const panelId = 'tab-' + panelKey;
-    const panel = root.querySelector('#' + panelId) || document.getElementById(panelId);
-    root.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
-    root.querySelectorAll('.tab-btn').forEach((b) => {
-      b.classList.remove('active');
-      if (b.hasAttribute('aria-selected')) b.setAttribute('aria-selected', 'false');
-    });
-    if (panel) panel.classList.add('active');
-    if (btn) {
-      btn.classList.add('active');
-      if (btn.hasAttribute('aria-selected')) btn.setAttribute('aria-selected', 'true');
-    }
-  };
-
-  /* CSP peut bloquer onclick inline — branchement explicite sur les onglets */
-  root.querySelectorAll('.tab-btn[data-svc-tab]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const key = btn.getAttribute('data-svc-tab');
-      if (key) window.showSvcTab(key, btn);
-    });
-  });
-
-  function applyConcoursHash() {
-    if (location.hash !== '#concours') return;
-    const tabBtn = root.querySelector('.tab-btn[data-svc-tab="concours"]');
-    window.showSvcTab('concours', tabBtn);
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const el = document.getElementById('tab-concours');
-    if (!el) return;
-    requestAnimationFrame(() => {
-      el.scrollIntoView({
-        behavior: reduce.matches ? 'auto' : 'smooth',
-        block: 'start'
-      });
-    });
-  }
-
-  window.addEventListener('hashchange', applyConcoursHash);
-  applyConcoursHash();
-
-  const tabsWrap = root.querySelector('.tabs-nav-wrap');
-  const tabsNav = root.querySelector('.tabs-nav');
-  if (tabsWrap && tabsNav) {
-    const EDGE = 10;
-    function syncTabsScrollHint() {
-      const maxScroll = tabsNav.scrollWidth - tabsNav.clientWidth;
-      const hasOverflow = maxScroll > EDGE;
-      tabsWrap.classList.toggle('tabs-nav-wrap--has-overflow', hasOverflow);
-      const atEnd = hasOverflow && tabsNav.scrollLeft >= maxScroll - EDGE;
-      tabsWrap.classList.toggle('tabs-nav-wrap--at-end', atEnd);
-    }
-    tabsNav.addEventListener('scroll', syncTabsScrollHint, { passive: true });
-    window.addEventListener('resize', syncTabsScrollHint, { passive: true });
-    if (typeof ResizeObserver !== 'undefined') {
-      new ResizeObserver(syncTabsScrollHint).observe(tabsNav);
-    }
-    syncTabsScrollHint();
-  }
-})();
-
-/* ── 16. SOCIAL TABS ──────────────────────────────────── */
-(function initSocialTabs() {
-  const root = document.getElementById('social');
-  if (!root) return;
-
-  function showSocialPanel(panelKey, btn) {
-    root.querySelectorAll('.soc-panel').forEach((p) => {
-      const on = p.id === 'soc-panel-' + panelKey;
-      p.classList.toggle('on', on);
-      p.hidden = !on;
-    });
-    root.querySelectorAll('.ptab[data-p]').forEach((b) => {
-      const on = b === btn;
-      b.classList.toggle('on', on);
-      if (b.hasAttribute('aria-selected')) b.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-  }
-
-  root.querySelectorAll('.ptab[data-p]').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const key = tab.getAttribute('data-p');
-      if (key) showSocialPanel(key, tab);
-    });
-  });
-
-  const initial = root.querySelector('.ptab.on[data-p]') || root.querySelector('.ptab[data-p]');
-  if (initial) {
-    const key = initial.getAttribute('data-p');
-    if (key) showSocialPanel(key, initial);
-  }
-})();
-
-/* ── 17. NAV ACTIVE STATE ─────────────────────────────── */
-const navObserveEls = [
-  ...document.querySelectorAll('section[id]'),
-  document.getElementById('concours')
-].filter(Boolean);
-const navScrollLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-if (navObserveEls.length && navScrollLinks.length) {
-  const navIo = new IntersectionObserver((entries) => {
-    const hit = entries
-      .filter((e) => e.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (!hit || !hit.target.id) return;
-    const id = hit.target.id;
-    navScrollLinks.forEach((a) => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
-    });
-  }, { threshold: [0.08, 0.14, 0.22, 0.35], rootMargin: '-10% 0px -48% 0px' });
-  navObserveEls.forEach((el) => navIo.observe(el));
-}
-
-/* ── 18. TESTIMONIALS — spotlight carousel + swipe ───── */
-(function initTestiSpotlight() {
-  const outer = document.getElementById('testiSpotOuter');
-  const track = document.getElementById('testiScrollTrack');
-  const root = document.getElementById('temoignages');
-  if (!track || !root || !root.classList.contains('testi-scroll')) return;
-  const useSpotlight = root.classList.contains('testi-spotlight');
-
-  const dotsAll = Array.from(root.querySelectorAll('.tB-dot'));
-  const prevBtn = root.querySelector('[data-testi-prev]');
-  const nextBtn = root.querySelector('[data-testi-next]');
-  const cardsEl = Array.from(track.querySelectorAll('.tB-card'));
-  if (!cardsEl.length || !dotsAll.length) return;
-
-  let activeIdx = Math.min(
-    dotsAll.findIndex((d) => d.classList.contains('on')),
-    cardsEl.length - 1
-  );
-  if (activeIdx < 0) activeIdx = 0;
-
-  function setDotsActive(idx) {
-    dotsAll.forEach((d, i) => {
-      const on = i === idx;
-      d.classList.toggle('on', on);
-      d.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-  }
-
-  function applySpotStates(idx) {
-    const n = cardsEl.length;
-    cardsEl.forEach((card, i) => {
-      card.classList.remove('spot-active', 'spot-near');
-      const d = Math.abs(i - idx);
-      if (i === idx) card.classList.add('spot-active');
-      else if (d === 1) card.classList.add('spot-near');
-    });
-    setDotsActive(idx);
-  }
-
-  function recenterTesti() {
-    const el = cardsEl[activeIdx];
-    if (el) centerSpotlightStage(outer, track, el);
-  }
-
-  function setActive(rawIdx, fromAuto) {
-    const n = cardsEl.length;
-    if (!n) return;
-    activeIdx = ((rawIdx % n) + n) % n;
-    if (useSpotlight && outer) {
-      applySpotStates(activeIdx);
-      recenterTesti();
-    } else {
-      const card = cardsEl[activeIdx];
-      if (card && track.scrollTo) {
-        const left =
-          card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
-        track.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
-      }
-      setDotsActive(activeIdx);
-    }
-    if (!fromAuto) onTestiUserNav();
-  }
-
-  const TESTI_AUTO_MS = 5500;
-  const TESTI_AUTO_RESUME_MS = 8000;
-  const testiReduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let testiAutoId = 0;
-  let testiResumeT = 0;
-  let testiSectionVisible = false;
-  const testiAutoHost = outer || root;
-
-  function stopTestiAuto() {
-    if (testiAutoId) window.clearInterval(testiAutoId);
-    testiAutoId = 0;
-  }
-
-  function startTestiAuto() {
-    stopTestiAuto();
-    if (testiReduceMq.matches || !testiSectionVisible || cardsEl.length < 2) return;
-    testiAutoId = window.setInterval(() => {
-      setActive(activeIdx + 1, true);
-    }, TESTI_AUTO_MS);
-  }
-
-  function onTestiUserNav() {
-    stopTestiAuto();
-    window.clearTimeout(testiResumeT);
-    testiResumeT = window.setTimeout(startTestiAuto, TESTI_AUTO_RESUME_MS);
-  }
-
-  function wireTestiAutoplay() {
-    const testiIo = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          testiSectionVisible = e.isIntersecting;
-          if (testiSectionVisible) startTestiAuto();
-          else stopTestiAuto();
-        });
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -8% 0px' }
-    );
-    testiIo.observe(root);
-
-    testiAutoHost.addEventListener('mouseenter', stopTestiAuto);
-    testiAutoHost.addEventListener('mouseleave', () => {
-      if (testiSectionVisible) startTestiAuto();
-    });
-    testiAutoHost.addEventListener('focusin', stopTestiAuto);
-    testiAutoHost.addEventListener('focusout', () => {
-      window.setTimeout(() => {
-        if (!testiAutoHost.contains(document.activeElement) && testiSectionVisible) {
-          startTestiAuto();
-        }
-      }, 80);
-    });
-
-    testiReduceMq.addEventListener('change', () => {
-      if (testiReduceMq.matches) stopTestiAuto();
-      else if (testiSectionVisible) startTestiAuto();
-    });
-  }
-
-  if (useSpotlight && outer) {
-    dotsAll.forEach((dot, i) => {
-      dot.addEventListener('click', () => setActive(i));
-    });
-    cardsEl.forEach((card, i) =>
-      card.addEventListener('click', () => {
-        if (!card.classList.contains('spot-active')) setActive(i);
-      })
-    );
-    if (prevBtn) prevBtn.addEventListener('click', () => setActive(activeIdx - 1));
-    if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIdx + 1));
-
-    let sx = 0;
-    let sy = 0;
-    outer.addEventListener(
-      'touchstart',
-      (e) => {
-        sx = e.touches[0].clientX;
-        sy = e.touches[0].clientY;
-      },
-      { passive: true }
-    );
-    outer.addEventListener(
-      'touchend',
-      (e) => {
-        if (!e.changedTouches.length) return;
-        const dx = e.changedTouches[0].clientX - sx;
-        const dy = e.changedTouches[0].clientY - sy;
-        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.12) {
-          if (dx < 0) setActive(activeIdx + 1);
-          else setActive(activeIdx - 1);
-        }
-      },
-      { passive: true }
-    );
-    outer.addEventListener('touchstart', stopTestiAuto, { passive: true });
-    outer.addEventListener('touchend', onTestiUserNav, { passive: true });
-
-    let resizeT = 0;
-    window.addEventListener('resize', () => {
-      window.clearTimeout(resizeT);
-      resizeT = window.setTimeout(recenterTesti, 120);
-    });
-
-    setActive(activeIdx, true);
-    wireTestiAutoplay();
-    return;
-  }
-
-  /** Fallback horizontal scroll carousel (sans .testi-spotlight). */
-  function syncDotsFromScroll() {
-    if (!cardsEl.length) return;
-    const mid = track.scrollLeft + track.clientWidth / 2;
-    let best = Infinity;
-    let idx = 0;
-    cardsEl.forEach((card, i) => {
-      const cm = card.offsetLeft + card.offsetWidth / 2;
-      const d = Math.abs(cm - mid);
-      if (d < best) {
-        best = d;
-        idx = i;
-      }
-    });
-    activeIdx = idx;
-    setDotsActive(idx);
-  }
-
-  let scrollRaf = 0;
-  track.addEventListener(
-    'scroll',
-    () => {
-      if (scrollRaf) return;
-      scrollRaf = requestAnimationFrame(() => {
-        scrollRaf = 0;
-        syncDotsFromScroll();
-      });
-    },
-    { passive: true }
-  );
-
-  dotsAll.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      const c = cardsEl[i];
-      if (c)
-        track.scrollTo({
-          left: Math.max(0, c.offsetLeft - (track.clientWidth - c.offsetWidth) / 2),
-          behavior: 'smooth',
-        });
-    });
-  });
-
-  if (prevBtn) prevBtn.addEventListener('click', () => setActive(activeIdx - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIdx + 1));
-
-  let drag = false;
-  let startX = 0;
-  let startScroll = 0;
-  track.addEventListener('mousedown', (e) => {
-    drag = true;
-    startX = e.pageX;
-    startScroll = track.scrollLeft;
-  });
-  track.addEventListener('mouseleave', () => {
-    drag = false;
-  });
-  track.addEventListener('mouseup', () => {
-    drag = false;
-  });
-  track.addEventListener('mousemove', (e) => {
-    if (!drag) return;
-    track.scrollLeft = startScroll - (e.pageX - startX) * 1.2;
-  });
-  track.addEventListener('mousedown', stopTestiAuto);
-  track.addEventListener('mouseup', onTestiUserNav);
-  track.addEventListener('touchstart', stopTestiAuto, { passive: true });
-  track.addEventListener('touchend', onTestiUserNav, { passive: true });
-
-  syncDotsFromScroll();
-  wireTestiAutoplay();
-})();
-
-/* ── 19. LYCÉES CAROUSEL ──────────────────────────────── */
-(function initLyceesMobileCycle() {
-  const section = document.getElementById('lycees-francais');
-  if (!section) return;
-
-  const grid = section.querySelector('.lycees-grid');
-  if (!grid) return;
-  const dots = Array.from(section.querySelectorAll('.lycees-dot'));
-  const prevBtn = section.querySelector('[data-lycee-prev]');
-  const nextBtn = section.querySelector('[data-lycee-next]');
-
-  const cards = Array.from(grid.querySelectorAll('.lycee-card'));
-  if (cards.length <= 1) return;
-
-  const mobileMq = window.matchMedia('(max-width: 768px)');
-  let activeIdx = 0;
-  let syncRaf = 0;
-
-  function render() {
-    const activeCard = cards[activeIdx];
-    if (activeCard) {
-      grid.style.minHeight = `${activeCard.offsetHeight}px`;
-      const left = activeIdx * grid.clientWidth;
-      grid.scrollTo({ left, behavior: 'smooth' });
-    }
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('is-active', idx === activeIdx);
-    });
-  }
-
-  function syncActiveFromScroll() {
-    const left = grid.scrollLeft;
-    const width = Math.max(1, grid.clientWidth);
-    activeIdx = Math.round(left / width) % cards.length;
-    dots.forEach((dot, idx) => dot.classList.toggle('is-active', idx === activeIdx));
-  }
-
-  function applyMode() {
-    if (mobileMq.matches) {
-      grid.classList.add('is-mobile-cycle');
-      render();
-    } else {
-      grid.classList.remove('is-mobile-cycle');
-      grid.style.minHeight = '';
-      grid.scrollTo({ left: 0, behavior: 'auto' });
-    }
-  }
-
-  applyMode();
-  window.addEventListener('resize', applyMode);
-  mobileMq.addEventListener('change', applyMode);
-  grid.addEventListener('scroll', () => {
-    if (syncRaf) return;
-    syncRaf = requestAnimationFrame(() => {
-      syncRaf = 0;
-      syncActiveFromScroll();
-    });
-  }, { passive: true });
-  dots.forEach((dot, idx) => {
-    dot.addEventListener('click', () => {
-      activeIdx = idx;
-      render();
-    });
-  });
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      activeIdx = (activeIdx - 1 + cards.length) % cards.length;
-      render();
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      activeIdx = (activeIdx + 1) % cards.length;
-      render();
-    });
-  }
-})();
-
-/* ── 20. OFFRES — spotlight carousel + swipe ─────────── */
-(function initOffersSpotlight() {
-  const section = document.querySelector('.offers.offers-spotlight');
-  if (!section) return;
-
-  const outer = document.getElementById('offSpotOuter');
-  const grid = document.getElementById('offersSpotStage');
-  if (!grid || !outer) return;
-
-  const cards = Array.from(grid.querySelectorAll('.card'));
-  if (!cards.length) return;
-
-  const dots = Array.from(section.querySelectorAll('.offers-dot'));
-  const prevBtn = section.querySelector('[data-offer-prev]');
-  const nextBtn = section.querySelector('[data-offer-next]');
-
-  let activeIdx = dots.findIndex((d) => d.classList.contains('is-active'));
-  if (activeIdx < 0 || activeIdx >= cards.length) {
-    activeIdx = Math.min(1, cards.length - 1);
-  }
-
-  function applySpotStates(idx) {
-    cards.forEach((card, i) => {
-      card.classList.remove('spot-active', 'spot-near');
-      const dist = Math.abs(i - idx);
-      if (i === idx) card.classList.add('spot-active');
-      else if (dist === 1) card.classList.add('spot-near');
-    });
-    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === idx));
-  }
-
-  function recenterOffers() {
-    const el = cards[activeIdx];
-    if (el) centerSpotlightStage(outer, grid, el);
-  }
-
-  function setActive(rawIdx) {
-    const n = cards.length;
-    if (!n) return;
-    activeIdx = ((rawIdx % n) + n) % n;
-    applySpotStates(activeIdx);
-    recenterOffers();
-  }
-
-  dots.forEach((dot, i) => dot.addEventListener('click', () => setActive(i)));
-
-  cards.forEach((card, i) =>
-    card.addEventListener('click', (e) => {
-      const t = e.target;
-      if (t instanceof Element && t.closest('a')) return;
-      if (!card.classList.contains('spot-active')) setActive(i);
-    })
-  );
-
-  if (prevBtn) prevBtn.addEventListener('click', () => setActive(activeIdx - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => setActive(activeIdx + 1));
-
-  let sx = 0;
-  let sy = 0;
-  outer.addEventListener(
-    'touchstart',
-    (e) => {
-      sx = e.touches[0].clientX;
-      sy = e.touches[0].clientY;
-    },
-    { passive: true }
-  );
-  outer.addEventListener(
-    'touchend',
-    (e) => {
-      if (!e.changedTouches.length) return;
-      const dx = e.changedTouches[0].clientX - sx;
-      const dy = e.changedTouches[0].clientY - sy;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.12) {
-        if (dx < 0) setActive(activeIdx + 1);
-        else setActive(activeIdx - 1);
-      }
-    },
-    { passive: true }
-  );
-
-  let offResizeT = 0;
-  window.addEventListener('resize', () => {
-    window.clearTimeout(offResizeT);
-    offResizeT = window.setTimeout(recenterOffers, 120);
-  });
-
-  setActive(activeIdx);
-})();

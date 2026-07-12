@@ -1,122 +1,40 @@
 /**
  * Allowlists aligned with main.js (dependentOptions + mode select).
- * If you add form options, update both places.
  */
 
 const ALLOWED_NIVEAU = new Set([
-  'bac1',
-  'bac2',
-  'prepa_sci',
-  'prepa_eco',
-  'concours_public',
-  'langues',
-  'coaching',
-  'bacplus',
-  'pro',
-  'parent',
+  'dirigeant',
+  'cadre',
+  'professionnel',
+  'transition',
+  'formation',
+  'autre',
 ]);
 
 const DEPENDENT = {
-  bac1: {
-    filieres: [
-      'Sciences Maths',
-      'Sciences PC',
-      'Sciences SVT',
-      'Sciences Éco',
-    ],
-    services: [
-      'Cours de soutien (sur site)',
-      'Cours à distance',
-      'Capsule personnalisée',
-      'Langues',
-      'Coaching & Développement',
-    ],
+  dirigeant: {
+    filieres: ['PME / Startup', 'Institution', 'Croissance & scale-up', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
   },
-  bac2: {
-    filieres: [
-      'Sciences Maths',
-      'Sciences PC',
-      'Sciences SVT',
-      'Sciences Éco',
-    ],
-    services: [
-      'Cours de soutien (sur site)',
-      'Cours à distance',
-      'Capsule personnalisée',
-      'Langues',
-      'Coaching & Développement',
-    ],
+  cadre: {
+    filieres: ['Management', 'Poste de direction', 'Performance & équipe', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
   },
-  prepa_sci: {
-    filieres: ['MP', 'PCSI', 'Maths niveau prépa', 'Physique niveau prépa'],
-    services: ['Classes Préparatoires', 'Langues', 'Coaching & Développement'],
+  professionnel: {
+    filieres: ['Évolution de carrière', 'Communication', 'Leadership', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Formation sur mesure'],
   },
-  prepa_eco: {
-    filieres: ['ECG', 'ECT', 'Économie', 'Gestion', 'Culture générale'],
-    services: ['Classes Préparatoires', 'Langues', 'Coaching & Développement'],
+  transition: {
+    filieres: ['Changement de poste', 'Reconversion', 'Création d\'activité', 'Autre'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
   },
-  concours_public: {
-    filieres: [
-      'Technicien',
-      'Administrateur',
-      'Ingénieur',
-      'Cadre A',
-      'Cadre B',
-      'Cadre C',
-      'Autre grade',
-    ],
-    services: ['Concours Emploi Public', 'Coaching & Développement', 'Langues'],
+  formation: {
+    filieres: ['Leadership & management', 'Finance & stratégie', 'Communication & posture', 'Gestion de projet', 'Digital & data', 'Autre'],
+    services: ['Formation sur mesure', 'Consultation 1-à-1', 'Coaching exécutif'],
   },
-  langues: {
-    filieres: ['Français', 'Anglais', 'Français + Anglais'],
-    services: ['Langues', 'Coaching & Développement'],
-  },
-  coaching: {
-    filieres: [
-      'Coaching mental',
-      'Communication professionnelle',
-      'Construction de caractère',
-    ],
-    services: ['Coaching & Développement'],
-  },
-  bacplus: {
-    filieres: ['Sciences', 'Économie', 'Langues', 'Autre'],
-    services: [
-      'Cours à distance',
-      'Langues',
-      'Concours Emploi Public',
-      'Coaching & Développement',
-      'Plusieurs services',
-    ],
-  },
-  pro: {
-    filieres: ['Concours', 'Évolution professionnelle', 'Communication', 'Autre'],
-    services: [
-      'Concours Emploi Public',
-      'Langues',
-      'Coaching & Développement',
-      'Plusieurs services',
-    ],
-  },
-  parent: {
-    filieres: [
-      'Enfant en 1ère BAC',
-      'Enfant en 2ème BAC',
-      'Prépa',
-      'Concours',
-      'Autre situation',
-    ],
-    services: [
-      'Cours de soutien (sur site)',
-      'Cours à distance',
-      'Capsule personnalisée',
-      'Classes Préparatoires',
-      'Concours Emploi Public',
-      'Langues',
-      'Coaching & Développement',
-      'Club parascolaire',
-      'Plusieurs services',
-    ],
+  autre: {
+    filieres: ['À préciser en échange'],
+    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil', 'Formation sur mesure'],
   },
 };
 
@@ -161,9 +79,6 @@ function isReasonableClientTimestamp(iso) {
   return t >= now - skew && t <= now + skew;
 }
 
-/**
- * Returns { ok: true, body } with trimmed / bounded fields, or { ok: false, error }.
- */
 function validateAndSanitizeLead(body) {
   const out = {
     prenom: trimStr(body.prenom).slice(0, LIM.prenom),
@@ -202,10 +117,8 @@ function validateAndSanitizeLead(body) {
   const dep = DEPENDENT[out.niveau];
   if (!dep) return { ok: false, error: 'invalid_niveau' };
 
-  const filiereOk = dep.filieres.includes(out.filiere);
-  const serviceOk = dep.services.includes(out.service);
-  if (!filiereOk) return { ok: false, error: 'invalid_filiere' };
-  if (!serviceOk) return { ok: false, error: 'invalid_service' };
+  if (!dep.filieres.includes(out.filiere)) return { ok: false, error: 'invalid_filiere' };
+  if (!dep.services.includes(out.service)) return { ok: false, error: 'invalid_service' };
   if (!ALLOWED_MODE.has(out.mode)) return { ok: false, error: 'invalid_mode' };
 
   return { ok: true, body: out };
