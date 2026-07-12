@@ -68,8 +68,15 @@
 .form-progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-lt));transition:width .4s ease}
 .form-progress-label{font-size:11px;color:var(--ink-dim);margin-top:6px}
 
-/* Honeypot */
-.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
+/* Honeypot anti-spam — jamais visible */
+.hp-field,.hp-field *{
+  position:absolute!important;left:-10000px!important;top:auto!important;
+  width:1px!important;height:1px!important;overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;clip-path:inset(50%)!important;
+  white-space:nowrap!important;border:0!important;padding:0!important;margin:0!important;
+  opacity:0!important;pointer-events:none!important;visibility:hidden!important;
+}
+.hp-field{display:none!important}
 
 /* Locknote */
 .locknote{margin-top:12px;font-size:10.5px;color:var(--steel);line-height:1.6}

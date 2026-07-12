@@ -35,47 +35,9 @@
     revEls.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* Animated counters — static values in HTML for no-JS; animate only when scrolling into view */
-  function runCount(el) {
-    var to = parseInt(el.getAttribute('data-to'), 10) || 0;
-    if (reduce) { el.textContent = to; return; }
-    el.textContent = '0';
-    var cur = 0, step = Math.max(1, Math.round(to / 60));
-    var t = setInterval(function () {
-      cur += step;
-      if (cur >= to) { cur = to; clearInterval(t); }
-      el.textContent = cur;
-    }, 22);
-  }
-  var counters = document.querySelectorAll('.nc-count');
+  /* Hero counters — valeurs statiques dans le HTML (pas d'animation vers 0) */
+
   var hero = document.querySelector('.nc-hero');
-  var initiallyVisible = new Set();
-  counters.forEach(function (el) {
-    var r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight && r.bottom > 0) initiallyVisible.add(el);
-  });
-
-  if ('IntersectionObserver' in window && counters.length) {
-    var cio = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) {
-          if (!e.target.dataset.counted) {
-            e.target.dataset.counted = '1';
-            if (initiallyVisible.has(e.target)) return;
-            runCount(e.target);
-          }
-          cio.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.6 });
-    counters.forEach(function (el) { cio.observe(el); });
-  } else if (!reduce) {
-    counters.forEach(function (el) {
-      if (!initiallyVisible.has(el)) runCount(el);
-    });
-  }
-
-  /* Hero cursor / touch glow */
   var glow = document.getElementById('ncHeroGlow');
   if (hero && glow && window.matchMedia('(min-width:769px)').matches) {
     function moveHeroGlow(clientX, clientY) {
@@ -85,38 +47,6 @@
     if (window.matchMedia('(hover:hover)').matches) {
       hero.addEventListener('mousemove', function (e) { moveHeroGlow(e.clientX, e.clientY); });
     }
-  }
-
-  /* Pôles : onglets Formation / Accompagnement / Conseil */
-  var polesRoot = document.getElementById('ncPoles');
-  if (polesRoot) {
-    var polTabs = Array.prototype.slice.call(polesRoot.querySelectorAll('.nc-poles-tab'));
-    var polPanels = Array.prototype.slice.call(polesRoot.querySelectorAll('.nc-poles-panel'));
-    function activatePole(idx) {
-      polTabs.forEach(function (t, i) {
-        var on = i === idx;
-        t.classList.toggle('is-active', on);
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.tabIndex = on ? 0 : -1;
-      });
-      polPanels.forEach(function (p, i) {
-        var on = i === idx;
-        p.classList.toggle('is-active', on);
-        p.hidden = !on;
-      });
-    }
-    polTabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { activatePole(i); });
-      tab.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-          e.preventDefault();
-          var ni = (i + 1) % polTabs.length; activatePole(ni); polTabs[ni].focus();
-        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-          e.preventDefault();
-          var pi = (i - 1 + polTabs.length) % polTabs.length; activatePole(pi); polTabs[pi].focus();
-        }
-      });
-    });
   }
 
   /* Theme toggle (light / dark) */

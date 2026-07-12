@@ -10,7 +10,7 @@
 
 <!-- SEO -->
 <title>NC Consulting — Conseil, coaching &amp; accompagnement premium | Meknès</title>
-<meta name="description" content="NC Consulting — conseil stratégique, coaching exécutif et accompagnement 1-à-1 pour dirigeants et professionnels ambitieux. Présentiel à Meknès ou à distance. Votre partenaire vers l'excellence.">
+<meta name="description" content="NC Consulting à Meknès : conseil stratégique, coaching exécutif et accompagnement 1-à-1 pour dirigeants, cadres et professionnels ambitieux. Présentiel ou à distance.">
 <meta name="keywords" content="conseil Meknès, coaching exécutif Maroc, consultant Meknès, accompagnement dirigeant, consultation 1-à-1, coaching professionnel, NC Consulting">
 <meta name="author" content="NC Consulting">
   <meta name="robots" content="index, follow">
@@ -45,7 +45,8 @@
     "telephone": "+212606111199",
   "email": "contact@ncconsulting.ma",
   "priceRange": "$$",
-  "address": {"@type": "PostalAddress", "addressLocality": "Meknès", "addressRegion": "Fès-Meknès", "addressCountry": "MA"},
+  "address": {"@type": "PostalAddress", "streetAddress": "Meknès", "addressLocality": "Meknès", "addressRegion": "Fès-Meknès", "addressCountry": "MA"},
+  "geo": {"@type": "GeoCoordinates", "latitude": 33.858861, "longitude": -5.575118},
   "areaServed": {"@type": "Country", "name": "Maroc"},
   "slogan": "Votre partenaire vers l'excellence.",
   "sameAs": [
@@ -62,7 +63,7 @@
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Consultation 1-à-1", "description": "Séance individuelle et ciblée pour débloquer une situation ou prendre une décision clé."}},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Coaching exécutif", "description": "Programme d'accompagnement dans la durée pour développer leadership et performance."}},
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Accompagnement & Conseil", "description": "Partenariat stratégique continu pour projets, transitions et décisions majeures."}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Formation professionnelle", "description": "Modules sur mesure pour dirigeants et cadres : leadership, management et montée en compétences."}}
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Montée en compétences", "description": "Modules sur mesure pour dirigeants et cadres : leadership, management et posture professionnelle."}}
       ]
     }
   }
@@ -157,13 +158,11 @@
 
       <div class="nc-hero-ctas reveal in d3">
         <a class="btn btn-gold btn-lg" href="#contact">Réserver mon appel gratuit →</a>
-        <a class="btn btn-ghost-light btn-lg" href="#poles">Voir les pôles</a>
+        <a class="btn btn-ghost-light btn-lg" href="#poles">Découvrir nos pôles</a>
       </div>
 
       <div class="nc-hero-assure reveal in d3">
-        <span><span class="nc-live-dot"></span>3 créneaux restants cette semaine</span>
-        <span class="nc-hero-assure-sep" aria-hidden="true"></span>
-        <span>Réponse sous 24 h · Sans engagement</span>
+        <span>Réponse personnalisée · Sans engagement</span>
       </div>
 
       <div class="nc-hero-metrics reveal in d3">
@@ -221,87 +220,59 @@
   <div class="container">
     <div class="nc-head center">
       <div class="nc-label reveal">Nos pôles</div>
-      <h2 class="nc-title reveal d1" id="poles-title">Explorez chaque pôle et <em>ses métiers</em>.</h2>
+      <h2 class="nc-title reveal d1" id="poles-title">Trois expertises pour <em>professionnels exigeants</em>.</h2>
+      <p class="nc-sub reveal d2">Conseil, coaching et montée en compétences — exclusivement pour dirigeants, cadres et entrepreneurs.</p>
     </div>
 
-    <div class="nc-poles reveal d1" id="ncPoles">
-      <!-- Tabs -->
-      <div class="nc-poles-tabs" role="tablist" aria-label="Pôles d'expertise">
-        <button class="nc-poles-tab is-active" id="ncPolTab-formation" role="tab" aria-selected="true" aria-controls="ncPolPanel-formation" data-pole-tab="formation" type="button">
-          <span class="nc-poles-tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 2.5 6 2.5S18 18 18 17v-5"/></svg></span>
-          Formation
-        </button>
-        <button class="nc-poles-tab" id="ncPolTab-accompagnement" role="tab" aria-selected="false" aria-controls="ncPolPanel-accompagnement" data-pole-tab="accompagnement" type="button" tabindex="-1">
-          <span class="nc-poles-tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-          Accompagnement
-        </button>
-        <button class="nc-poles-tab" id="ncPolTab-conseil" role="tab" aria-selected="false" aria-controls="ncPolPanel-conseil" data-pole-tab="conseil" type="button" tabindex="-1">
-          <span class="nc-poles-tab-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.4 6.3L21 9l-5 4.2L17.5 20 12 16.4 6.5 20 8 13.2 3 9l6.6-.7L12 2z"/></svg></span>
-          Conseil
-        </button>
-      </div>
-
-      <!-- Panels -->
-      <div class="nc-poles-panels">
-        <!-- FORMATION -->
-        <div class="nc-poles-panel is-active" id="ncPolPanel-formation" role="tabpanel" aria-labelledby="ncPolTab-formation" tabindex="0">
-          <div class="nc-poles-intro">
-            <h3>Formation professionnelle &amp; montée en compétences</h3>
-            <p>Modules et parcours sur mesure pour dirigeants et cadres : leadership, management, finance appliquée et posture professionnelle. Groupes restreints, formats modulaires, présentiel à Meknès ou à distance.</p>
-            <a class="nc-poles-cta" href="#contact">Explorer nos formations →</a>
-          </div>
-          <ul class="nc-poles-jobs">
-            <li><span class="nc-poles-job-dot"></span>Leadership &amp; management</li>
-            <li><span class="nc-poles-job-dot"></span>Finance &amp; stratégie</li>
-            <li><span class="nc-poles-job-dot"></span>Communication &amp; posture</li>
-            <li><span class="nc-poles-job-dot"></span>Gestion de projet</li>
-            <li><span class="nc-poles-job-dot"></span>Entrepreneuriat</li>
-            <li><span class="nc-poles-job-dot"></span>Digital, data &amp; performance <span class="nc-poles-new">nouveau</span></li>
-          </ul>
+    <div class="nc-offers-grid">
+      <article class="nc-offer-card reveal d1">
+        <div class="nc-offer-head">
+          <span class="nc-offer-num">01</span>
+          <h3>Consultation 1-à-1</h3>
         </div>
+        <p>Séance ciblée pour débloquer une situation, arbitrer une décision ou clarifier vos priorités — franc, confidentiel, actionnable.</p>
+        <ul class="nc-offer-tags">
+          <li>Aide à la décision</li>
+          <li>Diagnostic express</li>
+          <li>Plan d'action</li>
+        </ul>
+        <a class="nc-offer-link" href="#contact">Réserver une consultation →</a>
+      </article>
 
-        <!-- ACCOMPAGNEMENT -->
-        <div class="nc-poles-panel" id="ncPolPanel-accompagnement" role="tabpanel" aria-labelledby="ncPolTab-accompagnement" tabindex="0" hidden>
-          <div class="nc-poles-intro">
-            <h3>Coaching &amp; accompagnement 1-à-1</h3>
-            <p>Un accompagnement structuré dans la durée pour développer votre leadership, votre posture et votre performance — objectifs mesurables, suivi régulier entre les séances et bilans d'étape. Présentiel à Meknès ou entièrement à distance.</p>
-            <a class="nc-poles-cta" href="#contact">Démarrer mon accompagnement →</a>
-          </div>
-          <ul class="nc-poles-jobs">
-            <li><span class="nc-poles-job-dot"></span>Entrepreneuriat</li>
-            <li><span class="nc-poles-job-dot"></span>RH, management &amp; organisations</li>
-            <li><span class="nc-poles-job-dot"></span>Développement personnel &amp; carrière</li>
-            <li><span class="nc-poles-job-dot"></span>Digital, data &amp; international</li>
-            <li><span class="nc-poles-job-dot"></span>Leadership &amp; prise de décision</li>
-            <li><span class="nc-poles-job-dot"></span>Préparation aux entretiens &amp; oraux</li>
-          </ul>
+      <article class="nc-offer-card nc-offer-card--feat reveal d2">
+        <span class="nc-offer-badge">Le plus demandé</span>
+        <div class="nc-offer-head">
+          <span class="nc-offer-num">02</span>
+          <h3>Coaching exécutif</h3>
         </div>
+        <p>Programme structuré sur plusieurs semaines pour renforcer leadership, posture et performance — avec jalons mesurables à chaque étape.</p>
+        <ul class="nc-offer-tags">
+          <li>Leadership</li>
+          <li>Management</li>
+          <li>Prise de parole</li>
+        </ul>
+        <a class="nc-offer-link" href="#contact">Démarrer mon coaching →</a>
+      </article>
 
-        <!-- CONSEIL -->
-        <div class="nc-poles-panel" id="ncPolPanel-conseil" role="tabpanel" aria-labelledby="ncPolTab-conseil" tabindex="0" hidden>
-          <div class="nc-poles-intro">
-            <h3>Conseil stratégique &amp; partenariat</h3>
-            <p>Un partenariat continu aux côtés de vos décisions majeures : vision stratégique, aide à la décision, accompagnement des transitions et disponibilité privilégiée. Confidentialité absolue sur l'ensemble de la mission.</p>
-            <a class="nc-poles-cta" href="#contact">Discuter de ma mission →</a>
-          </div>
-          <ul class="nc-poles-jobs">
-            <li><span class="nc-poles-job-dot"></span>Stratégie &amp; aide à la décision</li>
-            <li><span class="nc-poles-job-dot"></span>Transitions &amp; restructuration</li>
-            <li><span class="nc-poles-job-dot"></span>Organisation &amp; performance</li>
-            <li><span class="nc-poles-job-dot"></span>Pilotage de projets</li>
-            <li><span class="nc-poles-job-dot"></span>Finance &amp; investissement</li>
-            <li><span class="nc-poles-job-dot"></span>Développement commercial</li>
-          </ul>
+      <article class="nc-offer-card reveal d3">
+        <div class="nc-offer-head">
+          <span class="nc-offer-num">03</span>
+          <h3>Conseil &amp; accompagnement</h3>
         </div>
-      </div>
+        <p>Partenariat stratégique continu pour vos transitions, projets majeurs et décisions structurantes — disponibilité privilégiée.</p>
+        <ul class="nc-offer-tags">
+          <li>Stratégie PME</li>
+          <li>Transitions</li>
+          <li>Performance</li>
+        </ul>
+        <a class="nc-offer-link" href="#contact">Discuter de ma mission →</a>
+      </article>
     </div>
 
     <div class="nc-svc-note reveal d2">
       <span><b>1er échange gratuit</b> de 20 minutes</span>
       <span class="sep" aria-hidden="true"></span>
       <span>Réponse <b>sous 24 h</b></span>
-      <span class="sep" aria-hidden="true"></span>
-      <span><b>Sans engagement</b></span>
       <span class="sep" aria-hidden="true"></span>
       <span>Présentiel <b>Meknès</b> ou à distance</span>
     </div>
@@ -390,11 +361,29 @@
         <p>NC Consulting accompagne dirigeants, cadres et professionnels ambitieux avec une approche directe : diagnostic franc, recommandations actionnables et suivi dans la durée. Notre expertise couvre le conseil stratégique, le coaching exécutif et l'accompagnement sur mesure.</p>
         <p>Fondé sur plus de 15 ans d'expérience, le cabinet place la relation de confiance et la confidentialité au cœur de chaque mission — à Meknès et à distance.</p>
         <ul class="nc-about-points">
-          <li><span class="chk">✓</span>Conseil &amp; coaching pour dirigeants et cadres</li>
+          <li><span class="chk">✓</span>Consultation, coaching &amp; conseil stratégique</li>
           <li><span class="chk">✓</span>Accompagnement sur mesure, sans formule générique</li>
-          <li><span class="chk">✓</span>Trois pôles : Formation, Accompagnement, Conseil</li>
+          <li><span class="chk">✓</span>Dirigeants, cadres &amp; entrepreneurs uniquement</li>
         </ul>
         <a class="btn btn-gold" href="#contact">Échanger avec un conseiller →</a>
+      </div>
+    </div>
+
+    <div class="nc-founder reveal d2" aria-labelledby="founder-title">
+      <div class="nc-founder-photo">
+        <img src="assets/nc-icon.png" width="160" height="160" alt="Consultant fondateur NC Consulting" loading="lazy" decoding="async">
+      </div>
+      <div class="nc-founder-copy">
+        <div class="nc-label">Le fondateur</div>
+        <h3 class="nc-founder-name" id="founder-title">Consultant fondateur</h3>
+        <p>Plus de 15 ans d'accompagnement de dirigeants, cadres et entrepreneurs. Une expertise pointue en conseil stratégique et coaching exécutif — au service de résultats concrets et mesurables.</p>
+        <ul class="nc-founder-creds">
+          <li><span class="chk">✓</span>Conseil stratégique &amp; coaching exécutif</li>
+          <li><span class="chk">✓</span>Accompagnement dirigeants PME &amp; institutions</li>
+          <li><span class="chk">✓</span>Transitions de carrière &amp; leadership</li>
+          <li><span class="chk">✓</span>Meknès · Présentiel &amp; à distance</li>
+        </ul>
+        <p class="nc-founder-note"><em>Photo et certifications détaillées à compléter par le cabinet (ICE, RC, diplômes).</em></p>
       </div>
     </div>
 
@@ -497,16 +486,16 @@
       <div class="container">
     <div class="nc-booking-inner">
       <div class="nc-booking-copy reveal">
-        <div class="nc-scarcity"><span class="nc-live-dot"></span>Plus que 3 créneaux cette semaine</div>
+        <div class="nc-scarcity">Premier échange gratuit · 20 minutes</div>
         <h2 id="contact-title">Prêt à passer au <em>niveau supérieur</em> ?</h2>
-        <p class="lead">Réservez un appel découverte gratuit de 20 minutes, ou envoyez votre demande. Nous clarifions votre besoin et définissons ensemble la meilleure façon d'avancer.</p>
+        <p class="lead">Réservez un appel découverte gratuit de 20 minutes, ou envoyez votre demande. Nous clarifions votre besoin et définissons la meilleure façon d'avancer.</p>
         <ul class="nc-booking-benefits">
           <li><span class="chk">✓</span>Contexte pris en compte, clairement synthétisé</li>
           <li><span class="chk">✓</span>Recommandation ciblée, pas une réponse générique</li>
           <li><span class="chk">✓</span>Un conseiller suit votre dossier</li>
           <li><span class="chk">✓</span>Pas de frais ni d'engagement à cette étape</li>
         </ul>
-        <div class="nc-slots">Plus que <b style="color:var(--gold-lt)">2 créneaux</b> disponibles cette semaine · Réponse sous 24 h</div>
+        <div class="nc-slots">Réponse sous <b style="color:var(--gold-lt)">24–48 h</b> · Sans engagement</div>
         </div>
 
       <!-- FORM (wiring preserved for main.js) -->
@@ -515,6 +504,10 @@
               <div class="form-topline"></div>
               <div class="form-pad" id="formWrap">
                 <form id="leadForm" novalidate>
+                  <div class="hp-field" aria-hidden="true" hidden>
+                    <label for="hp_website">Ne pas remplir</label>
+                    <input type="text" id="hp_website" name="website" tabindex="-1" autocomplete="off">
+                  </div>
                   <div class="wiz-head" aria-label="Étapes du formulaire">
                     <div class="wiz-step">
                       <div class="wiz-dot active" id="wizDot1">1</div>
@@ -562,14 +555,14 @@
                 <div class="wiz-title">Votre objectif</div>
                 <div class="wiz-sub">Nous personnalisons ensuite l'accompagnement selon votre profil.</div>
                     <div class="field" style="margin-top:10px">
-                      <label for="niveau">Profil / Parcours principal</label>
+                      <label for="niveau">Votre profil</label>
                       <select id="niveau" name="niveau" required>
                         <option value="" disabled selected>Sélectionnez</option>
                         <option value="dirigeant">Dirigeant / Entrepreneur</option>
                         <option value="cadre">Cadre supérieur / Manager</option>
                         <option value="professionnel">Professionnel</option>
                         <option value="transition">En transition de carrière</option>
-                        <option value="formation">Formation professionnelle</option>
+                        <option value="formation">Montée en compétences (cadres)</option>
                         <option value="autre">Autre profil</option>
           </select>
         </div>
@@ -615,10 +608,6 @@
                       <div class="form-progress-bar" id="formProgressBar"></div>
                     </div>
                     <div class="form-progress-label" id="formProgressLabel">0 / 8 champs remplis</div>
-                    <div class="hp-field" aria-hidden="true">
-                      <label for="hp_website">Website</label>
-                      <input type="text" id="hp_website" name="website" tabindex="-1" autocomplete="off">
-                    </div>
                     <div id="leadSubmitError" class="field-error lead-submit-error" role="alert" hidden></div>
                     <div class="wiz-nav">
                       <button class="wiz-back" type="button" data-wiz-prev="2">← Retour</button>
@@ -664,8 +653,8 @@
   </div>
               <div>
         <h4>Navigation</h4>
-        <a href="#about">À propos</a>
         <a href="#poles">Pôles d'expertise</a>
+        <a href="#about">À propos</a>
         <a href="#methode">Méthode</a>
         <a href="#temoignages">Témoignages</a>
         <a href="#faq">FAQ</a>
@@ -674,12 +663,12 @@
         <h4>Contact</h4>
         <a href="tel:+212606111199">06 06 11 11 99</a>
         <a href="mailto:contact@ncconsulting.ma">contact@ncconsulting.ma</a>
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=33.858861,-5.575118" target="_blank" rel="noopener noreferrer">Meknès, Maroc</a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=33.858861,-5.575118" target="_blank" rel="noopener noreferrer">Meknès, Maroc — 33.8589, -5.5751</a>
         <a href="#contact">Réserver un appel</a>
               </div>
             </div>
     <div class="nc-foot-bottom">
-      <div>© 2026 NC Consulting · Meknès, Maroc · Conseil &amp; coaching</div>
+      <div>© 2026 NC Consulting · Meknès, Maroc · <span class="nc-foot-legal">ICE &amp; RC à compléter</span></div>
       <div>
         <a href="mentions-legales.html">Mentions légales</a> ·
         <a href="confidentialite.html">Confidentialité</a> ·

@@ -18,7 +18,7 @@ const NIVEAU_LABELS = {
   cadre: 'Cadre supérieur / Manager',
   professionnel: 'Professionnel',
   transition: 'En transition de carrière',
-  formation: 'Formation professionnelle',
+  formation: 'Montée en compétences (cadres)',
   autre: 'Autre profil',
 };
 

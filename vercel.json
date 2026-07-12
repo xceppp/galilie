@@ -5,6 +5,16 @@
       "has": [{ "type": "host", "value": "ncconsulting.ma" }],
       "destination": "https://www.ncconsulting.ma/:path*",
       "permanent": true
+    },
+    {
+      "source": "/preparation-concours.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/coaching-executif.html",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "functions": {
