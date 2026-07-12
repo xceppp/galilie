@@ -34,9 +34,9 @@ Site canonique : **https://www.ncconsulting.ma**
 5. **Inspection d'URL** → `https://www.ncconsulting.ma/` → **Demander une indexation**
 
 ### B. Balise de vérification Google (si méthode HTML)
-Ajouter dans `<head>` de `index.html` (remplacer `VOTRE_CODE`) :
+Ajoutée dans `<head>` de `index.html` :
 ```html
-<meta name="google-site-verification" content="VOTRE_CODE" />
+<meta name="google-site-verification" content="ISR4_otxO0KXznvo5Vtw9o5M1rpX6fHmj3qXPo5RI_8" />
 ```
 
 ### C. Google Business Profile (critique pour le local)
