@@ -83,6 +83,21 @@
 .locknote a{color:var(--gold-deep);text-decoration:underline;text-underline-offset:2px}
 .locknote a:hover{color:var(--gold)}
 
+/* reCAPTCHA v3 badge hidden — legal notice in .locknote */
+.grecaptcha-badge,
+.grecaptcha-badge iframe{
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  width:0!important;
+  height:0!important;
+  overflow:hidden!important;
+  position:fixed!important;
+  right:-9999px!important;
+  bottom:0!important;
+  border:0!important;
+}
+
 /* Success */
 .success{display:none;padding:40px 26px;text-align:center}
 .success.show{display:block;animation:fadeIn .4s ease}

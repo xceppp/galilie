@@ -58,7 +58,7 @@ Partout identique :
 - **NC Consulting**
 - Meknès, Maroc
 - `+212606111199` / `06 06 11 11 99`
-- `contact@ncconsulting.ma`
+- `chaltoutenouamane@gmail.com`
 - `https://www.ncconsulting.ma`
 
 Mettre à jour : Instagram bio, Facebook, WhatsApp Business, signatures email.
@@ -122,4 +122,4 @@ L'indexation technique ne garantit pas la 1ère place : Google Business Profile 
 ## 8. Contact cabinet
 
 - Tél. : 06 06 11 11 99 (`+212606111199`)
-- Email : contact@ncconsulting.ma
+- Email : chaltoutenouamane@gmail.com

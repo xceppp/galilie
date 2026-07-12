@@ -68,5 +68,5 @@ Scripts Apps Script dans `scripts/` pour initialiser le classeur.
 ## Contact
 
 - **Site :** https://www.ncconsulting.ma
-- **Email :** contact@ncconsulting.ma
+- **Email :** chaltoutenouamane@gmail.com
 - **Téléphone :** 06 06 11 11 99
