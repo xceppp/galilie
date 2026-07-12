@@ -1,5 +1,12 @@
 {
+  "buildCommand": "npm run verify:seo",
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "nconsulting.vercel.app" }],
+      "destination": "https://www.ncconsulting.ma/:path*",
+      "permanent": true
+    },
     {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "ncconsulting.ma" }],
