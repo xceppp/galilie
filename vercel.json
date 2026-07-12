@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run verify:seo",
+  "outputDirectory": ".",
   "redirects": [
     {
       "source": "/:path*",
