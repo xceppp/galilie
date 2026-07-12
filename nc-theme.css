@@ -557,21 +557,16 @@ button,input,select,textarea{font-family:inherit}
   .nc-alert-cta { display: none; }
 }
 
-/* Concours slider */
+/* Concours grid (desktop) — all cards visible */
 .nc-concours-slider {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
   gap: 22px;
-  padding: 6px 4px 28px;
-  margin: 0 -4px;
+  padding: 6px 0 10px;
   scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
 }
 .nc-concours-slider::-webkit-scrollbar { display: none; }
 .nc-concours-card {
-  scroll-snap-align: start;
-  flex: 0 0 340px;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 16px;
@@ -660,14 +655,20 @@ button,input,select,textarea{font-family:inherit}
   color: var(--ink-dim);
   margin-top: 2px;
 }
-@media(max-width: 860px) {
+@media(max-width: 640px) {
   .nc-concours-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     gap: 16px;
     padding: 6px 20px 26px;
     margin: 0 -20px;
     scroll-padding-left: 20px;
+    grid-template-columns: none;
   }
   .nc-concours-card {
+    scroll-snap-align: start;
     flex: 0 0 82%;
     max-width: 340px;
     padding: 26px 22px;
