@@ -90,7 +90,7 @@ Domaines reCAPTCHA Google Admin : `www.ncconsulting.ma`, `ncconsulting.ma`
 
 | Plateforme | URL |
 |------------|-----|
-| Instagram | https://www.instagram.com/consultingg |
+| Instagram | https://www.instagram.com/ncconsultingg |
 | Facebook | https://www.facebook.com/share/14n6ep56JPi/ |
 | LinkedIn | *à créer et ajouter dans `sameAs` + footer* |
 
