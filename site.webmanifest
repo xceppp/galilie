@@ -1,12 +1,16 @@
 {
+  "id": "https://www.ncconsulting.ma/",
   "name": "NC Consulting",
   "short_name": "NC Consulting",
-  "description": "Cabinet de conseil et coaching exécutif à Meknès, Maroc.",
+  "description": "Cabinet de conseil et coaching exécutif à Meknès, Maroc — ncconsulting.ma",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0E1116",
   "theme_color": "#0E1116",
-  "lang": "fr",
+  "lang": "fr-MA",
+  "dir": "ltr",
+  "categories": ["business", "consulting"],
   "icons": [
     {
       "src": "assets/icon-192.png",

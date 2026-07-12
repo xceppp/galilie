@@ -1,6 +1,15 @@
+# NC Consulting — https://www.ncconsulting.ma
 User-agent: *
 Allow: /
+Allow: /assets/
 
 Disallow: /api/
+
+# Crawlers IA (autoriser l'indexation de référence)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://www.ncconsulting.ma/sitemap.xml

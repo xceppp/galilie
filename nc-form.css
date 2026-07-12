@@ -1,7 +1,7 @@
 /* NC Consulting — styles du formulaire multi-étapes (wizard) et états.
    Conserve les IDs/classes attendus par main.js. Thème clair premium. */
 
-.form-topline{height:4px;background:linear-gradient(90deg,var(--gold),var(--gold-lt),transparent)}
+.form-topline{height:4px;background:var(--gold)}
 .form-pad{padding:28px 26px}
 @media(max-width:560px){.form-pad{padding:22px 18px}}
 
@@ -9,7 +9,7 @@
 .wiz-head{display:flex;align-items:center;gap:8px;margin-bottom:22px}
 .wiz-step{display:flex;align-items:center;gap:9px}
 .wiz-dot{width:30px;height:30px;border-radius:50%;background:var(--pearl);border:1px solid var(--line);color:var(--ink-dim);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:all .3s}
-.wiz-dot.active{background:var(--gold);border-color:var(--gold);color:#1a1408;box-shadow:0 6px 16px rgba(201,162,75,.3)}
+.wiz-dot.active{background:var(--gold);border-color:var(--gold);color:var(--navy);box-shadow:0 6px 16px rgba(201,163,86,.3)}
 .wiz-dot.done{background:var(--ok);border-color:var(--ok);color:#fff}
 .wiz-lbl{font-size:12px;font-weight:600;color:var(--ink-dim);transition:color .3s}
 .wiz-lbl.active{color:var(--charcoal)}
@@ -43,11 +43,11 @@
 
 /* Buttons */
 .submit{
-  margin-top:16px;width:100%;border:none;border-radius:11px;background:var(--gold);color:#1a1408;
+  margin-top:16px;width:100%;border:none;border-radius:11px;background:var(--gold);color:var(--navy);
   padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
-  transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 10px 26px rgba(201,162,75,.3);
+  transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 10px 26px rgba(201,163,86,.3);
 }
-.submit:hover{transform:translateY(-2px);background:var(--gold-lt);box-shadow:0 14px 34px rgba(201,162,75,.4)}
+.submit:hover{transform:translateY(-2px);background:var(--gold-hover);box-shadow:0 14px 34px rgba(201,163,86,.35)}
 .submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
 .wiz-nav{display:flex;align-items:center;gap:10px;margin-top:14px}
 .wiz-nav .wiz-next{flex:1;margin-top:0}
@@ -65,7 +65,7 @@
 
 /* Progress */
 .form-progress{margin-top:14px;height:7px;border-radius:999px;background:var(--line);overflow:hidden}
-.form-progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-lt));transition:width .4s ease}
+.form-progress-bar{height:100%;width:0;background:var(--gold);transition:width .4s ease}
 .form-progress-label{font-size:11px;color:var(--ink-dim);margin-top:6px}
 
 /* Honeypot anti-spam — jamais visible */

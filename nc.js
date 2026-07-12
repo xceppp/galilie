@@ -35,17 +35,42 @@
     revEls.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* Hero counters — valeurs statiques dans le HTML (pas d'animation vers 0) */
+  /* Hero background video — plays once, freezes on last frame */
+  var heroVid = document.getElementById('ncHeroVideo');
+  var heroVideoWrap = document.querySelector('.nc-hero-video');
+  if (heroVid && heroVideoWrap) {
+    heroVid.muted = true;
+    heroVid.defaultMuted = true;
+    heroVid.playsInline = true;
+    heroVid.setAttribute('playsinline', '');
+    heroVid.setAttribute('webkit-playsinline', '');
 
-  var hero = document.querySelector('.nc-hero');
-  var glow = document.getElementById('ncHeroGlow');
-  if (hero && glow && window.matchMedia('(min-width:769px)').matches) {
-    function moveHeroGlow(clientX, clientY) {
-      var r = hero.getBoundingClientRect();
-      glow.style.transform = 'translate(' + (clientX - r.left - 240) + 'px,' + (clientY - r.top - 240) + 'px)';
-    }
-    if (window.matchMedia('(hover:hover)').matches) {
-      hero.addEventListener('mousemove', function (e) { moveHeroGlow(e.clientX, e.clientY); });
+    heroVid.addEventListener('ended', function () {
+      heroVid.pause();
+      heroVideoWrap.classList.add('is-ended');
+    });
+
+    if (reduce) {
+      heroVid.addEventListener('loadedmetadata', function () {
+        if (heroVid.duration && isFinite(heroVid.duration)) {
+          heroVid.currentTime = Math.max(0, heroVid.duration - 0.05);
+        }
+        heroVid.pause();
+        heroVideoWrap.classList.add('is-ended');
+      }, { once: true });
+    } else {
+      var tryPlayHero = function () {
+        var p = heroVid.play();
+        if (p && typeof p.catch === 'function') {
+          p.catch(function () {
+            document.documentElement.addEventListener('pointerdown', function once() {
+              heroVid.play().catch(function () {});
+            }, { once: true, passive: true });
+          });
+        }
+      };
+      if (heroVid.readyState >= 2) tryPlayHero();
+      else heroVid.addEventListener('loadeddata', tryPlayHero, { once: true });
     }
   }
 
@@ -64,7 +89,7 @@
     else document.documentElement.removeAttribute('data-theme');
     try { localStorage.setItem('nc-theme', dark ? 'dark' : 'light'); } catch (e) {}
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', dark ? '#0f131a' : '#0E1116');
+    if (meta) meta.setAttribute('content', '#0E1116');
     syncThemeBtns();
   }
   themeBtns.forEach(function (b) { b.addEventListener('click', toggleTheme); });
@@ -92,5 +117,26 @@
   if (overlay) overlay.addEventListener('click', closeD);
   if (drawer) drawer.querySelectorAll('[data-close]').forEach(function (a) { a.addEventListener('click', closeD); });
   window.addEventListener('resize', function () { if (drawer && !drawer.classList.contains('open')) document.body.style.overflow = ''; });
+
+  /* Instagram embeds — process when script loads and when section is visible */
+  function processIgEmbeds() {
+    if (window.instgrm && window.instgrm.Embeds) {
+      window.instgrm.Embeds.process();
+    }
+  }
+  processIgEmbeds();
+  window.addEventListener('load', processIgEmbeds);
+  var reelsEl = document.getElementById('reels');
+  if (reelsEl && 'IntersectionObserver' in window) {
+    var igIo = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          processIgEmbeds();
+          igIo.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    igIo.observe(reelsEl);
+  }
 
 })();

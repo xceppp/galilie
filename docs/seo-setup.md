@@ -1,63 +1,125 @@
-# SEO & Google Search Console — NC Consulting
+# SEO & indexation Google — NC Consulting (ncconsulting.ma)
 
 Site canonique : **https://www.ncconsulting.ma**
 
-## 1. Vercel — variables d'environnement
+> **Objectif** : apparaître en première position pour les recherches de marque (`NC Consulting`, `ncconsulting`, `ncconsulting.ma`) et bien se positionner sur les requêtes locales (`conseil Meknès`, `coaching exécutif Maroc`).
 
-Dans **Vercel → Project → Settings → Environment Variables**, vérifier :
+---
 
-| Variable | Valeur recommandée |
-|----------|-------------------|
+## 1. Déjà en place sur le site (technique)
+
+| Élément | Statut |
+|---------|--------|
+| URL canonique `www.ncconsulting.ma` | ✅ |
+| Redirection 301 `ncconsulting.ma` → `www` | ✅ `vercel.json` |
+| Redirection 301 `/index.html` → `/` | ✅ |
+| `robots.txt` + `sitemap.xml` | ✅ |
+| Meta title / description optimisés (marque + ville) | ✅ |
+| Open Graph + Twitter cards | ✅ |
+| `hreflang` fr-MA | ✅ |
+| JSON-LD : Organization, WebSite, LocalBusiness, FAQPage | ✅ |
+| `llms.txt` (référencement IA) | ✅ |
+| Pages légales indexables | ✅ |
+| API `/api/*` en `noindex` | ✅ |
+
+---
+
+## 2. Actions obligatoires (à faire manuellement)
+
+### A. Google Search Console
+1. [search.google.com/search-console](https://search.google.com/search-console)
+2. Ajouter la propriété **Domaine** : `ncconsulting.ma` (recommandé) ou préfixe `https://www.ncconsulting.ma/`
+3. Vérifier via enregistrement DNS TXT (Vercel / registrar)
+4. Soumettre le sitemap : `https://www.ncconsulting.ma/sitemap.xml`
+5. **Inspection d'URL** → `https://www.ncconsulting.ma/` → **Demander une indexation**
+
+### B. Balise de vérification Google (si méthode HTML)
+Ajouter dans `<head>` de `index.html` (remplacer `VOTRE_CODE`) :
+```html
+<meta name="google-site-verification" content="VOTRE_CODE" />
+```
+
+### C. Google Business Profile (critique pour le local)
+1. [business.google.com](https://business.google.com)
+2. Créer / revendiquer **NC Consulting** à Meknès
+3. Catégorie : *Consultant en management* ou *Coach professionnel*
+4. Site web : `https://www.ncconsulting.ma`
+5. Téléphone : `+212 6 06 11 11 99`
+6. Mêmes horaires que le JSON-LD (lun–ven 9h–19h)
+7. Photos logo + bureau, lien Instagram
+
+### D. Bing Webmaster Tools
+1. [bing.com/webmasters](https://www.bing.com/webmasters)
+2. Importer depuis Search Console ou vérifier le domaine
+3. Soumettre le même sitemap
+
+### E. Cohérence NAP (Name, Address, Phone)
+Partout identique :
+- **NC Consulting**
+- Meknès, Maroc
+- `+212606111199` / `06 06 11 11 99`
+- `contact@ncconsulting.ma`
+- `https://www.ncconsulting.ma`
+
+Mettre à jour : Instagram bio, Facebook, WhatsApp Business, signatures email.
+
+---
+
+## 3. Vercel — variables d'environnement
+
+| Variable | Valeur |
+|----------|--------|
 | `RECAPTCHA_ALLOWED_HOSTNAMES` | `www.ncconsulting.ma,ncconsulting.ma` |
 
-Dans **Google reCAPTCHA Admin**, ajouter les domaines :
-- `www.ncconsulting.ma`
-- `ncconsulting.ma`
+Domaines reCAPTCHA Google Admin : `www.ncconsulting.ma`, `ncconsulting.ma`
 
-## 2. Domaine canonique (www)
+---
 
-Le site utilise **`https://www.ncconsulting.ma`** comme URL canonique.
+## 4. Validation après déploiement
 
-Les redirections 301 sont configurées dans `vercel.json` :
-- `ncconsulting.ma` → `www.ncconsulting.ma`
+- [Rich Results Test](https://search.google.com/test/rich-results) → FAQ + Local Business
+- [PageSpeed Insights](https://pagespeed.web.dev/) → mobile ≥ 90 SEO
+- `https://www.ncconsulting.ma/robots.txt`
+- `https://www.ncconsulting.ma/sitemap.xml`
+- `https://www.ncconsulting.ma/llms.txt`
+- Test redirection : `http://ncconsulting.ma` → `https://www.ncconsulting.ma/`
 
-Dans **Vercel → Domains**, attacher les deux domaines (`ncconsulting.ma` et `www.ncconsulting.ma`) au projet.
+---
 
-## 3. Google Search Console
+## 5. Réseaux sociaux (signaux de marque)
 
-1. Aller sur [Google Search Console](https://search.google.com/search-console)
-2. **Ajouter une propriété** → type **Domaine** : `ncconsulting.ma` (recommandé) ou **Préfixe d'URL** : `https://www.ncconsulting.ma/`
-3. **Vérifier la propriété** (TXT DNS ou balise HTML)
-4. Une fois vérifié :
-   - **Sitemaps** → soumettre : `https://www.ncconsulting.ma/sitemap.xml`
-   - **Inspection d'URL** → saisir `https://www.ncconsulting.ma/` → **Demander une indexation**
+| Plateforme | URL |
+|------------|-----|
+| Instagram | https://www.instagram.com/ncconsulting2 |
+| Facebook | https://www.facebook.com/share/14n6ep56JPi/ |
+| LinkedIn | *à créer et ajouter dans `sameAs` + footer* |
 
-## 4. Validation technique
+Bio Instagram / Facebook : inclure **ncconsulting.ma** et « NC Consulting Meknès ».
 
-Après déploiement, vérifier :
+---
 
-- [Rich Results Test](https://search.google.com/test/rich-results) sur la page d'accueil (JSON-LD `ProfessionalService`)
-- `https://www.ncconsulting.ma/robots.txt` — doit référencer le sitemap
-- `https://www.ncconsulting.ma/sitemap.xml` — 4 URLs publiques
-- Redirection : `http://ncconsulting.ma` et `https://ncconsulting.ma` → `https://www.ncconsulting.ma`
+## 6. Levier organique (moyen terme)
 
-## 5. Lighthouse (mobile)
+Pour dépasser les concurrents sur des requêtes non-marque :
+- Articles ciblés : *coaching exécutif Meknès*, *consultant dirigeant Maroc*
+- Avis clients Google Business (authentiques)
+- Backlinks locaux (annuaires pro Maroc, partenaires, presse locale)
+- Publier régulièrement sur Instagram avec lien bio vers le site
 
-Exécuter un audit Lighthouse dans Chrome DevTools (mode mobile) et viser ≥ 90 sur Performance, Accessibilité, SEO et Bonnes pratiques.
+---
 
-## 6. Réseaux sociaux
+## 7. Délais réalistes
 
-Profils configurés sur le site :
-- Instagram : https://www.instagram.com/ncconsulting2
-- Facebook : https://www.facebook.com/share/14n6ep56JPi/
+| Requête | Délai typique après configuration |
+|---------|-------------------------------------|
+| `ncconsulting.ma` / `NC Consulting` (marque) | 1–14 jours |
+| `conseil Meknès` / `coaching exécutif Maroc` | 2–6 mois + contenu |
 
-**LinkedIn** : non fourni — ajouter l'URL dès qu'un profil professionnel est créé.
+L'indexation technique ne garantit pas la 1ère place : Google Business Profile + avis + backlinks sont décisifs pour le local.
 
-## 7. Contact
+---
 
-- Téléphone : 06 06 11 11 99 (`+212606111199`)
+## 8. Contact cabinet
+
+- Tél. : 06 06 11 11 99 (`+212606111199`)
 - Email : contact@ncconsulting.ma
-
-## 8. Contenu organique (recommandation)
-
-Publier 3–5 articles ciblant des requêtes longue traîne (ex. « coaching exécutif Meknès », « accompagnement dirigeant Maroc ») est le levier organique le plus important à moyen terme. Aucune section blog n'existe encore sur le site.
