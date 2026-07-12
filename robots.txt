@@ -8,8 +8,10 @@ Disallow: /api/
 # Crawlers IA (autoriser l'indexation de référence)
 User-agent: GPTBot
 Allow: /
+Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /api/
 
 Sitemap: https://www.ncconsulting.ma/sitemap.xml
