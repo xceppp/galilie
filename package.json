@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "description": "NC Consulting site with secure lead API",
   "scripts": {
-    "verify:seo": "node scripts/verify-site-url.js"
+    "verify:seo": "node scripts/verify-site-url.js",
+    "csp:print": "node scripts/print-csp-header.js"
   },
   "engines": {
     "node": ">=18.x"
