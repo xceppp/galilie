@@ -1,5 +1,6 @@
 const { appendLeadRow } = require('../lib/sheets');
 const { validateAndSanitizeLead } = require('../lib/leadValidation');
+const { notifyNewLead } = require('../lib/notifyLead');
 
 const isProduction =
   process.env.VERCEL_ENV === 'production' ||
@@ -140,6 +141,9 @@ module.exports = async function handler(req, res) {
     }
 
     const { tabName } = await appendLeadRow(body, recaptcha.data);
+    notifyNewLead(body, tabName).catch((err) => {
+      console.error('[api/lead] notify', err && err.message ? err.message : err);
+    });
     return sendJson(res, 200, { ok: true, tab: tabName });
   } catch (err) {
     console.error('[api/lead]', err && err.stack ? err.stack : err);

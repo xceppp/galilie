@@ -17,11 +17,11 @@
 const CSP_PUBLIC = [
   "default-src 'self'",
   "media-src 'self'",
-  "script-src 'self' 'strict-dynamic' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://static.cdninstagram.com",
+  "script-src 'self' https://www.googletagmanager.com https://tagmanager.google.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://static.cdninstagram.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: https:",
-  "connect-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://api.instagram.com https://graph.instagram.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://region1.google-analytics.com",
+  "connect-src 'self' https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://api.instagram.com https://graph.instagram.com https://www.googletagmanager.com https://tagmanager.google.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net",
   "frame-src https://www.google.com https://www.recaptcha.net https://www.linkedin.com https://www.instagram.com https://www.googletagmanager.com",
   "object-src 'none'",
   "base-uri 'self'",
