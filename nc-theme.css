@@ -372,7 +372,7 @@ button,input,select,textarea{font-family:inherit}
 }
 
 /* Témoignages — LinkedIn + parole côte à côte, Instagram en dessous */
-.nc-section--testimonials{padding:80px 0}
+.nc-section--testimonials{padding:80px 0;overflow-x:clip}
 .nc-testimonial-feature{
   display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
   gap:28px 32px;max-width:1080px;margin:36px auto 32px;align-items:stretch;
@@ -456,30 +456,74 @@ button,input,select,textarea{font-family:inherit}
   border:0!important;box-shadow:none!important;border-radius:0!important;display:block;
 }
 .nc-linkedin-embed{
+  position:relative;width:100%;aspect-ratio:504/399;max-height:440px;
   border:1px solid var(--line);border-radius:14px;background:var(--ivory);overflow:hidden;
 }
-.nc-linkedin-embed--feature{flex:1;display:flex;align-items:stretch}
+.nc-linkedin-embed--feature{max-height:none;flex:1;min-height:280px}
 .nc-linkedin-embed iframe{
-  display:block;width:100%;max-width:100%;height:399px;margin:0 auto;border:0;
+  position:absolute;inset:0;display:block;width:100%!important;height:100%!important;
+  max-width:100%!important;margin:0;border:0;
 }
-.nc-linkedin-embed--feature iframe{min-height:360px;height:100%}
-.nc-reels-note{margin-top:28px;text-align:center;font-size:13px;color:var(--ink-dim)}
+.nc-reels-note{margin-top:28px;text-align:center;font-size:13px;color:var(--ink-dim);line-height:1.65;padding:0 8px}
 .nc-reels-note a{color:var(--gold-deep);font-weight:600;text-decoration:none}
 .nc-reels-note a:hover{color:var(--gold)}
 .nc-reels-profile{color:var(--gold-deep);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(201,163,86,.35)}
 .nc-reels-profile:hover{color:var(--gold)}
+.nc-testimonial-feature,
+.nc-testimonial-feature > *,
+.nc-testimonial-stack,
+.nc-reels-grid,
+.nc-reel-embed{min-width:0}
 @media(max-width:900px){
-  .nc-testimonial-feature{grid-template-columns:1fr;max-width:520px}
-  .nc-linkedin-embed iframe{height:399px}
+  .nc-testimonial-feature{
+    grid-template-columns:1fr;gap:22px;max-width:none;width:100%;
+    margin:32px 0 28px;
+  }
+  .nc-testimonial-stack{max-width:none;width:100%}
+  .nc-voice{height:auto;justify-content:flex-start}
+  .nc-linkedin-embed--feature{min-height:320px;aspect-ratio:504/399}
+}
+@media(max-width:768px){
+  .nc-section--testimonials{padding:64px 0}
+  .nc-testimonial-feature__media{padding:18px 16px 20px}
+  .nc-voice{padding:26px 22px 22px}
+  .nc-testimonial-panel{padding:20px 18px 24px}
 }
 @media(max-width:640px){
-  .nc-section--testimonials{padding:56px 0}
-  .nc-testimonial-feature{margin:28px auto 24px;gap:20px}
-  .nc-voice{padding:24px 22px 20px}
-  .nc-voice__quote p{font-size:1rem}
-  .nc-testimonial-panel{padding:18px 16px 22px}
-  .nc-reels-grid{grid-template-columns:1fr;max-width:320px;margin-inline:auto}
-  .nc-linkedin-embed iframe{height:360px}
+  .nc-reels-grid{grid-template-columns:1fr;gap:16px;max-width:none;width:100%}
+  .nc-reel-embed{min-height:0}
+}
+@media(max-width:560px){
+  .nc-section--testimonials{padding:44px 0}
+  .nc-testimonial-feature{margin:24px 0 20px;gap:18px}
+  .nc-testimonial-feature__media{padding:16px 14px 18px;border-radius:16px}
+  .nc-testimonial-panel{padding:16px 14px 20px;border-radius:16px}
+  .nc-testimonial-panel__head{
+    flex-direction:column;align-items:stretch;gap:12px;margin-bottom:16px;
+  }
+  .nc-testimonial-panel__head--compact{gap:10px}
+  .nc-testimonial-panel__brand{gap:12px}
+  .nc-testimonial-panel__icon{width:36px;height:36px;border-radius:10px}
+  .nc-testimonial-panel__title{font-size:1.05rem}
+  .nc-testimonial-panel__sub{font-size:12.5px}
+  .nc-testimonial-panel__cta{
+    width:100%;text-align:center;white-space:normal;padding:10px 14px;
+  }
+  .nc-voice{padding:22px 18px 20px;border-radius:16px}
+  .nc-voice__mark{font-size:2.75rem;margin-bottom:0}
+  .nc-voice__quote p{font-size:1rem;line-height:1.62}
+  .nc-voice__name{font-size:1rem}
+  .nc-voice__role{font-size:12px;line-height:1.5;word-wrap:break-word;overflow-wrap:anywhere}
+  .nc-voice__source{font-size:10.5px}
+  .nc-linkedin-embed,
+  .nc-linkedin-embed--feature{min-height:0;max-height:none;aspect-ratio:4/5}
+  .nc-reels-note{font-size:12.5px;padding:0 4px;margin-top:22px}
+  .nc-head .nc-sub{padding:0 4px}
+}
+@media(max-width:400px){
+  .nc-linkedin-embed,
+  .nc-linkedin-embed--feature{aspect-ratio:9/11}
+  .nc-voice__quote p{font-size:.98rem}
 }
 
 /* FAQ */
