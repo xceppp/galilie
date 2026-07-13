@@ -345,4 +345,9 @@ async function appendLeadRow(lead, recaptcha) {
 
 module.exports = {
   appendLeadRow,
+  getSheetsClient,
+  getSheetsId,
+  ensureTabExists,
+  safeCell,
+  a1Range,
 };

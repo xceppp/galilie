@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com; frame-src https://accounts.google.com; form-action 'self'; base-uri 'self';">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — NC Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <!-- LOGIN VIEW -->
+  <div id="loginView" class="login-view" hidden>
+    <div class="login-card">
+      <div class="login-logo">NC<span>Consulting</span></div>
+      <h1>Espace administrateur</h1>
+      <p class="login-sub">Connectez-vous avec votre compte Google autorisé.</p>
+      <div id="gsiButton" class="gsi-slot"></div>
+      <p id="loginError" class="login-error" hidden></p>
+      <p id="loginConfigWarn" class="login-warn" hidden>
+        Configuration Google manquante : définissez <code>GOOGLE_OAUTH_CLIENT_ID</code>,
+        <code>ADMIN_EMAILS</code> et <code>SESSION_SECRET</code> côté serveur.
+      </p>
+    </div>
+  </div>
+
+  <!-- APP VIEW -->
+  <div id="appView" class="app" hidden>
+    <aside class="sidebar">
+      <div class="brand">NC<span>Consulting</span></div>
+      <nav class="nav" id="nav">
+        <button class="nav-item" data-panel="hero" type="button">Accueil</button>
+        <button class="nav-item" data-panel="trust" type="button">Bandeau confiance</button>
+        <button class="nav-item is-active" data-panel="promo" type="button">Offre promo</button>
+        <button class="nav-item" data-panel="announcements" type="button">Annonces</button>
+        <button class="nav-item" data-panel="formations" type="button">Formations</button>
+        <button class="nav-item" data-panel="intro" type="button">Concours — titres</button>
+        <button class="nav-item" data-panel="poles" type="button">Pôles</button>
+        <button class="nav-item" data-panel="methode" type="button">Méthode</button>
+        <button class="nav-item" data-panel="expert" type="button">Pourquoi NC</button>
+        <button class="nav-item" data-panel="about" type="button">À propos</button>
+        <button class="nav-item" data-panel="faq" type="button">FAQ</button>
+        <button class="nav-item" data-panel="contact" type="button">Contact &amp; pied de page</button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="who"><span id="whoName"></span><small id="whoEmail"></small></div>
+        <a class="view-site" href="/" target="_blank" rel="noopener">Voir le site ↗</a>
+        <button id="logoutBtn" class="logout" type="button">Se déconnecter</button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <h1 id="panelTitle">Offre promo</h1>
+        <div class="topbar-actions">
+        <button id="seedBtn" class="btn-seed" type="button" title="Copie tout le texte actuel du site dans votre Google Sheet">Importer le contenu du site</button>
+        <button id="saveBtn" class="btn-save" type="button" disabled>Enregistrer</button>
+        </div>
+      </header>
+
+      <div class="scroll">
+        <!-- HERO -->
+        <section class="panel" id="panel-hero">
+          <p class="panel-desc">Section d'accueil — titre, textes, chiffres et carte latérale.</p>
+          <label class="field"><span>Accroche (eyebrow)</span><input type="text" data-content="hero.eyebrow"></label>
+          <label class="field"><span>Titre principal (HTML : &lt;br&gt;, &lt;em&gt;)</span><textarea rows="2" data-content="hero.title_html"></textarea></label>
+          <label class="field"><span>Texte d'introduction</span><textarea rows="3" data-content="hero.lead"></textarea></label>
+          <div class="grid2">
+            <label class="field"><span>Bouton principal</span><input type="text" data-content="hero.cta_primary"></label>
+            <label class="field"><span>Bouton secondaire</span><input type="text" data-content="hero.cta_secondary"></label>
+          </div>
+          <label class="field"><span>Réassurance sous les boutons</span><input type="text" data-content="hero.assure"></label>
+          <h3 class="sub-title">Chiffres clés</h3>
+          <div class="grid2">
+            <label class="field"><span>Chiffre 1</span><input type="text" data-content="hero.metric.1_value"></label>
+            <label class="field"><span>Suffixe 1</span><input type="text" data-content="hero.metric.1_suffix" placeholder="%"></label>
+            <label class="field"><span>Libellé 1</span><input type="text" data-content="hero.metric.1_label"></label>
+            <label class="field"><span>Chiffre 2</span><input type="text" data-content="hero.metric.2_value"></label>
+            <label class="field"><span>Suffixe 2</span><input type="text" data-content="hero.metric.2_suffix" placeholder="+"></label>
+            <label class="field"><span>Libellé 2</span><input type="text" data-content="hero.metric.2_label"></label>
+            <label class="field"><span>Chiffre 3</span><input type="text" data-content="hero.metric.3_value"></label>
+            <label class="field"><span>Suffixe 3</span><input type="text" data-content="hero.metric.3_suffix" placeholder="+"></label>
+            <label class="field"><span>Libellé 3</span><input type="text" data-content="hero.metric.3_label"></label>
+          </div>
+          <h3 class="sub-title">Carte latérale</h3>
+          <label class="field"><span>Badge</span><input type="text" data-content="hero.card.badge"></label>
+          <label class="field"><span>Titre carte</span><input type="text" data-content="hero.card.title"></label>
+          <label class="field"><span>Texte carte</span><textarea rows="2" data-content="hero.card.sub"></textarea></label>
+          <label class="field"><span>Points (un par ligne)</span><textarea rows="4" data-content="hero.card.items"></textarea></label>
+          <label class="field"><span>Bouton carte</span><input type="text" data-content="hero.card.cta"></label>
+          <label class="field"><span>Note sous la carte</span><input type="text" data-content="hero.card.rating"></label>
+        </section>
+
+        <!-- TRUST -->
+        <section class="panel" id="panel-trust">
+          <p class="panel-desc">Bandeau défilant sous le hero. Format : <b>mot en gras</b> + texte.</p>
+          <div class="collection" id="trustList"></div>
+          <button class="btn-add" type="button" data-add="trust">+ Ajouter un élément</button>
+        </section>
+
+        <!-- PROMO -->
+        <section class="panel is-active" id="panel-promo">
+          <p class="panel-desc">Le bloc d'offre en tête de la section Concours (badge, urgence, barre de places, bouton).</p>
+          <div class="grid2">
+            <label class="field"><span>Badge</span><input type="text" data-content="promo.badge"></label>
+            <label class="field"><span>Urgence</span><input type="text" data-content="promo.urgency"></label>
+          </div>
+          <label class="field"><span>Titre de l'offre</span><input type="text" data-content="promo.title"></label>
+          <label class="field"><span>Portion à mettre en avant (couleur or)</span><input type="text" data-content="promo.title_highlight"><small class="hint">Doit correspondre à une partie exacte du titre ci-dessus.</small></label>
+          <div class="grid2">
+            <label class="field"><span>Places réservées</span><input type="number" min="0" data-content="promo.places_reserved"></label>
+            <label class="field"><span>Places totales</span><input type="number" min="1" data-content="promo.places_total"></label>
+          </div>
+          <div class="grid2">
+            <label class="field"><span>Texte du bouton</span><input type="text" data-content="promo.cta_label"></label>
+            <label class="field"><span>Lien du bouton (formulaire)</span><input type="url" data-content="promo.cta_url"></label>
+          </div>
+
+          <h3 class="sub-title">Chiffres de réassurance</h3>
+          <div class="grid2">
+            <label class="field"><span>Chiffre 1</span><input type="text" data-content="proof.1_value"></label>
+            <label class="field"><span>Libellé 1</span><input type="text" data-content="proof.1_label"></label>
+            <label class="field"><span>Chiffre 2</span><input type="text" data-content="proof.2_value"></label>
+            <label class="field"><span>Libellé 2</span><input type="text" data-content="proof.2_label"></label>
+            <label class="field"><span>Chiffre 3</span><input type="text" data-content="proof.3_value"></label>
+            <label class="field"><span>Libellé 3</span><input type="text" data-content="proof.3_label"></label>
+            <label class="field"><span>Chiffre 4</span><input type="text" data-content="proof.4_value"></label>
+            <label class="field"><span>Libellé 4</span><input type="text" data-content="proof.4_label"></label>
+          </div>
+        </section>
+
+        <!-- ANNOUNCEMENTS -->
+        <section class="panel" id="panel-announcements">
+          <p class="panel-desc">Le bandeau défilant en haut de page. Décochez pour masquer sans supprimer.</p>
+          <div class="collection" id="annList"></div>
+          <button class="btn-add" type="button" data-add="announcement">+ Ajouter une annonce</button>
+        </section>
+
+        <!-- FORMATIONS -->
+        <section class="panel" id="panel-formations">
+          <p class="panel-desc">Les cartes de préparation Concours. Une ligne d'élément = <code>Nom :: description</code> (ou juste un texte simple).</p>
+          <div class="collection" id="formList"></div>
+          <button class="btn-add" type="button" data-add="formation">+ Ajouter une formation</button>
+        </section>
+
+        <!-- INTRO / SECTION TITLES -->
+        <section class="panel" id="panel-intro">
+          <p class="panel-desc">Les titres en tête de la section Concours.</p>
+          <label class="field"><span>Petit label</span><input type="text" data-content="concours.label"></label>
+          <label class="field"><span>Titre (HTML autorisé : &lt;em&gt;)</span><input type="text" data-content="concours.title_html"></label>
+          <label class="field"><span>Sous-titre (HTML autorisé : &lt;strong&gt;)</span><textarea rows="3" data-content="concours.subtitle_html"></textarea></label>
+        </section>
+
+        <!-- POLES -->
+        <section class="panel" id="panel-poles">
+          <p class="panel-desc">Section Pôles d'expertise — onglets Formation, Accompagnement, Conseil.</p>
+          <label class="field"><span>Label section</span><input type="text" data-content="poles.label"></label>
+          <label class="field"><span>Titre (HTML)</span><input type="text" data-content="poles.title_html"></label>
+          <label class="field"><span>Sous-titre</span><textarea rows="2" data-content="poles.subtitle"></textarea></label>
+          <h3 class="sub-title">Onglet Formation</h3>
+          <div class="grid2">
+            <label class="field"><span>Nom onglet</span><input type="text" data-content="poles.formation.tab"></label>
+            <label class="field"><span>Bouton CTA</span><input type="text" data-content="poles.formation.cta"></label>
+          </div>
+          <label class="field"><span>Titre</span><input type="text" data-content="poles.formation.title"></label>
+          <label class="field"><span>Description</span><textarea rows="3" data-content="poles.formation.desc"></textarea></label>
+          <label class="field"><span>Liste (un par ligne)</span><textarea rows="5" data-content="poles.formation.items"></textarea></label>
+          <h3 class="sub-title">Onglet Accompagnement</h3>
+          <div class="grid2">
+            <label class="field"><span>Nom onglet</span><input type="text" data-content="poles.accompagnement.tab"></label>
+            <label class="field"><span>Bouton CTA</span><input type="text" data-content="poles.accompagnement.cta"></label>
+          </div>
+          <label class="field"><span>Titre</span><input type="text" data-content="poles.accompagnement.title"></label>
+          <label class="field"><span>Description</span><textarea rows="3" data-content="poles.accompagnement.desc"></textarea></label>
+          <label class="field"><span>Liste (un par ligne)</span><textarea rows="5" data-content="poles.accompagnement.items"></textarea></label>
+          <h3 class="sub-title">Onglet Conseil</h3>
+          <div class="grid2">
+            <label class="field"><span>Nom onglet</span><input type="text" data-content="poles.conseil.tab"></label>
+            <label class="field"><span>Bouton CTA</span><input type="text" data-content="poles.conseil.cta"></label>
+          </div>
+          <label class="field"><span>Titre</span><input type="text" data-content="poles.conseil.title"></label>
+          <label class="field"><span>Description</span><textarea rows="3" data-content="poles.conseil.desc"></textarea></label>
+          <label class="field"><span>Liste (un par ligne)</span><textarea rows="5" data-content="poles.conseil.items"></textarea></label>
+          <h3 class="sub-title">Note en bas de section</h3>
+          <label class="field"><span>Ligne 1 (HTML)</span><input type="text" data-content="poles.note.1_html"></label>
+          <label class="field"><span>Ligne 2 (HTML)</span><input type="text" data-content="poles.note.2_html"></label>
+          <label class="field"><span>Ligne 3 (HTML)</span><input type="text" data-content="poles.note.3_html"></label>
+        </section>
+
+        <!-- METHODE -->
+        <section class="panel" id="panel-methode">
+          <p class="panel-desc">Section « Comment ça marche » — 3 étapes.</p>
+          <label class="field"><span>Label</span><input type="text" data-content="methode.label"></label>
+          <label class="field"><span>Titre (HTML)</span><input type="text" data-content="methode.title_html"></label>
+          <label class="field"><span>Sous-titre</span><textarea rows="2" data-content="methode.subtitle"></textarea></label>
+          <h3 class="sub-title">Étape 1</h3>
+          <div class="grid2">
+            <label class="field"><span>Numéro</span><input type="text" data-content="methode.1.num"></label>
+            <label class="field"><span>Tag</span><input type="text" data-content="methode.1.tag"></label>
+          </div>
+          <label class="field"><span>Titre</span><input type="text" data-content="methode.1.title"></label>
+          <label class="field"><span>Description</span><textarea rows="2" data-content="methode.1.desc"></textarea></label>
+          <label class="field"><span>Chips (séparés par des virgules)</span><input type="text" data-content="methode.1.chips"></label>
+          <h3 class="sub-title">Étape 2</h3>
+          <div class="grid2">
+            <label class="field"><span>Numéro</span><input type="text" data-content="methode.2.num"></label>
+            <label class="field"><span>Tag</span><input type="text" data-content="methode.2.tag"></label>
+          </div>
+          <label class="field"><span>Titre</span><input type="text" data-content="methode.2.title"></label>
+          <label class="field"><span>Description</span><textarea rows="2" data-content="methode.2.desc"></textarea></label>
+          <label class="field"><span>Chips</span><input type="text" data-content="methode.2.chips"></label>
+          <h3 class="sub-title">Étape 3</h3>
+          <div class="grid2">
+            <label class="field"><span>Numéro</span><input type="text" data-content="methode.3.num"></label>
+            <label class="field"><span>Tag</span><input type="text" data-content="methode.3.tag"></label>
+          </div>
+          <label class="field"><span>Titre</span><input type="text" data-content="methode.3.title"></label>
+          <label class="field"><span>Description</span><textarea rows="2" data-content="methode.3.desc"></textarea></label>
+          <label class="field"><span>Chips</span><input type="text" data-content="methode.3.chips"></label>
+        </section>
+
+        <!-- EXPERT -->
+        <section class="panel" id="panel-expert">
+          <p class="panel-desc">Section « Pourquoi NC Consulting ».</p>
+          <label class="field"><span>Label</span><input type="text" data-content="expert.label"></label>
+          <label class="field"><span>Titre (HTML)</span><input type="text" data-content="expert.title_html"></label>
+          <label class="field"><span>Texte</span><textarea rows="3" data-content="expert.text"></textarea></label>
+          <label class="field"><span>Bouton CTA</span><input type="text" data-content="expert.cta"></label>
+          <h3 class="sub-title">Piliers</h3>
+          <label class="field"><span>Pilier 1 — titre</span><input type="text" data-content="expert.pillar.1.title"></label>
+          <label class="field"><span>Pilier 1 — texte</span><textarea rows="2" data-content="expert.pillar.1.text"></textarea></label>
+          <label class="field"><span>Pilier 2 — titre</span><input type="text" data-content="expert.pillar.2.title"></label>
+          <label class="field"><span>Pilier 2 — texte</span><textarea rows="2" data-content="expert.pillar.2.text"></textarea></label>
+          <label class="field"><span>Pilier 3 — titre</span><input type="text" data-content="expert.pillar.3.title"></label>
+          <label class="field"><span>Pilier 3 — texte</span><textarea rows="2" data-content="expert.pillar.3.text"></textarea></label>
+          <h3 class="sub-title">Témoignages vidéo (titres)</h3>
+          <label class="field"><span>Label reels</span><input type="text" data-content="reels.label"></label>
+          <label class="field"><span>Titre reels (HTML)</span><input type="text" data-content="reels.title_html"></label>
+          <label class="field"><span>Sous-titre reels (HTML)</span><textarea rows="2" data-content="reels.subtitle_html"></textarea></label>
+          <label class="field"><span>Note reels (HTML)</span><textarea rows="2" data-content="reels.note_html"></textarea></label>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="panel" id="panel-about">
+          <p class="panel-desc">Section À propos, études de cas et types de clients.</p>
+          <label class="field"><span>Label</span><input type="text" data-content="about.label"></label>
+          <label class="field"><span>Titre (HTML)</span><input type="text" data-content="about.title_html"></label>
+          <label class="field"><span>Titre mission</span><input type="text" data-content="about.mission_title"></label>
+          <label class="field"><span>Lead mission (HTML)</span><textarea rows="2" data-content="about.mission_lead_html"></textarea></label>
+          <label class="field"><span>Paragraphe mission</span><textarea rows="2" data-content="about.mission_p2"></textarea></label>
+          <label class="field"><span>Note mission</span><textarea rows="2" data-content="about.mission_note"></textarea></label>
+          <h3 class="sub-title">Chiffres</h3>
+          <div class="grid2">
+            <label class="field"><span>Chiffre 1</span><input type="text" data-content="about.fact.1_num"></label>
+            <label class="field"><span>Libellé 1</span><input type="text" data-content="about.fact.1_lbl"></label>
+            <label class="field"><span>Chiffre 2</span><input type="text" data-content="about.fact.2_num"></label>
+            <label class="field"><span>Libellé 2</span><input type="text" data-content="about.fact.2_lbl"></label>
+            <label class="field"><span>Chiffre 3</span><input type="text" data-content="about.fact.3_num"></label>
+            <label class="field"><span>Libellé 3</span><input type="text" data-content="about.fact.3_lbl"></label>
+          </div>
+          <h3 class="sub-title">Piliers</h3>
+          <label class="field"><span>Pilier 1 titre / texte</span><input type="text" data-content="about.pillar.1.title"><textarea rows="2" data-content="about.pillar.1.text"></textarea></label>
+          <label class="field"><span>Pilier 2 titre / texte</span><input type="text" data-content="about.pillar.2.title"><textarea rows="2" data-content="about.pillar.2.text"></textarea></label>
+          <label class="field"><span>Pilier 3 titre / texte</span><input type="text" data-content="about.pillar.3.title"><textarea rows="2" data-content="about.pillar.3.text"></textarea></label>
+          <label class="field"><span>Bouton CTA</span><input type="text" data-content="about.cta"></label>
+          <label class="field"><span>Titre « Ils nous font confiance »</span><input type="text" data-content="about.clients_label"></label>
+          <h3 class="sub-title">Types de clients</h3>
+          <div class="collection" id="clientList"></div>
+          <button class="btn-add" type="button" data-add="client">+ Ajouter un type de client</button>
+          <h3 class="sub-title">Études de cas</h3>
+          <div class="collection" id="caseList"></div>
+          <button class="btn-add" type="button" data-add="case">+ Ajouter une étude de cas</button>
+        </section>
+
+        <!-- FAQ -->
+        <section class="panel" id="panel-faq">
+          <p class="panel-desc">Questions fréquentes — accordéon sur le site.</p>
+          <label class="field"><span>Label section</span><input type="text" data-content="faq.label"></label>
+          <label class="field"><span>Titre (HTML)</span><input type="text" data-content="faq.title_html"></label>
+          <div class="collection" id="faqList"></div>
+          <button class="btn-add" type="button" data-add="faq">+ Ajouter une question</button>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="panel" id="panel-contact">
+          <p class="panel-desc">Section contact et pied de page.</p>
+          <label class="field"><span>Bandeau urgence</span><input type="text" data-content="contact.scarcity"></label>
+          <label class="field"><span>Titre (HTML)</span><input type="text" data-content="contact.title_html"></label>
+          <label class="field"><span>Texte d'intro</span><textarea rows="3" data-content="contact.lead"></textarea></label>
+          <label class="field"><span>Avantages (un par ligne)</span><textarea rows="4" data-content="contact.benefits"></textarea></label>
+          <label class="field"><span>Délai de réponse (HTML)</span><input type="text" data-content="contact.slots_html"></label>
+          <h3 class="sub-title">Coordonnées</h3>
+          <label class="field"><span>Ville / adresse</span><input type="text" data-content="contact.location"></label>
+          <label class="field"><span>Téléphone affiché</span><input type="text" data-content="contact.phone_display"></label>
+          <label class="field"><span>Téléphone (lien tel:)</span><input type="text" data-content="contact.phone_tel" placeholder="+212606111199"></label>
+          <label class="field"><span>Email</span><input type="email" data-content="contact.email"></label>
+          <h3 class="sub-title">Pied de page</h3>
+          <label class="field"><span>Tagline</span><textarea rows="2" data-content="footer.tagline"></textarea></label>
+          <label class="field"><span>Copyright</span><input type="text" data-content="footer.copyright"></label>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <!-- Card template for a formation -->
+  <template id="tpl-formation">
+    <div class="card" data-kind="formation">
+      <div class="card-head">
+        <label class="chk"><input type="checkbox" data-field="active"><span>Visible</span></label>
+        <div class="card-actions">
+          <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+          <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+          <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+        </div>
+      </div>
+      <input type="hidden" data-field="id">
+      <div class="grid2">
+        <label class="field"><span>Étiquette</span><input type="text" data-field="tag"></label>
+        <label class="field"><span>Titre</span><input type="text" data-field="title"></label>
+      </div>
+      <label class="field"><span>Sous-titre</span><input type="text" data-field="subtitle"></label>
+      <label class="field"><span>Éléments (un par ligne — <code>Nom :: description</code>)</span><textarea rows="6" data-field="items"></textarea></label>
+      <label class="field"><span>Lien du bouton</span><input type="url" data-field="cta_url"></label>
+    </div>
+  </template>
+
+  <!-- Row template for an announcement -->
+  <template id="tpl-announcement">
+    <div class="row" data-kind="announcement">
+      <label class="chk"><input type="checkbox" data-field="active"><span></span></label>
+      <input type="hidden" data-field="id">
+      <input type="text" class="row-text" data-field="text" placeholder="Texte de l'annonce">
+      <div class="card-actions">
+        <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+        <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+        <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- Row template for trust item -->
+  <template id="tpl-trust">
+    <div class="row" data-kind="trust">
+      <label class="chk"><input type="checkbox" data-field="active"><span></span></label>
+      <input type="hidden" data-field="id">
+      <input type="text" class="row-text" data-field="bold" placeholder="Mot en gras" style="max-width:140px">
+      <input type="text" class="row-text" data-field="text" placeholder="Suite du texte">
+      <div class="card-actions">
+        <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+        <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+        <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- FAQ item -->
+  <template id="tpl-faq">
+    <div class="card" data-kind="faq">
+      <div class="card-head">
+        <label class="chk"><input type="checkbox" data-field="active"><span>Visible</span></label>
+        <div class="card-actions">
+          <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+          <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+          <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+        </div>
+      </div>
+      <input type="hidden" data-field="id">
+      <label class="field"><span>Question</span><input type="text" data-field="question"></label>
+      <label class="field"><span>Réponse</span><textarea rows="3" data-field="answer"></textarea></label>
+    </div>
+  </template>
+
+  <!-- Case study -->
+  <template id="tpl-case">
+    <div class="card" data-kind="case">
+      <div class="card-head">
+        <label class="chk"><input type="checkbox" data-field="active"><span>Visible</span></label>
+        <div class="card-actions">
+          <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+          <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+          <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+        </div>
+      </div>
+      <input type="hidden" data-field="id">
+      <label class="field"><span>Étiquette</span><input type="text" data-field="tag"></label>
+      <label class="field"><span>Titre</span><input type="text" data-field="title"></label>
+      <label class="field"><span>Description</span><textarea rows="4" data-field="description"></textarea></label>
+      <label class="field"><span>Résultat</span><input type="text" data-field="outcome"></label>
+    </div>
+  </template>
+
+  <!-- Client type pill -->
+  <template id="tpl-client">
+    <div class="row" data-kind="client">
+      <label class="chk"><input type="checkbox" data-field="active"><span></span></label>
+      <input type="hidden" data-field="id">
+      <input type="text" class="row-text" data-field="label" placeholder="Type de client">
+      <div class="card-actions">
+        <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+        <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+        <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

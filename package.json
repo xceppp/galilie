@@ -10,6 +10,7 @@
     "node": ">=18.x"
   },
   "dependencies": {
+    "google-auth-library": "^10.9.0",
     "googleapis": "^150.0.1"
   }
 }

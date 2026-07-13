@@ -180,15 +180,25 @@
   themeBtns.forEach(function (b) { b.addEventListener('click', toggleTheme); });
   syncThemeBtns();
 
-  /* FAQ accordion */
-  document.querySelectorAll('.nc-faq-item .nc-faq-q').forEach(function (q) {
-    q.addEventListener('click', function () {
-      var it = q.parentElement;
-      var open = it.classList.contains('open');
-      document.querySelectorAll('.nc-faq-item').forEach(function (x) { x.classList.remove('open'); });
-      if (!open) it.classList.add('open');
+  /* FAQ accordion — exposed for CMS re-render */
+  function initFaq() {
+    document.querySelectorAll('.nc-faq-item .nc-faq-q').forEach(function (q) {
+      if (q.dataset.ncBound) return;
+      q.dataset.ncBound = '1';
+      q.addEventListener('click', function () {
+        var it = q.parentElement;
+        var open = it.classList.contains('open');
+        document.querySelectorAll('.nc-faq-item').forEach(function (x) {
+          x.classList.remove('open');
+        });
+        if (!open) it.classList.add('open');
+      });
     });
-  });
+  }
+  initFaq();
+  window.ncReinitUi = function () {
+    initFaq();
+  };
 
   /* Mobile drawer */
   var drawer = document.getElementById('ncDrawer');

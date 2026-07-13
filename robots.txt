@@ -4,6 +4,7 @@ Allow: /
 Allow: /assets/
 
 Disallow: /api/
+Disallow: /admin
 
 # Crawlers IA (autoriser l'indexation de référence)
 User-agent: GPTBot
