@@ -2,6 +2,11 @@
 (function () {
   'use strict';
 
+  if (window.location.hash === '#concours') {
+    window.location.replace('concours.html');
+    return;
+  }
+
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Scroll progress + navbar shadow + floating widgets */

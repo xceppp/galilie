@@ -18,8 +18,13 @@
       "permanent": true
     },
     {
+      "source": "/concours",
+      "destination": "/concours.html",
+      "permanent": true
+    },
+    {
       "source": "/preparation-concours.html",
-      "destination": "/",
+      "destination": "/concours.html",
       "permanent": true
     },
     {

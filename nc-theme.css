@@ -1510,6 +1510,22 @@ button,input,select,textarea{font-family:inherit}
 .nc-quiz-grid{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
 }
+.nc-quiz-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.nc-quiz-cross{
+  margin:16px 0 0;text-align:center;font-size:13.5px;color:var(--ink-dim);
+}
+.nc-quiz-cross a{font-weight:600;color:var(--gold-deep);text-decoration:none}
+.nc-quiz-cross a:hover{text-decoration:underline}
+.nc-foot-cross{margin:6px 0 0;font-size:12.5px;color:var(--silver)}
+.nc-foot-cross a{color:var(--gold-lt);font-weight:600;text-decoration:none}
+.nc-foot-cross a:hover{text-decoration:underline}
+.nc-promo-updated{
+  margin:0 0 14px;font-size:12px;color:var(--ink-dim);text-align:center;
+}
+.nc-section--concours-page{padding-top:48px}
+@media(max-width:900px){
+  .nc-quiz-grid--3{grid-template-columns:1fr;max-width:420px;margin-inline:auto}
+}
 .nc-quiz-card{
   display:flex;flex-direction:column;gap:10px;padding:22px 20px;
   background:var(--white);border:1px solid var(--line);border-radius:16px;

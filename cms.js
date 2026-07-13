@@ -227,7 +227,7 @@
     'cadres-superieurs': 'Leadership affirmé et coaching exécutif structuré.',
     entrepreneurs: 'Structuration de projet et priorités stratégiques.',
     'institutions-publiques': 'Montée en compétences des équipes et du pilotage.',
-    'profils-en-transition': 'Reconversion et préparation concours avec suivi.',
+    'profils-en-transition': 'Reconversion et repositionnement professionnel avec suivi.',
   };
 
   function trustHintFor(label) {
