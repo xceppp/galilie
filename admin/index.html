@@ -13,6 +13,26 @@
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
+  <!-- LOADING -->
+  <div id="loadingView" class="login-view">
+    <div class="login-card login-card--compact">
+      <div class="login-logo">NC<span>Consulting</span></div>
+      <p class="login-sub">Chargement…</p>
+    </div>
+  </div>
+
+  <!-- SETUP VIEW (auth not configured on server) -->
+  <div id="setupView" class="login-view" hidden>
+    <div class="login-card setup-card">
+      <div class="login-logo">NC<span>Consulting</span></div>
+      <h1>Configuration requise</h1>
+      <p class="login-sub">L’espace administrateur n’est pas encore activé. Ajoutez ces variables dans <strong>Vercel → Settings → Environment Variables</strong>, puis redéployez.</p>
+      <ul id="setupMissing" class="setup-list"></ul>
+      <p class="setup-note">Générez <code>SESSION_SECRET</code> avec&nbsp;: <code>openssl rand -hex 32</code></p>
+      <p class="setup-note">Guide complet&nbsp;: <code>docs/cms-setup.md</code> dans le dépôt du projet.</p>
+    </div>
+  </div>
+
   <!-- LOGIN VIEW -->
   <div id="loginView" class="login-view" hidden>
     <div class="login-card">
@@ -21,10 +41,6 @@
       <p class="login-sub">Connectez-vous avec votre compte Google autorisé.</p>
       <div id="gsiButton" class="gsi-slot"></div>
       <p id="loginError" class="login-error" hidden></p>
-      <p id="loginConfigWarn" class="login-warn" hidden>
-        Configuration Google manquante : définissez <code>GOOGLE_OAUTH_CLIENT_ID</code>,
-        <code>ADMIN_EMAILS</code> et <code>SESSION_SECRET</code> côté serveur.
-      </p>
     </div>
   </div>
 

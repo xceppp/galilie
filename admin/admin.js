@@ -14,11 +14,13 @@
   var clientId = '';
 
   var el = {
+    loading: document.getElementById('loadingView'),
+    setup: document.getElementById('setupView'),
+    setupMissing: document.getElementById('setupMissing'),
     login: document.getElementById('loginView'),
     app: document.getElementById('appView'),
     gsiButton: document.getElementById('gsiButton'),
     loginError: document.getElementById('loginError'),
-    loginWarn: document.getElementById('loginConfigWarn'),
     nav: document.getElementById('nav'),
     panelTitle: document.getElementById('panelTitle'),
     saveBtn: document.getElementById('saveBtn'),
@@ -124,13 +126,39 @@
     });
   }
 
+  function hideAllViews() {
+    el.loading.hidden = true;
+    el.setup.hidden = true;
+    el.login.hidden = true;
+    el.app.hidden = true;
+  }
+
+  function showSetup(missing) {
+    hideAllViews();
+    el.setup.hidden = false;
+    if (el.setupMissing) {
+      el.setupMissing.innerHTML = '';
+      (missing || []).forEach(function (name) {
+        var li = document.createElement('li');
+        li.innerHTML = '<code>' + name + '</code>';
+        el.setupMissing.appendChild(li);
+      });
+    }
+  }
+
+  function showLogin() {
+    hideAllViews();
+    el.login.hidden = false;
+  }
+
   function bootstrap() {
+    hideAllViews();
+    el.loading.hidden = false;
     api('/api/admin/config').then(function (res) {
       var j = res.json || {};
       clientId = j.clientId || '';
       if (!j.configured) {
-        showLogin();
-        el.loginWarn.hidden = false;
+        showSetup(j.missing || []);
         return;
       }
       if (j.authenticated) enterApp(j.user);
@@ -140,11 +168,6 @@
       el.loginError.textContent = 'Impossible de contacter le serveur.';
       el.loginError.hidden = false;
     });
-  }
-
-  function showLogin() {
-    el.app.hidden = true;
-    el.login.hidden = false;
   }
 
   function initGsi() {
@@ -169,6 +192,7 @@
     api('/api/admin/login', { method: 'POST', body: { credential: response.credential } })
       .then(function (res) {
         if (res.status === 200 && res.json.ok) enterApp(res.json.user);
+        else if (res.json.error === 'not_configured') showSetup();
         else if (res.json.error === 'not_allowed') {
           el.loginError.textContent = "Ce compte Google n'est pas autorisé.";
           el.loginError.hidden = false;
@@ -184,7 +208,7 @@
   }
 
   function enterApp(user) {
-    el.login.hidden = true;
+    hideAllViews();
     el.app.hidden = false;
     if (user) {
       el.whoName.textContent = user.name || 'Admin';
@@ -204,6 +228,10 @@
 
   function loadContent() {
     api('/api/admin/content').then(function (res) {
+      if (res.status === 503 || (res.json && res.json.error === 'not_configured')) {
+        showSetup();
+        return;
+      }
       if (res.status === 401) { showLogin(); initGsi(); return; }
       if (!res.json.ok) { toast('Erreur de chargement', 'err'); return; }
       state.content = res.json.content || {};
@@ -284,6 +312,10 @@
     api('/api/admin/content', { method: 'POST', body: payload })
       .then(function (res) {
         el.saveBtn.textContent = 'Enregistrer';
+        if (res.status === 503 || (res.json && res.json.error === 'not_configured')) {
+          showSetup();
+          return;
+        }
         if (res.status === 401) { showLogin(); initGsi(); return; }
         if (res.json.ok) {
           state.content = res.json.content || {};
@@ -358,6 +390,10 @@
         api('/api/admin/seed', { method: 'POST' })
           .then(function (res) {
             el.seedBtn.disabled = false;
+            if (res.status === 503 || (res.json && res.json.error === 'not_configured')) {
+              showSetup();
+              return;
+            }
             if (res.status === 401) { showLogin(); initGsi(); return; }
             if (res.json.ok) {
               state.content = res.json.content || {};

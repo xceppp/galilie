@@ -1,7 +1,7 @@
 'use strict';
 
 const { sendJson, parseRequestBody, isProduction } = require('../../lib/http');
-const { readSession } = require('../../lib/adminAuth');
+const { readSession, isAdminAuthConfigured } = require('../../lib/adminAuth');
 const { readCms, writeCms } = require('../../lib/cmsStore');
 
 /**
@@ -10,6 +10,9 @@ const { readCms, writeCms } = require('../../lib/cmsStore');
  *   POST -> save { content?, announcements?, formations? }, returns fresh data
  */
 module.exports = async function handler(req, res) {
+  if (!isAdminAuthConfigured()) {
+    return sendJson(res, 503, { ok: false, error: 'not_configured' });
+  }
   const session = readSession(req);
   if (!session) {
     return sendJson(res, 401, { ok: false, error: 'unauthorized' });

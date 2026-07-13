@@ -1,7 +1,10 @@
 'use strict';
 
 const { sendJson } = require('../../lib/http');
-const { readSession } = require('../../lib/adminAuth');
+const {
+  readSession,
+  getAdminAuthSetupStatus,
+} = require('../../lib/adminAuth');
 
 /**
  * Public-ish admin bootstrap config. Exposes only the Google OAuth *client id*
@@ -13,17 +16,16 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
     return sendJson(res, 405, { ok: false, error: 'method_not_allowed' });
   }
-  const clientId = String(process.env.GOOGLE_OAUTH_CLIENT_ID || '').trim();
-  let session = null;
-  try {
-    session = readSession(req);
-  } catch (_) {
-    session = null;
-  }
+  const setup = getAdminAuthSetupStatus();
+  const clientId = setup.configured
+    ? String(process.env.GOOGLE_OAUTH_CLIENT_ID || '').trim()
+    : '';
+  const session = setup.configured ? readSession(req) : null;
   return sendJson(res, 200, {
     ok: true,
     clientId,
-    configured: Boolean(clientId),
+    configured: setup.configured,
+    missing: setup.missing,
     authenticated: Boolean(session),
     user: session ? { email: session.email, name: session.name } : null,
   });

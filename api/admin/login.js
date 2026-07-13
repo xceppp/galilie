@@ -5,10 +5,14 @@ const {
   verifyGoogleCredential,
   createSessionToken,
   buildSetCookie,
+  isAdminAuthConfigured,
 } = require('../../lib/adminAuth');
 
 module.exports = async function handler(req, res) {
   try {
+    if (!isAdminAuthConfigured()) {
+      return sendJson(res, 503, { ok: false, error: 'not_configured' });
+    }
     if (req.method !== 'POST') {
       return sendJson(res, 405, { ok: false, error: 'method_not_allowed' });
     }

@@ -1,11 +1,14 @@
 'use strict';
 
 const { sendJson } = require('../../lib/http');
-const { readSession } = require('../../lib/adminAuth');
+const { readSession, isAdminAuthConfigured } = require('../../lib/adminAuth');
 const { seedFromDefaults } = require('../../lib/cmsStore');
 
 /** POST — overwrite all CMS tabs with the built-in site defaults (current site copy). */
 module.exports = async function handler(req, res) {
+  if (!isAdminAuthConfigured()) {
+    return sendJson(res, 503, { ok: false, error: 'not_configured' });
+  }
   if (!readSession(req)) {
     return sendJson(res, 401, { ok: false, error: 'unauthorized' });
   }
