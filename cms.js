@@ -222,6 +222,18 @@
       .replace(/^-|-$/g, '');
   }
 
+  var TRUST_HINTS = {
+    'dirigeants-pme': 'Arbitrages de croissance et feuilles de route clarifiées.',
+    'cadres-superieurs': 'Leadership affirmé et coaching exécutif structuré.',
+    entrepreneurs: 'Structuration de projet et priorités stratégiques.',
+    'institutions-publiques': 'Montée en compétences des équipes et du pilotage.',
+    'profils-en-transition': 'Reconversion et préparation concours avec suivi.',
+  };
+
+  function trustHintFor(label) {
+    return TRUST_HINTS[slugifyLabel(label)] || 'Profils accompagnés par NC Consulting à Meknès et à distance.';
+  }
+
   function renderFaq(list) {
     var container = document.getElementById('ncFaq');
     if (!container || !list || !list.length) return;
@@ -265,15 +277,24 @@
       .filter(function (c) { return c.active !== false; })
       .map(function (c) {
         var slug = slugifyLabel(c.label);
+        var hint = trustHintFor(c.label);
         return (
-          '<a class="nc-quiz-chip" href="cabinet.html#confiance-' +
+          '<a class="nc-trust-card" href="cabinet.html#confiance-' +
           esc(slug) +
-          '">' +
+          '" role="listitem">' +
+          '<span class="nc-trust-card__icon" aria-hidden="true">◆</span>' +
+          '<h4 class="nc-trust-card__title">' +
           esc(c.label) +
+          '</h4>' +
+          '<p class="nc-trust-card__hint">' +
+          esc(hint) +
+          '</p>' +
+          '<span class="nc-trust-card__cta">Découvrir →</span>' +
           '</a>'
         );
       })
       .join('');
+    if (typeof window.ncReinitUi === 'function') window.ncReinitUi();
   }
 
   function applyContent(data) {

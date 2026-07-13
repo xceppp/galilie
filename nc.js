@@ -196,8 +196,26 @@
     });
   }
   initFaq();
+  function initTrustPicker() {
+    var grid = document.getElementById('ncClientQuiz');
+    if (!grid) return;
+    grid.querySelectorAll('.nc-trust-card').forEach(function (card) {
+      if (card.dataset.trustBound) return;
+      card.dataset.trustBound = '1';
+      function activate() {
+        grid.querySelectorAll('.nc-trust-card').forEach(function (c) {
+          c.classList.toggle('is-active', c === card);
+        });
+      }
+      card.addEventListener('mouseenter', activate);
+      card.addEventListener('focus', activate);
+      card.addEventListener('touchstart', activate, { passive: true });
+    });
+  }
+  initTrustPicker();
   window.ncReinitUi = function () {
     initFaq();
+    initTrustPicker();
   };
 
   /* Mobile drawer */
