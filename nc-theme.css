@@ -1548,13 +1548,76 @@ button,input,select,textarea{font-family:inherit}
 .nc-quiz-chip:hover{
   border-color:var(--gold);background:rgba(201,163,86,.08);color:var(--gold-deep);transform:translateY(-1px);
 }
+
+/* Méthode — 3-step journey quiz */
+.nc-section--methode{padding-top:88px;padding-bottom:88px}
+.nc-quiz--methode{margin-top:12px}
+.nc-quiz-steps{
+  display:flex;flex-direction:column;gap:12px;max-width:720px;margin:0 auto;
+  position:relative;
+}
+.nc-quiz-step{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;
+  padding:20px 22px;background:var(--white);border:1px solid var(--line);
+  border-radius:16px;box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.nc-quiz-step:hover{
+  border-color:rgba(201,163,86,.45);transform:translateX(4px);box-shadow:var(--shadow-md);
+}
+.nc-quiz-step__num{
+  width:48px;height:48px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Fraunces",serif;font-size:1.15rem;font-weight:600;
+  color:var(--navy);background:rgba(201,163,86,.14);border:1px solid rgba(201,163,86,.28);
+}
+.nc-quiz-step__body{min-width:0}
+.nc-quiz-step__tag{
+  display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-deep);margin-bottom:4px;
+}
+.nc-quiz-step__title{
+  font-family:"Fraunces",serif;font-size:1.12rem;font-weight:600;color:var(--charcoal);margin:0 0 4px;
+}
+.nc-quiz-step__text{font-size:13.5px;line-height:1.55;color:var(--ink-dim);margin:0}
+.nc-quiz-step__go{
+  font-size:1.25rem;font-weight:600;color:var(--gold-deep);opacity:.7;
+  transition:opacity .2s,transform .2s;
+}
+.nc-quiz-step:hover .nc-quiz-step__go{opacity:1;transform:translateX(3px)}
+
+/* Méthode detail page */
+.nc-methode-timeline{display:flex;flex-direction:column;gap:20px;margin-bottom:48px}
+.nc-methode-step{
+  scroll-margin-top:20px;padding:28px 26px;background:var(--white);
+  border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);
+}
+.nc-methode-step:target{border-color:rgba(201,163,86,.5);box-shadow:0 0 0 3px rgba(201,163,86,.12)}
+.nc-methode-step__head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.nc-methode-step__num{
+  font-family:"Fraunces",serif;font-size:1.5rem;font-weight:600;color:var(--gold-deep);line-height:1;
+}
+.nc-methode-step__tag{
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-deep);background:rgba(201,163,86,.1);padding:6px 12px;border-radius:999px;
+}
+.nc-methode-step h2{font-family:"Fraunces",serif;font-size:1.35rem;margin:0 0 12px;color:var(--charcoal)}
+.nc-methode-step p{font-size:15px;line-height:1.7;color:var(--ink-dim);margin:0 0 14px}
+.nc-methode-step .btn{margin-top:6px}
+:root[data-theme="dark"] .nc-quiz-step,
+:root[data-theme="dark"] .nc-methode-step{background:var(--slate)}
+
 @media(max-width:768px){
   .nc-quiz-grid{grid-template-columns:1fr;max-width:420px;margin-inline:auto}
+  .nc-methode-step{padding:22px 18px}
+  .nc-methode-step .btn{width:100%}
 }
 @media(max-width:560px){
   .nc-quiz-card{padding:18px 16px}
   .nc-quiz-chip{width:100%;justify-content:center;padding:12px 16px}
   .nc-quiz--trust{margin-top:32px;padding-top:28px}
+  .nc-quiz-step{padding:16px 14px;gap:12px}
+  .nc-quiz-step__num{width:40px;height:40px;font-size:1rem}
   .nc-faq-q{font-size:14px;padding:16px 16px}
   .nc-faq-a{font-size:13.5px}
   .nc-faq-item.open .nc-faq-a{padding:0 16px 16px}

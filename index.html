@@ -558,36 +558,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- MÉTHODE -->
-<section class="nc-section alt" id="methode" aria-labelledby="methode-title">
+<!-- MÉTHODE — parcours interactif -->
+<section class="nc-section alt nc-section--methode" id="methode" aria-labelledby="methode-title">
   <div class="container">
     <div class="nc-head center">
-      <div class="nc-label reveal" data-cms="methode.label">Comment ça marche</div>
-      <h2 class="nc-title reveal d1" id="methode-title" data-cms-html="methode.title_html">De la prise de contact aux <em>résultats</em>, en 3 étapes.</h2>
-      <p class="nc-sub reveal d2" data-cms="methode.subtitle">Un parcours simple et cadré — vous savez exactement ce qui se passe à chaque étape.</p>
-        </div>
-    <div class="nc-steps nc-steps--v2">
-      <div class="nc-step reveal d1">
-        <div class="nc-step-num" data-cms="methode.1.num">01</div>
-        <div class="nc-step-tag" data-cms="methode.1.tag">Simple &amp; rapide</div>
-        <h3 data-cms="methode.1.title">Prenez contact</h3>
-        <p data-cms="methode.1.desc">Réservez un appel découverte ou envoyez votre demande en 2 minutes. Nous cadrons votre objectif et orientons vers le pôle le plus adapté.</p>
-        <div class="nc-step-chips" data-cms-chips="methode.1.chips"><span class="nc-chip">2 minutes</span><span class="nc-chip">Sans engagement</span></div>
-        </div>
-      <div class="nc-step reveal d2">
-        <div class="nc-step-num" data-cms="methode.2.num">02</div>
-        <div class="nc-step-tag" data-cms="methode.2.tag">Sous 24 h</div>
-        <h3 data-cms="methode.2.title">Diagnostic &amp; recommandation</h3>
-        <p data-cms="methode.2.desc">Nous analysons votre situation, répondons à vos questions et proposons un plan clair — consultation, coaching ou accompagnement sur mesure.</p>
-        <div class="nc-step-chips" data-cms-chips="methode.2.chips"><span class="nc-chip">Réponse sous 24 h</span><span class="nc-chip">Conseiller dédié</span></div>
-        </div>
-      <div class="nc-step reveal d3">
-        <div class="nc-step-num" data-cms="methode.3.num">03</div>
-        <div class="nc-step-tag" data-cms="methode.3.tag">Résultats</div>
-        <h3 data-cms="methode.3.title">Passez à l'action</h3>
-        <p data-cms="methode.3.desc">Suivez un accompagnement structuré avec des jalons mesurables. Des progrès visibles dès les premières semaines.</p>
-        <div class="nc-step-chips" data-cms-chips="methode.3.chips"><span class="nc-chip">97% de satisfaction</span><span class="nc-chip">Suivi réel</span></div>
-        </div>
+      <div class="nc-label" data-cms="methode.label">Comment ça marche</div>
+      <h2 class="nc-title" id="methode-title" data-cms-html="methode.title_html">De la prise de contact aux <em>résultats</em>, en 3 étapes.</h2>
+      <p class="nc-sub" data-cms="methode.quiz_lead">Où en êtes-vous dans votre parcours ? Choisissez une étape pour voir le détail.</p>
+    </div>
+
+    <div class="nc-quiz nc-quiz--methode">
+      <div class="nc-quiz-steps" role="list">
+        <a class="nc-quiz-step" href="methode.html#etape-1" role="listitem">
+          <span class="nc-quiz-step__num" aria-hidden="true">01</span>
+          <div class="nc-quiz-step__body">
+            <span class="nc-quiz-step__tag" data-cms="methode.1.tag">Simple &amp; rapide</span>
+            <h3 class="nc-quiz-step__title" data-cms="methode.1.title">Prenez contact</h3>
+            <p class="nc-quiz-step__text" data-cms="methode.1.desc">Appel découverte gratuit ou formulaire en 2 minutes — sans engagement.</p>
+          </div>
+          <span class="nc-quiz-step__go" aria-hidden="true">→</span>
+        </a>
+        <a class="nc-quiz-step" href="methode.html#etape-2" role="listitem">
+          <span class="nc-quiz-step__num" aria-hidden="true">02</span>
+          <div class="nc-quiz-step__body">
+            <span class="nc-quiz-step__tag" data-cms="methode.2.tag">Sous 24 h</span>
+            <h3 class="nc-quiz-step__title" data-cms="methode.2.title">Diagnostic &amp; recommandation</h3>
+            <p class="nc-quiz-step__text" data-cms="methode.2.desc">Analyse de votre besoin et plan clair proposé par un conseiller dédié.</p>
+          </div>
+          <span class="nc-quiz-step__go" aria-hidden="true">→</span>
+        </a>
+        <a class="nc-quiz-step" href="methode.html#etape-3" role="listitem">
+          <span class="nc-quiz-step__num" aria-hidden="true">03</span>
+          <div class="nc-quiz-step__body">
+            <span class="nc-quiz-step__tag" data-cms="methode.3.tag">Résultats</span>
+            <h3 class="nc-quiz-step__title" data-cms="methode.3.title">Passez à l'action</h3>
+            <p class="nc-quiz-step__text" data-cms="methode.3.desc">Accompagnement structuré avec jalons mesurables et suivi réel.</p>
+          </div>
+          <span class="nc-quiz-step__go" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <p class="nc-quiz-all"><a href="methode.html">Voir le parcours complet en détail →</a></p>
     </div>
   </div>
 </section>
@@ -968,6 +978,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="#concours">Concours</a></li>
           <li><a href="#poles">Pôles</a></li>
           <li><a href="#methode">Méthode</a></li>
+          <li><a href="methode.html">Comment ça marche</a></li>
           <li><a href="#reels">Témoignages</a></li>
           <li><a href="#about">Qui sommes-nous</a></li>
           <li><a href="cabinet.html">Le cabinet</a></li>
