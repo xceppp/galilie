@@ -1,19 +1,13 @@
 'use strict';
 
-/**
- * Content-Security-Policy for public pages (ncconsulting.ma).
- * Served via vercel.json — keep in sync with scripts/print-csp-header.js output.
- *
- * Domains inventory (verified against HTML/JS):
- * - script-src: self, googletagmanager.com (GTM+gtag), google.com (reCAPTCHA),
- *   gstatic.com, recaptcha.net, instagram.com + cdninstagram.com (embed.js)
- * - style-src: self unsafe-inline (embeds + theme), fonts.googleapis.com
- * - font-src: self, fonts.gstatic.com, data:
- * - img-src: self, data:, https: (social CDNs, OG images)
- * - connect-src: self (/api/*), Google reCAPTCHA/analytics/GTM, Instagram API
- * - frame-src: google.com, recaptcha.net, linkedin.com, instagram.com, googletagmanager.com
- */
-const CSP_PUBLIC = [
+const SITE_ORIGIN = String(process.env.SITE_URL || 'https://www.ncconsulting.ma').replace(
+  /\/$/,
+  ''
+);
+const CSP_REPORT_GROUP = 'csp-endpoint';
+const CSP_REPORT_URL = `${SITE_ORIGIN}/api/csp-report`;
+
+const CSP_DIRECTIVES = [
   "default-src 'self'",
   "media-src 'self'",
   "script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://www.recaptcha.net https://www.instagram.com https://static.cdninstagram.com",
@@ -25,7 +19,28 @@ const CSP_PUBLIC = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
-  "upgrade-insecure-requests",
-].join('; ');
+  'upgrade-insecure-requests',
+  `report-uri ${CSP_REPORT_URL}`,
+  `report-to ${CSP_REPORT_GROUP}`,
+];
 
-module.exports = { CSP_PUBLIC };
+/** Full policy string (Report-Only header value today; same directives when enforced). */
+const CSP_PUBLIC = CSP_DIRECTIVES.join('; ');
+
+/** Legacy Reporting API header (Chrome, older browsers). */
+const REPORT_TO_HEADER = JSON.stringify({
+  group: CSP_REPORT_GROUP,
+  max_age: 10886400,
+  endpoints: [{ url: CSP_REPORT_URL }],
+});
+
+/** Reporting API v1 header (modern browsers). */
+const REPORTING_ENDPOINTS_HEADER = `${CSP_REPORT_GROUP}="${CSP_REPORT_URL}"`;
+
+module.exports = {
+  CSP_PUBLIC,
+  CSP_REPORT_GROUP,
+  CSP_REPORT_URL,
+  REPORT_TO_HEADER,
+  REPORTING_ENDPOINTS_HEADER,
+};
