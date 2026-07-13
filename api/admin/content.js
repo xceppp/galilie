@@ -1,8 +1,8 @@
 'use strict';
 
-const { sendJson, parseRequestBody, isProduction } = require('../lib/http');
-const { readSession } = require('../lib/adminAuth');
-const { readCms, writeCms } = require('../lib/cmsStore');
+const { sendJson, parseRequestBody, isProduction } = require('../../lib/http');
+const { readSession } = require('../../lib/adminAuth');
+const { readCms, writeCms } = require('../../lib/cmsStore');
 
 /**
  * Admin content endpoint (auth required):

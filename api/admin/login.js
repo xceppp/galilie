@@ -1,11 +1,11 @@
 'use strict';
 
-const { sendJson, parseRequestBody, isProduction } = require('../lib/http');
+const { sendJson, parseRequestBody, isProduction } = require('../../lib/http');
 const {
   verifyGoogleCredential,
   createSessionToken,
   buildSetCookie,
-} = require('../lib/adminAuth');
+} = require('../../lib/adminAuth');
 
 module.exports = async function handler(req, res) {
   try {

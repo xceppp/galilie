@@ -1,7 +1,7 @@
 'use strict';
 
-const { readCmsPublic } = require('./lib/cmsStore');
-const { isProduction } = require('./lib/http');
+const { readCmsPublic } = require('../lib/cmsStore');
+const { isProduction } = require('../lib/http');
 
 /** Public content endpoint consumed by cms.js on the live site. Edge-cached. */
 module.exports = async function handler(req, res) {

@@ -29,7 +29,11 @@
     }
   ],
   "functions": {
-    "api/**/*.js": {
+    "api/*.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "api/admin/*.js": {
       "memory": 1024,
       "maxDuration": 30
     }

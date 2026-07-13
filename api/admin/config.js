@@ -1,7 +1,7 @@
 'use strict';
 
-const { sendJson } = require('../lib/http');
-const { readSession } = require('../lib/adminAuth');
+const { sendJson } = require('../../lib/http');
+const { readSession } = require('../../lib/adminAuth');
 
 /**
  * Public-ish admin bootstrap config. Exposes only the Google OAuth *client id*

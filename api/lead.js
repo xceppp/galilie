@@ -1,5 +1,5 @@
-const { appendLeadRow } = require('./lib/sheets');
-const { validateAndSanitizeLead } = require('./lib/leadValidation');
+const { appendLeadRow } = require('../lib/sheets');
+const { validateAndSanitizeLead } = require('../lib/leadValidation');
 
 const isProduction =
   process.env.VERCEL_ENV === 'production' ||

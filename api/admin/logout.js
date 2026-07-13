@@ -1,7 +1,7 @@
 'use strict';
 
-const { sendJson } = require('../lib/http');
-const { buildSetCookie } = require('../lib/adminAuth');
+const { sendJson } = require('../../lib/http');
+const { buildSetCookie } = require('../../lib/adminAuth');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
