@@ -236,6 +236,94 @@
   if (drawer) drawer.querySelectorAll('[data-close]').forEach(function (a) { a.addEventListener('click', closeD); });
   window.addEventListener('resize', function () { if (drawer && !drawer.classList.contains('open')) document.body.style.overflow = ''; });
 
+  /* CTA → formulaire (scroll précis sous la barre fixe, sans zoom mobile) */
+  function navScrollOffset() {
+    var h = nav ? nav.offsetHeight : 72;
+    var alertBar = document.querySelector('.nc-alert-bar');
+    if (alertBar) {
+      var st = window.getComputedStyle(alertBar);
+      if (st.display !== 'none' && st.visibility !== 'hidden') {
+        h += alertBar.offsetHeight;
+      }
+    }
+    return h + 12;
+  }
+
+  function syncNavHeightVar() {
+    if (!nav) return;
+    document.documentElement.style.setProperty('--nc-nav-h', nav.offsetHeight + 'px');
+  }
+  syncNavHeightVar();
+  window.addEventListener('resize', syncNavHeightVar, { passive: true });
+
+  function scrollToLeadForm(opts) {
+    opts = opts || {};
+    var target = document.getElementById('formulaire') || document.getElementById('formWrap');
+    if (!target) return;
+    syncNavHeightVar();
+    var top = target.getBoundingClientRect().top + window.scrollY - navScrollOffset();
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: reduce ? 'auto' : 'smooth',
+    });
+    if (opts.resetForm && typeof window.ncResetLeadForm === 'function') {
+      window.ncResetLeadForm();
+    }
+    if (opts.focus && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      window.setTimeout(function () {
+        var prenom = document.getElementById('prenom');
+        if (prenom) prenom.focus({ preventScroll: true });
+      }, reduce ? 0 : 380);
+    }
+  }
+
+  function isLeadFormLink(link) {
+    if (!link || link.tagName !== 'A') return false;
+    var href = (link.getAttribute('href') || '').trim().toLowerCase();
+    if (href === '#formulaire') return true;
+    if (href !== '#contact') return false;
+    return (
+      link.classList.contains('btn') ||
+      link.classList.contains('nc-poles-cta') ||
+      link.classList.contains('nc-foot-cta') ||
+      link.classList.contains('nc-float') ||
+      link.classList.contains('nc-nav-cta') ||
+      link.classList.contains('nc-drawer-cta') ||
+      link.classList.contains('nc-hero-scroll') ||
+      link.classList.contains('nc-hero-card-cta')
+    );
+  }
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a');
+    if (!isLeadFormLink(link)) return;
+    e.preventDefault();
+    closeD();
+    if (history.replaceState) {
+      history.replaceState(null, '', '#formulaire');
+    } else {
+      location.hash = 'formulaire';
+    }
+    scrollToLeadForm({ resetForm: true });
+  });
+
+  function handleFormHashOnLoad() {
+    var hash = (location.hash || '').toLowerCase();
+    if (hash !== '#formulaire' && hash !== '#contact') return;
+    window.requestAnimationFrame(function () {
+      window.setTimeout(function () {
+        scrollToLeadForm({ resetForm: true });
+      }, 80);
+    });
+  }
+  handleFormHashOnLoad();
+  window.addEventListener('hashchange', function () {
+    var hash = (location.hash || '').toLowerCase();
+    if (hash === '#formulaire' || hash === '#contact') {
+      scrollToLeadForm({ resetForm: true });
+    }
+  });
+
   /* Instagram embeds — process when script loads and when section is visible */
   function processIgEmbeds() {
     if (window.instgrm && window.instgrm.Embeds) {

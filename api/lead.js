@@ -149,6 +149,19 @@ module.exports = async function handler(req, res) {
     console.error('[api/lead]', err && err.stack ? err.stack : err);
     const msg = String(err && err.message ? err.message : err);
     const payload = { ok: false, error: 'server_error' };
+    if (/Missing RECAPTCHA_SECRET_KEY/i.test(msg)) {
+      payload.error = 'misconfigured_recaptcha';
+      payload.hint =
+        'Configuration serveur incomplète (reCAPTCHA). Contactez l’administrateur du site.';
+    } else if (
+      /Missing GOOGLE_SHEETS_ID|Missing credentials|Clé PEM|credentials JSON/i.test(
+        msg
+      )
+    ) {
+      payload.error = 'misconfigured_sheets';
+      payload.hint =
+        'Configuration Google Sheets incomplète sur le serveur. Vérifiez GOOGLE_SHEETS_ID et le compte de service sur Vercel.';
+    }
     if (!isProduction) {
       payload.detail = msg.slice(0, 400);
     }

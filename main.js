@@ -325,6 +325,11 @@ function setWizardStep(nextStep) {
   if (wizardStep === 3) updateWizardSummary();
 }
 
+window.ncResetLeadForm = function ncResetLeadForm() {
+  setWizardStep(1);
+  clearErrors();
+};
+
 if (niveauSelect) {
   niveauSelect.addEventListener('change', updateDependentSelects);
   updateDependentSelects();
@@ -450,6 +455,11 @@ if (leadForm) {
           msg = apiJson.detail
             ? 'Erreur serveur : ' + String(apiJson.detail).slice(0, 220) + (String(apiJson.detail).length > 220 ? '…' : '')
             : 'Une erreur serveur est survenue. Réessayez dans quelques instants.';
+        } else if (code === 'misconfigured_recaptcha' || code === 'misconfigured_sheets') {
+          msg = apiJson.hint || 'Configuration serveur incomplète. Le formulaire ne peut pas enregistrer les demandes pour le moment.';
+        }
+        if (apiJson && apiJson.tab) {
+          msg += ' (onglet attendu : ' + apiJson.tab + ')';
         }
         showLeadSubmitError(msg);
         return;
