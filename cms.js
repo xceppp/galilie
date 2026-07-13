@@ -213,18 +213,28 @@
     container.innerHTML = list.map(renderFormationCard).join('');
   }
 
+  function slugifyLabel(s) {
+    return String(s || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
   function renderFaq(list) {
     var container = document.getElementById('ncFaq');
     if (!container || !list || !list.length) return;
     container.innerHTML = list
+      .filter(function (q) { return q.active !== false; })
       .map(function (q, i) {
         var open = i === 0 ? ' open' : '';
         return (
-          '<div class="nc-faq-item' + open + ' reveal d1">' +
+          '<div class="nc-faq-item' + open + '">' +
           '<button class="nc-faq-q" type="button">' +
           esc(q.question) +
-          '<span class="nc-faq-ico">+</span></button>' +
-          '<div class="nc-faq-a">' + esc(q.answer) + '</div></div>'
+          '<span class="nc-faq-ico" aria-hidden="true">+</span></button>' +
+          '<div class="nc-faq-a"><p>' + esc(q.answer) + '</p></div></div>'
         );
       })
       .join('');
@@ -249,11 +259,19 @@
   }
 
   function renderClients(list) {
-    var container = document.getElementById('ncClients');
+    var container = document.getElementById('ncClientQuiz');
     if (!container || !list || !list.length) return;
     container.innerHTML = list
+      .filter(function (c) { return c.active !== false; })
       .map(function (c) {
-        return '<span>' + esc(c.label) + '</span>';
+        var slug = slugifyLabel(c.label);
+        return (
+          '<a class="nc-quiz-chip" href="cabinet.html#confiance-' +
+          esc(slug) +
+          '">' +
+          esc(c.label) +
+          '</a>'
+        );
       })
       .join('');
   }

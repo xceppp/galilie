@@ -528,13 +528,14 @@ button,input,select,textarea{font-family:inherit}
 
 /* FAQ */
 .nc-faq{max-width:820px;margin:44px auto 0;display:flex;flex-direction:column;gap:12px}
-.nc-faq-item{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.nc-faq-item{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .3s,box-shadow .3s;opacity:1;transform:none}
 .nc-faq-item.open{border-color:rgba(201,163,86,.45);box-shadow:var(--shadow-sm)}
-.nc-faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--charcoal);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-.nc-faq-ico{color:var(--gold);font-size:20px;transition:transform .3s;flex-shrink:0}
+.nc-faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--charcoal);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;-webkit-tap-highlight-color:transparent}
+.nc-faq-ico{color:var(--gold);font-size:20px;transition:transform .3s;flex-shrink:0;line-height:1}
 .nc-faq-item.open .nc-faq-ico{transform:rotate(45deg)}
-.nc-faq-a{max-height:0;overflow:hidden;padding:0 20px;color:var(--ink-dim);font-size:14px;line-height:1.8;transition:max-height .35s ease,padding .35s ease}
-.nc-faq-item.open .nc-faq-a{max-height:260px;padding:0 20px 18px}
+.nc-faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease,padding .35s ease;padding:0 20px;color:var(--ink-dim);font-size:14px;line-height:1.8}
+.nc-faq-a > p{overflow:hidden;margin:0}
+.nc-faq-item.open .nc-faq-a{grid-template-rows:1fr;padding:0 20px 18px}
 
 /* Booking / contact band — flat navy */
 .nc-booking{position:relative;overflow:hidden;background:var(--navy);color:var(--text-on-dark);padding:88px 0;border-top:1px solid rgba(155,163,173,.12)}
@@ -1499,4 +1500,127 @@ button,input,select,textarea{font-family:inherit}
 :root[data-theme="dark"] .nc-offer-tags li{background:#1d232c}
 @media(max-width:900px){
   .nc-offers-grid{grid-template-columns:1fr}
+}
+
+/* ---- QUIZ (Qui sommes-nous / Ils nous font confiance) ---- */
+.nc-quiz{margin-top:8px}
+.nc-quiz-prompt{
+  text-align:center;font-size:15px;font-weight:600;color:var(--charcoal);margin-bottom:18px;
+}
+.nc-quiz-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+}
+.nc-quiz-card{
+  display:flex;flex-direction:column;gap:10px;padding:22px 20px;
+  background:var(--white);border:1px solid var(--line);border-radius:16px;
+  box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+  min-height:100%;
+}
+.nc-quiz-card:hover{
+  border-color:rgba(201,163,86,.5);transform:translateY(-3px);box-shadow:var(--shadow-md);
+}
+.nc-quiz-card__num{
+  font-family:"Fraunces",serif;font-size:1.1rem;font-weight:600;color:var(--gold-deep);
+}
+.nc-quiz-card__title{
+  font-family:"Fraunces",serif;font-size:1.08rem;font-weight:600;color:var(--charcoal);margin:0;
+}
+.nc-quiz-card__text{font-size:13.5px;line-height:1.6;color:var(--ink-dim);margin:0;flex:1}
+.nc-quiz-card__go{font-size:13px;font-weight:700;color:var(--gold-deep);margin-top:4px}
+.nc-quiz-all{text-align:center;margin-top:20px;font-size:14px}
+.nc-quiz-all a{color:var(--gold-deep);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(201,163,86,.35)}
+.nc-quiz-all a:hover{color:var(--gold)}
+.nc-quiz--trust{
+  margin-top:40px;padding-top:36px;border-top:1px solid var(--line);
+}
+.nc-quiz-eyebrow{
+  text-align:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold-deep);font-weight:700;margin-bottom:10px;
+}
+.nc-quiz-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.nc-quiz-chip{
+  display:inline-flex;align-items:center;padding:11px 18px;border-radius:999px;
+  font-size:13.5px;font-weight:600;color:var(--charcoal);text-decoration:none;
+  background:var(--white);border:1px solid var(--line);
+  transition:border-color .2s,background .2s,color .2s,transform .2s;
+}
+.nc-quiz-chip:hover{
+  border-color:var(--gold);background:rgba(201,163,86,.08);color:var(--gold-deep);transform:translateY(-1px);
+}
+@media(max-width:768px){
+  .nc-quiz-grid{grid-template-columns:1fr;max-width:420px;margin-inline:auto}
+}
+@media(max-width:560px){
+  .nc-quiz-card{padding:18px 16px}
+  .nc-quiz-chip{width:100%;justify-content:center;padding:12px 16px}
+  .nc-quiz--trust{margin-top:32px;padding-top:28px}
+  .nc-faq-q{font-size:14px;padding:16px 16px}
+  .nc-faq-a{font-size:13.5px}
+  .nc-faq-item.open .nc-faq-a{padding:0 16px 16px}
+}
+
+/* ---- PAGE CABINET ---- */
+.nc-page-body{background:var(--pearl)}
+.nc-page-top{
+  background:var(--navy);color:var(--text-on-dark);padding:14px 0;
+  border-bottom:1px solid rgba(155,163,173,.15);
+}
+.nc-page-top-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.nc-page-back{color:var(--silver);font-size:14px;font-weight:500;text-decoration:none}
+.nc-page-back:hover{color:var(--gold-hover)}
+.nc-page-top .nc-wordmark{color:#fff}
+.nc-page-top .nc-wordmark span{color:var(--gold-hover)}
+.nc-page-main{padding:48px 0 72px}
+.nc-page-hero{padding-bottom:40px;scroll-margin-top:24px}
+.nc-page-title{
+  font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.9rem,4vw,2.8rem);
+  line-height:1.12;color:var(--charcoal);margin:12px 0 16px;
+}
+.nc-page-title em{font-style:italic;color:var(--gold-deep)}
+.nc-page-lead{font-size:16px;line-height:1.75;color:var(--ink-dim);max-width:42rem}
+.nc-page-lead--center{text-align:center;margin-inline:auto}
+.nc-page-facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.nc-page-block{margin-bottom:48px}
+.nc-page-section-title{
+  font-family:"Fraunces",serif;font-size:clamp(1.5rem,3vw,2rem);
+  color:var(--charcoal);margin-bottom:20px;
+}
+.nc-page-profiles{display:flex;flex-direction:column;gap:18px}
+.nc-page-profile{
+  scroll-margin-top:20px;padding:26px 24px;background:var(--white);
+  border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-sm);
+}
+.nc-page-profile:target,.nc-page-trust-card:target{
+  border-color:rgba(201,163,86,.55);
+  box-shadow:0 0 0 3px rgba(201,163,86,.18);
+}
+.nc-page-profile__tag{
+  display:inline-flex;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-deep);background:rgba(201,163,86,.12);padding:6px 12px;border-radius:999px;margin-bottom:12px;
+}
+.nc-page-profile h3{font-family:"Fraunces",serif;font-size:1.25rem;margin:0 0 10px;color:var(--charcoal)}
+.nc-page-profile p{font-size:15px;line-height:1.7;color:var(--ink-dim);margin:0 0 14px}
+.nc-page-list{margin:0 0 18px;padding-left:1.1rem;color:var(--ink-dim);font-size:14px;line-height:1.8}
+.nc-page-trust-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.nc-page-trust-card{
+  scroll-margin-top:20px;padding:20px 18px;background:var(--white);
+  border:1px solid var(--line);border-radius:14px;
+}
+.nc-page-trust-card h3{font-family:"Fraunces",serif;font-size:1.05rem;margin:0 0 8px;color:var(--charcoal)}
+.nc-page-trust-card p{margin:0;font-size:14px;line-height:1.65;color:var(--ink-dim)}
+.nc-page-cta-band{
+  text-align:center;padding:40px 28px;background:var(--navy);color:var(--text-on-dark);
+  border-radius:22px;margin-top:16px;
+}
+.nc-page-cta-band h2{font-family:"Fraunces",serif;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px}
+.nc-page-cta-band p{color:var(--silver);margin-bottom:22px;font-size:15px}
+.nc-page-foot{padding:28px 0 36px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--ink-dim)}
+.nc-page-foot a{color:var(--gold-deep);font-weight:600;text-decoration:none}
+@media(max-width:768px){
+  .nc-page-main{padding:36px 0 56px}
+  .nc-page-facts{flex-direction:column}
+  .nc-page-trust-grid{grid-template-columns:1fr}
+  .nc-page-profile,.nc-page-cta-band{padding:22px 18px}
+  .nc-page-profile .btn,.nc-page-cta-band .btn{width:100%}
 }
