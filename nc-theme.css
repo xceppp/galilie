@@ -368,7 +368,8 @@ button,input,select,textarea{font-family:inherit}
   /* Témoignages → reels (styles plus bas) */
 }
 
-/* Instagram reels + LinkedIn — unified social wall */
+/* Instagram reels + LinkedIn — unified social wall (priority section) */
+.nc-section--social{padding:64px 0 72px}
 .nc-section--compact{padding:72px 0}
 .nc-social-wall{
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
