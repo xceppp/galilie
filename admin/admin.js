@@ -47,6 +47,7 @@
     poles: 'Pôles',
     methode: 'Méthode',
     expert: 'Pourquoi NC',
+    founder: 'Mot du fondateur',
     about: 'À propos',
     faq: 'FAQ',
     contact: 'Contact & pied de page',

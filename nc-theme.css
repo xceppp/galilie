@@ -1455,6 +1455,92 @@ button,input,select,textarea{font-family:inherit}
   .nc-about-fact{min-width:0}
 }
 
+/* ---- FOUNDER — mot du fondateur ---- */
+.nc-founder{
+  padding:64px 0;
+  background:var(--ivory);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.nc-founder-inner{
+  display:grid;
+  grid-template-columns:minmax(160px,.42fr) 1fr;
+  gap:clamp(24px,3.5vw,48px);
+  align-items:start;
+}
+.nc-founder-visual{margin:0;max-width:280px;width:100%}
+.nc-founder-photo-frame{
+  position:relative;border-radius:16px;overflow:hidden;
+  aspect-ratio:4/5;
+  max-height:320px;
+  box-shadow:var(--shadow-md);
+  border:1px solid rgba(201,163,86,.32);
+  background:var(--navy);
+}
+.nc-founder-photo-frame::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,17,22,.04) 0%,transparent 38%,rgba(14,17,22,.55) 100%);
+}
+.nc-founder-photo-frame::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:4px;z-index:2;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-hover));
+}
+.nc-founder-photo-frame img{
+  width:100%;height:100%;display:block;
+  object-fit:cover;object-position:center 14%;
+  filter:saturate(.94) contrast(1.03);
+}
+.nc-founder-caption{
+  margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:6px;text-align:center;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-dim);font-weight:600;line-height:1.45;
+}
+.nc-founder-caption-sep{color:var(--gold-deep);opacity:.75}
+.nc-founder-copy .nc-title{margin-top:4px}
+.nc-founder-quote{
+  margin:22px 0 18px;padding:0 0 0 22px;border:none;border-left:3px solid var(--gold);
+  font-family:"Fraunces",serif;font-size:clamp(1.12rem,2.1vw,1.42rem);line-height:1.58;
+  color:var(--charcoal);font-style:italic;font-weight:500;
+}
+.nc-founder-text{
+  font-size:15px;line-height:1.82;color:var(--ink-dim);max-width:36rem;margin-bottom:22px;
+}
+.nc-founder-signature{
+  display:flex;flex-direction:column;gap:5px;margin-bottom:28px;
+  padding-top:18px;border-top:1px solid var(--line);
+}
+.nc-founder-name{
+  font-family:"Fraunces",serif;font-size:1.12rem;font-weight:600;color:var(--charcoal);
+}
+.nc-founder-credential{
+  font-size:12.5px;font-weight:600;color:var(--ink-dim);letter-spacing:.02em;
+}
+.nc-founder-role{font-size:13px;font-weight:600;color:var(--gold-deep);letter-spacing:.03em}
+.nc-founder-cta{margin-top:4px}
+:root[data-theme="dark"] .nc-founder{background:var(--navy);border-color:rgba(155,163,173,.15)}
+:root[data-theme="dark"] .nc-founder-quote,
+:root[data-theme="dark"] .nc-founder-name{color:var(--text-on-dark)}
+:root[data-theme="dark"] .nc-founder-text{color:var(--silver)}
+:root[data-theme="dark"] .nc-founder-signature{border-top-color:rgba(155,163,173,.2)}
+:root[data-theme="dark"] .nc-founder-caption{color:var(--steel)}
+@media(max-width:900px){
+  .nc-founder-inner{grid-template-columns:1fr;gap:28px}
+  .nc-founder-visual{margin-inline:auto;max-width:240px}
+  .nc-founder-copy{text-align:center}
+  .nc-founder-copy .nc-label{justify-content:center}
+  .nc-founder-quote{margin-inline:auto;text-align:left;max-width:34rem}
+  .nc-founder-text{margin-inline:auto}
+  .nc-founder-signature{align-items:center}
+  .nc-founder-cta{margin-inline:auto}
+}
+@media(max-width:560px){
+  .nc-founder{padding:48px 0}
+  .nc-founder-visual{max-width:220px}
+  .nc-founder-photo-frame{max-height:260px;margin-inline:auto}
+  .nc-founder-quote{font-size:1.08rem;padding-left:18px}
+  .nc-founder-cta{width:100%;max-width:360px}
+}
+
 /* ---- OFFRES (3 pôles pro) ---- */
 .nc-offers-grid{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:8px;

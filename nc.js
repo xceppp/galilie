@@ -324,25 +324,4 @@
     }
   });
 
-  /* Instagram embeds — process when script loads and when section is visible */
-  function processIgEmbeds() {
-    if (window.instgrm && window.instgrm.Embeds) {
-      window.instgrm.Embeds.process();
-    }
-  }
-  processIgEmbeds();
-  window.addEventListener('load', processIgEmbeds);
-  var reelsEl = document.getElementById('reels');
-  if (reelsEl && 'IntersectionObserver' in window) {
-    var igIo = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) {
-          processIgEmbeds();
-          igIo.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    igIo.observe(reelsEl);
-  }
-
 })();
