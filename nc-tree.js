@@ -165,8 +165,11 @@
     });
     renderPanel(node);
     if (pushHash && history.replaceState) {
-      history.replaceState(null, '', embedMode ? '#decouvrir' : '#' + nodeId);
+      history.replaceState(null, '', embedMode ? '#about' : '#' + nodeId);
     }
+    document.dispatchEvent(
+      new CustomEvent('nc-tree-select', { detail: { id: nodeId } })
+    );
   }
 
   var rootUl = document.createElement('ul');
@@ -177,7 +180,7 @@
   navEl.appendChild(rootUl);
 
   var initial = (location.hash || '').replace(/^#/, '');
-  if (embedMode && (initial === 'decouvrir' || !initial)) {
+  if (embedMode && (initial === 'about' || initial === 'decouvrir' || !initial)) {
     initial = tree.id;
   } else if (!flat[initial]) {
     initial = tree.id;
@@ -196,6 +199,7 @@
 
   window.addEventListener('hashchange', function () {
     var id = (location.hash || '').replace(/^#/, '');
+    if (embedMode && id === 'about') return;
     if (embedMode && id === 'decouvrir') return;
     if (id && flat[id]) selectNode(id, false);
   });

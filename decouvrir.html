@@ -4,44 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="index, follow">
-  <title>Découvrir NC Consulting — Carte interactive du cabinet</title>
+  <title>Découvrir NC Consulting — L'arbre du cabinet</title>
   <meta name="description" content="Explorez NC Consulting en arbre : cabinet, pôles, méthode, profils accompagnés, concours, témoignages et contact. Toute l'information en un parcours clair.">
   <link rel="canonical" href="https://www.ncconsulting.ma/decouvrir.html">
   <link rel="icon" href="https://www.ncconsulting.ma/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" sizes="180x180" href="https://www.ncconsulting.ma/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="nc-theme.css">
 </head>
-<body class="nc-page-body">
+<body class="nc-page-body nc-page-body--arbre">
   <header class="nc-page-top">
     <div class="container nc-page-top-inner">
-      <a class="nc-page-back" href="/">← Retour à l'accueil</a>
+      <a class="nc-page-back" href="/#about">← Retour à l'accueil</a>
       <span class="nc-wordmark">NC <span>Consulting</span></span>
     </div>
   </header>
 
   <main class="nc-page-main">
     <section class="nc-page-hero container">
-      <div class="nc-label">Explorer</div>
-      <h1 class="nc-page-title">Toute NC Consulting, <em>en un arbre</em>.</h1>
-      <p class="nc-page-lead">Déployez les branches pour parcourir le cabinet : pôles, méthode, profils, concours, preuves et contact. Cliquez sur une rubrique pour voir le détail, puis accédez à la page complète.</p>
+      <div class="nc-label">Explorer · Meknès &amp; à distance</div>
+      <h1 class="nc-page-title">Toute NC Consulting, <em>en un arbre.</em></h1>
+      <p class="nc-page-lead">Déployez les branches pour parcourir le cabinet — qui nous sommes, ce que nous faisons, comment nous travaillons. Chaque feuille mène au détail complet.</p>
     </section>
 
-    <section class="container nc-tree-explorer" aria-label="Carte interactive NC Consulting">
-      <nav class="nc-tree-nav reveal" id="ncTreeNav" aria-label="Arborescence"></nav>
-      <article class="nc-tree-panel reveal d1" id="ncTreePanel" aria-live="polite" aria-atomic="true">
-        <p class="nc-tree-panel__crumb">NC Consulting</p>
-        <h2 class="nc-tree-panel__title">NC Consulting</h2>
-        <p class="nc-tree-panel__summary">Sélectionnez une branche dans l'arbre pour afficher le contenu.</p>
-      </article>
-    </section>
-
-    <section class="container nc-page-cta-band">
-      <h2>Prêt à passer à l'action ?</h2>
-      <p>Premier appel découverte gratuit · 20 minutes</p>
-      <a class="btn btn-gold btn-lg" href="/#formulaire">Réserver mon appel gratuit →</a>
+    <section class="container nc-arbre-page-wrap" aria-label="Arborescence NC Consulting">
+      <div class="nc-arbre nc-arbre--page" id="ncArbre"></div>
     </section>
   </main>
 
@@ -51,7 +40,7 @@
     </div>
   </footer>
 
-  <script src="assets/nc-tree-data.js" defer></script>
-  <script src="nc-tree.js" defer></script>
+  <script src="assets/nc-arbre-data.js" defer></script>
+  <script src="nc-arbre.js" defer></script>
 </body>
 </html>

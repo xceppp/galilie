@@ -277,18 +277,21 @@
     }
   }
 
-  function scrollToDecouvrir() {
-    var target = document.getElementById('decouvrir');
-    if (!target) {
-      window.location.href = 'decouvrir.html';
-      return;
-    }
+  function scrollToAbout() {
+    var target = document.getElementById('about');
+    if (!target) return;
     syncNavHeightVar();
     var top = target.getBoundingClientRect().top + window.scrollY - navScrollOffset();
     window.scrollTo({
       top: Math.max(0, top),
       behavior: reduce ? 'auto' : 'smooth',
     });
+  }
+
+  function isAboutLink(link) {
+    if (!link || link.tagName !== 'A') return false;
+    var href = (link.getAttribute('href') || '').trim().toLowerCase();
+    return href === '#about' || href === '#decouvrir';
   }
 
   function isLeadFormLink(link) {
@@ -309,22 +312,20 @@
   }
 
   function isDecouvrirLink(link) {
-    if (!link || link.tagName !== 'A') return false;
-    var href = (link.getAttribute('href') || '').trim().toLowerCase();
-    return href === '#decouvrir';
+    return isAboutLink(link);
   }
 
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a');
-    if (isDecouvrirLink(link)) {
+    if (isAboutLink(link)) {
       e.preventDefault();
       closeD();
       if (history.replaceState) {
-        history.replaceState(null, '', '#decouvrir');
+        history.replaceState(null, '', '#about');
       } else {
-        location.hash = 'decouvrir';
+        location.hash = 'about';
       }
-      scrollToDecouvrir();
+      scrollToAbout();
       return;
     }
     if (!isLeadFormLink(link)) return;
@@ -340,9 +341,9 @@
 
   function handleFormHashOnLoad() {
     var hash = (location.hash || '').toLowerCase();
-    if (hash === '#decouvrir') {
+    if (hash === '#about' || hash === '#decouvrir') {
       window.requestAnimationFrame(function () {
-        window.setTimeout(scrollToDecouvrir, 80);
+        window.setTimeout(scrollToAbout, 80);
       });
       return;
     }
@@ -356,8 +357,8 @@
   handleFormHashOnLoad();
   window.addEventListener('hashchange', function () {
     var hash = (location.hash || '').toLowerCase();
-    if (hash === '#decouvrir') {
-      scrollToDecouvrir();
+    if (hash === '#about' || hash === '#decouvrir') {
+      scrollToAbout();
       return;
     }
     if (hash === '#formulaire' || hash === '#contact') {
