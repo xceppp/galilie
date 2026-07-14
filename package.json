@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "NC Consulting site with secure lead API",
   "scripts": {
+    "dev": "vercel dev --listen 3000",
     "verify:seo": "node scripts/verify-site-url.js",
     "csp:print": "node scripts/print-csp-header.js",
     "csp:sync": "node scripts/sync-vercel-csp.js"

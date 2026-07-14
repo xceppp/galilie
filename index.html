@@ -205,10 +205,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="nc-wordmark">NC <span>Consulting</span></span>
     </a>
     <nav class="nc-links" aria-label="Navigation principale">
-      <a href="#poles">Pôles</a>
+      <a href="#decouvrir">Découvrir</a>
+        <a href="#poles">Pôles</a>
         <a href="#methode">Méthode</a>
         <a href="#reels">Témoignages</a>
-        <a href="#about">Qui sommes-nous</a>
+      <a href="#about">Qui sommes-nous</a>
       <a href="#faq">FAQ</a>
       </nav>
     <div class="nc-nav-actions">
@@ -238,6 +239,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
   <nav class="nc-drawer-nav" aria-label="Navigation mobile">
+    <a href="#decouvrir" data-close>Découvrir</a>
     <a href="#poles" data-close>Pôles</a>
     <a href="#methode" data-close>Méthode</a>
     <a href="#reels" data-close>Témoignages</a>
@@ -565,6 +567,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- EXPLORER — carte en arbre -->
+<section class="nc-section nc-section--tree" id="decouvrir" aria-labelledby="decouvrir-title">
+  <div class="container">
+    <div class="nc-head center reveal">
+      <div class="nc-label">Explorer</div>
+      <h2 class="nc-title" id="decouvrir-title">Toute NC Consulting, <em>en un arbre</em>.</h2>
+      <p class="nc-sub reveal d1">Déployez les branches pour parcourir le cabinet — chaque rubrique mène vers le détail complet.</p>
+    </div>
+    <div class="nc-tree-explorer reveal d1" id="ncTreeSection">
+      <nav class="nc-tree-nav" id="ncTreeNav" aria-label="Arborescence NC Consulting"></nav>
+      <article class="nc-tree-panel" id="ncTreePanel" aria-live="polite" aria-atomic="true"></article>
+    </div>
+    <p class="nc-tree-fullpage reveal d2"><a href="decouvrir.html">Ouvrir la carte en plein écran →</a></p>
+  </div>
+</section>
+
 <!-- QUI SOMMES-NOUS — parcours interactif -->
 <section class="nc-section alt" id="about" aria-labelledby="about-title">
   <div class="container">
@@ -862,6 +880,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <section class="nc-foot-block nc-foot-nav" aria-labelledby="foot-nav-title">
         <h4 id="foot-nav-title">Navigation</h4>
         <ul class="nc-foot-list nc-foot-list--grid">
+          <li><a href="#decouvrir">Découvrir (carte)</a></li>
           <li><a href="#poles">Pôles</a></li>
           <li><a href="#methode">Méthode</a></li>
           <li><a href="methode.html">Comment ça marche</a></li>
@@ -897,5 +916,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="nc.js" defer></script>
   <script src="main.js" defer></script>
   <script src="cms.js" defer></script>
+  <script src="assets/nc-tree-data.js" defer></script>
+  <script src="nc-tree.js" defer></script>
 </body>
 </html>

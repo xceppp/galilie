@@ -277,6 +277,20 @@
     }
   }
 
+  function scrollToDecouvrir() {
+    var target = document.getElementById('decouvrir');
+    if (!target) {
+      window.location.href = 'decouvrir.html';
+      return;
+    }
+    syncNavHeightVar();
+    var top = target.getBoundingClientRect().top + window.scrollY - navScrollOffset();
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: reduce ? 'auto' : 'smooth',
+    });
+  }
+
   function isLeadFormLink(link) {
     if (!link || link.tagName !== 'A') return false;
     var href = (link.getAttribute('href') || '').trim().toLowerCase();
@@ -294,8 +308,25 @@
     );
   }
 
+  function isDecouvrirLink(link) {
+    if (!link || link.tagName !== 'A') return false;
+    var href = (link.getAttribute('href') || '').trim().toLowerCase();
+    return href === '#decouvrir';
+  }
+
   document.addEventListener('click', function (e) {
     var link = e.target.closest('a');
+    if (isDecouvrirLink(link)) {
+      e.preventDefault();
+      closeD();
+      if (history.replaceState) {
+        history.replaceState(null, '', '#decouvrir');
+      } else {
+        location.hash = 'decouvrir';
+      }
+      scrollToDecouvrir();
+      return;
+    }
     if (!isLeadFormLink(link)) return;
     e.preventDefault();
     closeD();
@@ -309,6 +340,12 @@
 
   function handleFormHashOnLoad() {
     var hash = (location.hash || '').toLowerCase();
+    if (hash === '#decouvrir') {
+      window.requestAnimationFrame(function () {
+        window.setTimeout(scrollToDecouvrir, 80);
+      });
+      return;
+    }
     if (hash !== '#formulaire' && hash !== '#contact') return;
     window.requestAnimationFrame(function () {
       window.setTimeout(function () {
@@ -319,6 +356,10 @@
   handleFormHashOnLoad();
   window.addEventListener('hashchange', function () {
     var hash = (location.hash || '').toLowerCase();
+    if (hash === '#decouvrir') {
+      scrollToDecouvrir();
+      return;
+    }
     if (hash === '#formulaire' || hash === '#contact') {
       scrollToLeadForm({ resetForm: true });
     }

@@ -33,6 +33,11 @@
       "permanent": true
     },
     {
+      "source": "/decouvrir",
+      "destination": "/decouvrir.html",
+      "permanent": true
+    },
+    {
       "source": "/preparation-concours.html",
       "destination": "/concours.html",
       "permanent": true
