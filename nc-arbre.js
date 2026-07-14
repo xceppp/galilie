@@ -105,7 +105,7 @@
     '<a class="btn btn-gold nc-arbre__bouton" href="' +
     esc(cta.href || '#formulaire') +
     '">' +
-    esc(cta.button || 'Réserver mon appel gratuit →') +
+    esc(cta.button || 'Demander un premier échange →') +
     '</a></div>';
 
   var nodes = Array.prototype.slice.call(mount.querySelectorAll('[data-arbre-noeud]'));

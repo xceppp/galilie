@@ -213,33 +213,28 @@ async function getRecaptchaToken(action = 'lead_submit') {
   }
 })();
 
-const formFields = ['prenom', 'nom', 'telephone', 'email', 'niveau', 'filiere', 'service', 'mode'];
+const formFields = ['prenom', 'nom', 'telephone', 'email', 'niveau', 'filiere', 'service', 'mode', 'situation'];
+const requiredFormFields = ['prenom', 'nom', 'telephone'];
 const wizardStepRules = {
   1: [
     { id: 'prenom', msg: 'Veuillez entrer votre prénom.' },
     { id: 'nom', msg: 'Veuillez entrer votre nom.' },
     { id: 'telephone', msg: 'Veuillez entrer votre téléphone.' },
-    { id: 'email', msg: 'Veuillez entrer votre email.' },
   ],
-  2: [
-    { id: 'niveau', msg: 'Veuillez sélectionner votre profil.' },
-    { id: 'filiere', msg: 'Veuillez sélectionner une option.' },
-    { id: 'service', msg: 'Veuillez sélectionner un service.' },
-    { id: 'mode', msg: 'Veuillez sélectionner un mode.' },
-  ],
+  2: [],
 };
 let wizardStep = 1;
 
 function updateProgress() {
-  const filled = formFields.filter((id) => {
+  const filled = requiredFormFields.filter((id) => {
     const el = document.getElementById(id);
     return el && el.value && String(el.value).trim() !== '';
   }).length;
-  const pct = Math.round((filled / formFields.length) * 100);
+  const pct = Math.round((filled / requiredFormFields.length) * 100);
   const bar = document.getElementById('formProgressBar');
   const lbl = document.getElementById('formProgressLabel');
   if (bar) bar.style.width = pct + '%';
-  if (lbl) lbl.textContent = filled + ' / ' + formFields.length + ' champs remplis';
+  if (lbl) lbl.textContent = 'Seuls le nom et le téléphone sont nécessaires.';
 }
 
 function validateStep(step) {
@@ -261,6 +256,28 @@ function validateStep(step) {
     const phoneVal = val('telephone');
     if (phoneVal && !/^[\d\s+\-()]{8,}$/.test(phoneVal)) {
       showFieldError('telephone', 'Numéro de téléphone invalide.');
+      hasError = true;
+    }
+  }
+
+  if (step === 2) {
+    const niveauKey = val('niveau');
+    if (niveauKey) {
+      const dep = dependentOptions[niveauKey];
+      const filiereVal = val('filiere');
+      const serviceVal = val('service');
+      if (filiereVal && dep && !dep.filieres.includes(filiereVal)) {
+        showFieldError('filiere', 'Option invalide pour ce profil.');
+        hasError = true;
+      }
+      if (serviceVal && dep && !dep.services.includes(serviceVal)) {
+        showFieldError('service', 'Service invalide pour ce profil.');
+        hasError = true;
+      }
+    }
+    const modeVal = val('mode');
+    if (modeVal && !['Présentiel (Meknès)', 'À distance', 'Les deux'].includes(modeVal)) {
+      showFieldError('mode', 'Mode invalide.');
       hasError = true;
     }
   }
@@ -293,6 +310,7 @@ function updateWizardSummary() {
   setText('sumNiveau', NIVEAU_LABELS[niveauKey] || niveauKey);
   setText('sumFiliere', val('filiere'));
   setText('sumServiceMode', serviceMode);
+  setText('sumSituation', val('situation'));
 }
 
 function setWizardStep(nextStep) {
@@ -358,6 +376,13 @@ if (leadForm) {
     });
   });
 
+  leadForm.querySelectorAll('[data-wiz-skip]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      clearErrors();
+      setWizardStep(Number(btn.getAttribute('data-wiz-skip') || '3'));
+    });
+  });
+
   leadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearErrors();
@@ -405,6 +430,7 @@ if (leadForm) {
       filiere: val('filiere'),
       service: val('service'),
       mode: val('mode'),
+      situation: val('situation'),
       recaptchaToken,
       recaptchaAction: 'lead_submit',
     };

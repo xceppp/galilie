@@ -26,7 +26,7 @@ window.NC_ARBRE = {
             },
             {
               title: "15+ ans d'expertise",
-              text: '1 500+ profils accompagnés · 97 % de satisfaction.',
+              text: '1 500+ professionnels formés · 97 % de satisfaction.',
               href: 'cabinet.html',
             },
           ],
@@ -150,7 +150,7 @@ window.NC_ARBRE = {
           leaves: [
             {
               title: '01 · Prenez contact',
-              text: 'Appel découverte gratuit de 20 min ou formulaire en 2 minutes. Sans engagement.',
+              text: 'Un premier échange de 20 minutes, confidentiel et sans engagement.',
               href: 'methode.html#etape-1',
             },
             {
@@ -204,11 +204,6 @@ window.NC_ARBRE = {
               text: 'Reconversion et repositionnement, avec suivi.',
               href: 'cabinet.html#confiance-profils-en-transition',
             },
-            {
-              title: 'Étudiants',
-              text: 'Prépa concours — préparation aux entretiens et oraux.',
-              href: 'concours.html',
-            },
           ],
         },
       ],
@@ -238,7 +233,7 @@ window.NC_ARBRE = {
             },
             {
               title: 'Appel découverte',
-              text: '20 minutes, gratuit, sans engagement. Réponse sous 24 h.',
+              text: '20 minutes, sans engagement. Réponse sous 24 h.',
               href: '#formulaire',
             },
           ],
@@ -249,7 +244,7 @@ window.NC_ARBRE = {
   cta: {
     titleHtml: 'Prêt à passer au <em>niveau supérieur</em> ?',
     subtitle: 'Accompagnements limités par trimestre — suivi personnalisé garanti.',
-    button: 'Réserver mon appel gratuit →',
+    button: 'Demander un premier échange →',
     href: '#formulaire',
   },
 };

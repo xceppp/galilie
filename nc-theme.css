@@ -1074,6 +1074,11 @@ button,input,select,textarea{font-family:inherit}
   font-size:clamp(2.4rem,4.8vw,4.1rem);line-height:1.05;letter-spacing:-.015em;color:var(--text-on-dark);
 }
 .nc-hero-title em{font-style:italic;color:var(--gold-hover);position:relative;white-space:nowrap}
+.hero-credential{
+  font-size:13px;letter-spacing:.04em;color:var(--gold-hover);
+  margin:14px 0 0;padding-top:14px;border-top:1px solid rgba(201,163,86,.25);
+  max-width:34rem;line-height:1.55;
+}
 .nc-hero--v2 .nc-lead{color:var(--silver);max-width:34rem}
 .nc-hero--v2 .nc-hero-ctas{margin-top:34px}
 .nc-hero-assure{
@@ -1107,6 +1112,11 @@ button,input,select,textarea{font-family:inherit}
 .nc-hero-card-list .chk{color:var(--navy);background:var(--gold);width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:1px}
 .nc-hero-card-cta{width:100%}
 .nc-hero-card-foot{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--silver)}
+.nc-hero-card-rating{
+  margin-top:18px;display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;color:var(--silver);text-decoration:none;transition:color .2s,opacity .2s;
+}
+.nc-hero-card-rating:hover{color:var(--gold-hover);opacity:.92}
 .nc-hero-card-stars{color:var(--gold);letter-spacing:2px;font-size:13px}
 
 /* scroll cue */
@@ -1269,6 +1279,7 @@ button,input,select,textarea{font-family:inherit}
   .nc-hero-title{font-size:clamp(2rem,8.6vw,2.75rem);line-height:1.08}
   .nc-hero-title em{white-space:normal}
   .nc-hero--v2 .nc-lead{font-size:15px;margin-inline:auto;max-width:32rem}
+  .hero-credential{margin-inline:auto;text-align:center;max-width:32rem}
   .nc-hero--v2 .nc-hero-ctas{
     margin-top:26px;width:100%;flex-direction:column;gap:12px;
   }
