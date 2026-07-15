@@ -40,29 +40,23 @@
     revEls.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* Hero background video — plays once, freezes on last frame (mobile-friendly) */
+  /* Hero background video — muted loop, ambient only (pauses offscreen / reduced-motion) */
   var heroVid = document.getElementById('ncHeroVideo');
   var heroVideoWrap = document.querySelector('.nc-hero-video');
   var heroSection = document.querySelector('.nc-hero--v2');
   if (heroVid && heroVideoWrap) {
+    var heroInView = true;
     heroVid.muted = true;
     heroVid.defaultMuted = true;
+    heroVid.loop = true;
     heroVid.playsInline = true;
     heroVid.setAttribute('muted', '');
+    heroVid.setAttribute('loop', '');
     heroVid.setAttribute('playsinline', '');
     heroVid.setAttribute('webkit-playsinline', '');
 
-    function primeHeroFrame() {
+    function markReady() {
       heroVideoWrap.classList.add('is-ready');
-      if (heroVid.duration && isFinite(heroVid.duration)) {
-        heroVid.currentTime = Math.min(0.1, heroVid.duration - 0.05);
-      } else if (heroVid.currentTime < 0.05) {
-        heroVid.currentTime = 0.05;
-      }
-    }
-
-    function showFrame() {
-      primeHeroFrame();
     }
 
     function markPlaying() {
@@ -70,8 +64,8 @@
     }
 
     function tryPlayHero() {
-      if (heroVid.ended) return;
-      showFrame();
+      if (reduce || document.hidden || !heroInView) return;
+      markReady();
       var p = heroVid.play();
       if (p && typeof p.then === 'function') {
         p.then(markPlaying).catch(function () {});
@@ -80,54 +74,49 @@
       }
     }
 
-    heroVid.addEventListener('loadedmetadata', primeHeroFrame, { once: true });
-    heroVid.addEventListener('loadeddata', primeHeroFrame, { once: true });
-    setTimeout(function () { heroVideoWrap.classList.add('is-ready'); }, 1200);
-
-    heroVid.addEventListener('ended', function () {
-      heroVid.pause();
-      heroVideoWrap.classList.add('is-ended');
+    function pauseHero() {
+      if (!heroVid.paused) heroVid.pause();
       heroVideoWrap.classList.remove('is-playing');
-    });
+    }
 
+    heroVid.addEventListener('loadeddata', markReady, { once: true });
+    heroVid.addEventListener('loadedmetadata', markReady, { once: true });
+    setTimeout(markReady, 1200);
     heroVid.addEventListener('playing', markPlaying);
 
-    function bindGestureFallback() {
-      var unlock = function () {
-        tryPlayHero();
-      };
+    if (reduce) {
+      heroVid.removeAttribute('autoplay');
+      heroVid.loop = false;
+      heroVid.addEventListener('loadedmetadata', function () {
+        heroVid.pause();
+        markReady();
+        heroVideoWrap.classList.add('is-ended');
+      }, { once: true });
+    } else {
+      var unlock = function () { tryPlayHero(); };
       document.documentElement.addEventListener('touchstart', unlock, { once: true, passive: true, capture: true });
       document.documentElement.addEventListener('pointerdown', unlock, { once: true, passive: true, capture: true });
       if (heroSection) {
         heroSection.addEventListener('touchstart', unlock, { once: true, passive: true });
       }
-    }
-
-    if (reduce) {
-      heroVid.addEventListener('loadedmetadata', function () {
-        if (heroVid.duration && isFinite(heroVid.duration)) {
-          heroVid.currentTime = Math.max(0, heroVid.duration - 0.05);
-        }
-        heroVid.pause();
-        heroVideoWrap.classList.add('is-ended', 'is-ready');
-      }, { once: true });
-    } else {
-      bindGestureFallback();
       heroVid.addEventListener('loadeddata', tryPlayHero, { once: true });
       heroVid.addEventListener('canplay', tryPlayHero, { once: true });
       if (heroSection && 'IntersectionObserver' in window) {
         var heroIo = new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
-            if (e.isIntersecting) tryPlayHero();
+            heroInView = e.isIntersecting;
+            if (heroInView) tryPlayHero();
+            else pauseHero();
           });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.08 });
         heroIo.observe(heroSection);
       }
       tryPlayHero();
       window.addEventListener('load', tryPlayHero, { once: true });
       window.addEventListener('pageshow', tryPlayHero, { once: true });
       document.addEventListener('visibilitychange', function () {
-        if (!document.hidden && !heroVid.ended) tryPlayHero();
+        if (document.hidden) pauseHero();
+        else tryPlayHero();
       });
     }
   }
