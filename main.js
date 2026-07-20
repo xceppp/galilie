@@ -14,38 +14,89 @@ const filiereSelect = document.getElementById('filiere');
 const serviceSelect = document.getElementById('service');
 
 const NIVEAU_LABELS = {
-  dirigeant: 'Dirigeant / Entrepreneur',
-  cadre: 'Cadre supérieur / Manager',
-  professionnel: 'Professionnel',
-  transition: 'En transition de carrière',
-  formation: 'Montée en compétences (cadres)',
+  candidat_lex: "Candidat Licence d'Excellence",
+  candidat_lpro: 'Candidat Licence Pro',
+  candidat_master: 'Candidat Master',
+  etudiant: 'Étudiant / Autre filière',
+  coaching: 'Coaching / conseil exécutif',
   autre: 'Autre profil',
 };
 
+const CAMPAIGN_SERVICE = "Semaine gratuite Licences d'Excellence";
+
 const dependentOptions = {
-  dirigeant: {
-    filieres: ['PME / Startup', 'Institution', 'Croissance & scale-up', 'Autre'],
-    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
+  candidat_lex: {
+    filieres: [
+      'Finance & Comptabilité',
+      'Management',
+      'Marketing & Commerce',
+      'Économie',
+      'Ressources humaines',
+      'Autre',
+    ],
+    services: [
+      CAMPAIGN_SERVICE,
+      "Demande d'information",
+      'Préparation concours intensive',
+      'Coaching individuel concours',
+    ],
   },
-  cadre: {
-    filieres: ['Management', 'Poste de direction', 'Performance & équipe', 'Autre'],
-    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
+  candidat_lpro: {
+    filieres: [
+      'Finance & Comptabilité',
+      'Management',
+      'Marketing & Commerce',
+      'Logistique',
+      'Autre',
+    ],
+    services: [
+      CAMPAIGN_SERVICE,
+      "Demande d'information",
+      'Préparation Licence Pro',
+      'Coaching individuel concours',
+    ],
   },
-  professionnel: {
-    filieres: ['Évolution de carrière', 'Communication', 'Leadership', 'Autre'],
-    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Formation sur mesure'],
+  candidat_master: {
+    filieres: ['Finance', 'Management', 'Marketing', 'Économie', 'Autre'],
+    services: [
+      CAMPAIGN_SERVICE,
+      "Demande d'information",
+      'Préparation Master',
+      'Coaching individuel concours',
+    ],
   },
-  transition: {
-    filieres: ['Changement de poste', 'Reconversion', 'Création d\'activité', 'Autre'],
-    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil'],
+  etudiant: {
+    filieres: ['Bac+2', 'Licence', 'Master', 'Autre'],
+    services: [
+      CAMPAIGN_SERVICE,
+      "Demande d'information",
+      'Orientation & conseil',
+      'Coaching individuel',
+    ],
   },
-  formation: {
-    filieres: ['Leadership & management', 'Finance & stratégie', 'Communication & posture', 'Gestion de projet', 'Digital & data', 'Autre'],
-    services: ['Formation sur mesure', 'Consultation 1-à-1', 'Coaching exécutif'],
+  coaching: {
+    filieres: [
+      'Dirigeant / Entrepreneur',
+      'Cadre / Manager',
+      'Professionnel',
+      'Transition de carrière',
+      'Autre',
+    ],
+    services: [
+      'Consultation 1-à-1',
+      'Coaching exécutif',
+      'Accompagnement & Conseil',
+      'Formation sur mesure',
+    ],
   },
   autre: {
     filieres: ['À préciser en échange'],
-    services: ['Consultation 1-à-1', 'Coaching exécutif', 'Accompagnement & Conseil', 'Formation sur mesure'],
+    services: [
+      CAMPAIGN_SERVICE,
+      "Demande d'information",
+      'Consultation 1-à-1',
+      'Autre',
+    ],
   },
 };
 
@@ -74,8 +125,8 @@ function updateDependentSelects() {
     fillSelect(serviceSelect, [], 'Choisissez d\'abord le profil');
     return;
   }
-  fillSelect(filiereSelect, dep.filieres, 'Sélectionnez une option');
-  fillSelect(serviceSelect, dep.services, 'Sélectionnez un service');
+  fillSelect(filiereSelect, dep.filieres, 'Sélectionnez une spécialité');
+  fillSelect(serviceSelect, dep.services, 'Sélectionnez une demande');
 }
 
 function val(id) {
@@ -346,6 +397,20 @@ function setWizardStep(nextStep) {
 window.ncResetLeadForm = function ncResetLeadForm() {
   setWizardStep(1);
   clearErrors();
+};
+
+/** Prefill for Semaine gratuite / Licences d'Excellence inscription CTAs */
+window.ncPrefillCampaignLead = function ncPrefillCampaignLead() {
+  if (!niveauSelect) return;
+  niveauSelect.value = 'candidat_lex';
+  updateDependentSelects();
+  if (serviceSelect) {
+    const opts = Array.from(serviceSelect.options);
+    const match = opts.find((o) => o.value === CAMPAIGN_SERVICE);
+    if (match) serviceSelect.value = CAMPAIGN_SERVICE;
+  }
+  const modeEl = document.getElementById('mode');
+  if (modeEl) modeEl.value = 'À distance';
 };
 
 if (niveauSelect) {

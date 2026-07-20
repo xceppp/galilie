@@ -258,12 +258,26 @@
     if (opts.resetForm && typeof window.ncResetLeadForm === 'function') {
       window.ncResetLeadForm();
     }
+    if (opts.campaign && typeof window.ncPrefillCampaignLead === 'function') {
+      window.ncPrefillCampaignLead();
+    }
     if (opts.focus && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       window.setTimeout(function () {
         var prenom = document.getElementById('prenom');
         if (prenom) prenom.focus({ preventScroll: true });
       }, reduce ? 0 : 380);
     }
+  }
+
+  function isCampaignInscriptionLink(link) {
+    if (!link) return false;
+    return (
+      link.id === 'ncStoryCta' ||
+      link.classList.contains('nc-story-cta') ||
+      link.classList.contains('nc-nav-cta') ||
+      link.classList.contains('nc-drawer-cta') ||
+      link.classList.contains('nc-float')
+    );
   }
 
   function scrollToAbout() {
@@ -325,7 +339,11 @@
     } else {
       location.hash = 'formulaire';
     }
-    scrollToLeadForm({ resetForm: true });
+    scrollToLeadForm({
+      resetForm: true,
+      campaign: isCampaignInscriptionLink(link),
+      focus: true,
+    });
   });
 
   function handleFormHashOnLoad() {
@@ -339,7 +357,7 @@
     if (hash !== '#formulaire' && hash !== '#contact') return;
     window.requestAnimationFrame(function () {
       window.setTimeout(function () {
-        scrollToLeadForm({ resetForm: true });
+        scrollToLeadForm({ resetForm: true, campaign: true });
       }, 80);
     });
   }
@@ -351,7 +369,7 @@
       return;
     }
     if (hash === '#formulaire' || hash === '#contact') {
-      scrollToLeadForm({ resetForm: true });
+      scrollToLeadForm({ resetForm: true, campaign: true });
     }
   });
 

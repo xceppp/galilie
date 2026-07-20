@@ -46,7 +46,7 @@ async function auditPage(page, path) {
     await page.waitForTimeout(800);
     const niveau = page.locator('#niveau');
     if (await niveau.count()) {
-      await niveau.selectOption('dirigeant');
+      await niveau.selectOption('candidat_lex');
       await page.waitForTimeout(400);
     }
     const filiere = page.locator('#filiere');

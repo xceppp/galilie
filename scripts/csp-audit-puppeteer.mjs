@@ -27,7 +27,7 @@ async function auditPage(page, path) {
     await page.type('#email', 'test@example.com', { delay: 20 });
     await page.click('[data-wiz-next="2"]');
     await new Promise((r) => setTimeout(r, 600));
-    await page.select('#niveau', 'dirigeant');
+    await page.select('#niveau', 'candidat_lex');
     await new Promise((r) => setTimeout(r, 400));
     await page.select('#filiere', await page.$eval('#filiere option:nth-child(2)', (o) => o.value));
     await page.select('#service', await page.$eval('#service option:nth-child(2)', (o) => o.value));
