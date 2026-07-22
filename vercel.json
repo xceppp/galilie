@@ -38,6 +38,16 @@
       "permanent": true
     },
     {
+      "source": "/blog",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/index.html",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
       "source": "/preparation-concours.html",
       "destination": "/concours.html",
       "permanent": true

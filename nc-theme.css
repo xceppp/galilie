@@ -1942,6 +1942,69 @@ button,input,select,textarea{font-family:inherit}
 .nc-page-cta-band p{color:var(--silver);margin-bottom:22px;font-size:15px}
 .nc-page-foot{padding:28px 0 36px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--ink-dim)}
 .nc-page-foot a{color:var(--gold-deep);font-weight:600;text-decoration:none}
+
+/* Blog — static posts (CMS-migratable: data-blog-* + .nc-blog-prose) */
+.nc-blog-list{display:flex;flex-direction:column;gap:18px;margin-bottom:48px}
+.nc-blog-card{
+  padding:24px 22px;border-radius:var(--r,14px);
+  background:#fff;border:1px solid var(--line);
+}
+.nc-blog-card-meta{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  margin-bottom:12px;font-size:12.5px;color:var(--ink-dim);
+}
+.nc-blog-pill{
+  display:inline-flex;align-items:center;padding:5px 10px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-deep);background:rgba(201,163,86,.12);border:1px solid rgba(201,163,86,.28);
+}
+.nc-blog-card-title{margin:0 0 10px;font-family:"Fraunces",serif;font-size:clamp(1.25rem,2.5vw,1.55rem);line-height:1.25;font-weight:500}
+.nc-blog-card-title a{color:var(--charcoal);text-decoration:none}
+.nc-blog-card-title a:hover{color:var(--gold-deep)}
+.nc-blog-card-excerpt{margin:0 0 14px;font-size:15px;line-height:1.7;color:var(--ink-dim);max-width:40rem}
+.nc-blog-card-link{font-size:14px;font-weight:600;color:var(--gold-deep);text-decoration:none}
+.nc-blog-card-link:hover{color:var(--gold)}
+
+.nc-blog-article{max-width:44rem}
+.nc-blog-article-head{margin-bottom:32px}
+.nc-blog-crumbs{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  margin-bottom:16px;font-size:13px;color:var(--ink-dim);
+}
+.nc-blog-crumbs a{color:var(--gold-deep);text-decoration:none;font-weight:500}
+.nc-blog-crumbs a:hover{color:var(--gold)}
+.nc-blog-prose{font-size:16.5px;line-height:1.8;color:var(--ink-dim)}
+.nc-blog-prose > * + *{margin-top:1.05em}
+.nc-blog-prose h2{
+  margin-top:1.75em;margin-bottom:.55em;
+  font-family:"Fraunces",serif;font-size:clamp(1.35rem,2.4vw,1.65rem);
+  font-weight:500;color:var(--charcoal);line-height:1.25;
+}
+.nc-blog-prose h3{
+  margin-top:1.4em;margin-bottom:.4em;
+  font-family:"Fraunces",serif;font-size:1.15rem;font-weight:500;color:var(--charcoal);
+}
+.nc-blog-prose a{color:var(--gold-deep);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.nc-blog-prose a:hover{color:var(--gold)}
+.nc-blog-prose ul,.nc-blog-prose ol{padding-left:1.25rem;margin:0}
+.nc-blog-prose li + li{margin-top:.45em}
+.nc-blog-prose strong{color:var(--charcoal);font-weight:600}
+.nc-blog-cta{
+  margin:40px 0 28px;padding:28px 24px;border-radius:var(--r,14px);
+  background:var(--navy);color:var(--text-on-dark);text-align:center;
+}
+.nc-blog-cta h2{font-family:"Fraunces",serif;font-size:clamp(1.35rem,2.8vw,1.75rem);margin:0 0 10px;font-weight:500}
+.nc-blog-cta p{margin:0 0 20px;color:var(--silver);font-size:15px}
+.nc-blog-article-foot{
+  padding-top:22px;border-top:1px solid var(--line);
+  font-size:14px;line-height:1.7;color:var(--ink-dim);
+}
+.nc-blog-article-foot a{color:var(--gold-deep);font-weight:600;text-decoration:none}
+.nc-blog-article-foot a:hover{color:var(--gold)}
+@media(max-width:640px){
+  .nc-blog-card,.nc-blog-cta{padding:20px 16px}
+  .nc-blog-prose{font-size:15.5px}
+}
 @media(max-width:768px){
   .nc-page-main{padding:36px 0 56px}
   .nc-page-facts{flex-direction:column}
