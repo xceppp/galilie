@@ -1943,6 +1943,26 @@ button,input,select,textarea{font-family:inherit}
 .nc-page-foot{padding:28px 0 36px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--ink-dim)}
 .nc-page-foot a{color:var(--gold-deep);font-weight:600;text-decoration:none}
 
+/* 404 — branded not-found */
+.nc-404-main{display:flex;align-items:center;min-height:calc(100svh - 160px)}
+.nc-404-panel{max-width:36rem;padding-bottom:24px}
+.nc-404-code{
+  margin:0 0 8px;font-family:"Fraunces",serif;font-weight:500;
+  font-size:clamp(3.5rem,12vw,5.5rem);line-height:.9;letter-spacing:-.04em;
+  color:rgba(201,163,86,.35);
+}
+.nc-404-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.nc-404-links{
+  list-style:none;margin:28px 0 0;padding:0;
+  display:flex;flex-wrap:wrap;gap:10px 18px;
+  font-size:14px;
+}
+.nc-404-links a{color:var(--gold-deep);font-weight:600;text-decoration:none}
+.nc-404-links a:hover{color:var(--gold)}
+@media(max-width:560px){
+  .nc-404-actions .btn{width:100%;justify-content:center}
+}
+
 /* Blog — static posts (CMS-migratable: data-blog-* + .nc-blog-prose) */
 .nc-blog-list{display:flex;flex-direction:column;gap:18px;margin-bottom:48px}
 .nc-blog-card{
