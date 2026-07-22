@@ -152,7 +152,7 @@
 
         <!-- ANNOUNCEMENTS -->
         <section class="panel" id="panel-announcements">
-          <p class="panel-desc">Le bandeau défilant en haut de page. Décochez pour masquer sans supprimer.</p>
+          <p class="panel-desc">Annonces style « avis daté ». Chaque ligne ouvre une page détail avec l'image et les infos. Décochez pour masquer sans supprimer.</p>
           <div class="collection" id="annList"></div>
           <button class="btn-add" type="button" data-add="announcement">+ Ajouter une annonce</button>
         </section>
@@ -364,14 +364,29 @@
 
   <!-- Row template for an announcement -->
   <template id="tpl-announcement">
-    <div class="row" data-kind="announcement">
-      <label class="chk"><input type="checkbox" data-field="active"><span></span></label>
+    <div class="card" data-kind="announcement">
+      <div class="card-head">
+        <label class="chk"><input type="checkbox" data-field="active"><span>Visible</span></label>
+        <div class="card-actions">
+          <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+          <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+          <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+        </div>
+      </div>
       <input type="hidden" data-field="id">
-      <input type="text" class="row-text" data-field="text" placeholder="Texte de l'annonce">
-      <div class="card-actions">
-        <button type="button" class="ic" data-move="up" title="Monter">↑</button>
-        <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
-        <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+      <div class="grid2">
+        <label class="field"><span>Jour (ex. 23)</span><input type="text" data-field="date_day" placeholder="23"></label>
+        <label class="field"><span>Mois (ex. Juil)</span><input type="text" data-field="date_month" placeholder="Juil"></label>
+      </div>
+      <label class="field"><span>Titre</span><input type="text" data-field="title" placeholder="Titre de l'annonce"></label>
+      <label class="field"><span>Résumé (liste)</span><textarea rows="2" data-field="text" placeholder="Court texte visible sur la liste"></textarea></label>
+      <label class="field"><span>Statut</span><input type="text" data-field="status" placeholder="Inscription ouverte"></label>
+      <label class="field"><span>Image (chemin)</span><input type="text" data-field="image" placeholder="assets/annonce-semaine-gratuite.png"></label>
+      <label class="field"><span>Texte détail</span><textarea rows="4" data-field="body" placeholder="Texte long sur la page détail"></textarea></label>
+      <label class="field"><span>Infos (une par ligne — <code>Label :: valeur</code>)</span><textarea rows="4" data-field="details"></textarea></label>
+      <div class="grid2">
+        <label class="field"><span>Bouton CTA</span><input type="text" data-field="cta_label" placeholder="Je m'inscris →"></label>
+        <label class="field"><span>Lien CTA</span><input type="text" data-field="cta_url" placeholder="/#formulaire"></label>
       </div>
     </div>
   </template>

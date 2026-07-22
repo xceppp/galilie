@@ -145,13 +145,55 @@
 
   function renderAnnouncements(list) {
     var track = document.getElementById('ncAlertTrack');
-    if (!track || !list || !list.length) return;
-    var items = list
+    if (track && list && list.length) {
+      var items = list
+        .map(function (a) {
+          var label = a.title || a.text || '';
+          return '<span class="nc-alert-item">' + esc(label) + '</span>';
+        })
+        .join('');
+      track.innerHTML = items + items;
+    }
+
+    var listEl = document.getElementById('ncAnnouncementsList');
+    if (!listEl || !list || !list.length) return;
+
+    listEl.innerHTML = list
       .map(function (a) {
-        return '<span class="nc-alert-item">' + esc(a.text) + '</span>';
+        var id = encodeURIComponent(a.id || '');
+        var title = a.title || a.text || 'Annonce';
+        var text = a.text || '';
+        var day = a.date_day || '—';
+        var mon = a.date_month || '';
+        var status = a.status || '';
+        return (
+          '<a class="nc-ann-notice" href="annonce.html?id=' +
+          id +
+          '">' +
+          '<div class="nc-ann-notice__date">' +
+          '<div class="nc-ann-notice__day">' +
+          esc(day) +
+          '</div>' +
+          (mon
+            ? '<div class="nc-ann-notice__mon">' + esc(mon) + '</div>'
+            : '') +
+          '</div>' +
+          '<div class="nc-ann-notice__body">' +
+          '<h3 class="nc-ann-notice__title">' +
+          esc(title) +
+          '</h3>' +
+          (text
+            ? '<p class="nc-ann-notice__text">' + esc(text) + '</p>'
+            : '') +
+          (status
+            ? '<span class="nc-ann-notice__status">' + esc(status) + '</span>'
+            : '') +
+          '</div>' +
+          '<span class="nc-ann-notice__cta">Voir →</span>' +
+          '</a>'
+        );
       })
       .join('');
-    track.innerHTML = items + items;
   }
 
   function renderTrust(list) {
@@ -168,7 +210,15 @@
         );
       })
       .join('');
-    track.innerHTML = items + items;
+    track.innerHTML =
+      '<div class="nc-trust-group">' +
+      items +
+      '</div><div class="nc-trust-group" aria-hidden="true">' +
+      items +
+      '</div>';
+    if (typeof window.ncFillTrustMarquee === 'function') {
+      window.ncFillTrustMarquee();
+    }
   }
 
   function parseItems(itemsStr) {

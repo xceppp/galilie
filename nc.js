@@ -13,6 +13,7 @@
   var progress = document.getElementById('ncProgress');
   var nav = document.getElementById('ncNav');
   var floatCta = document.getElementById('ncFloat');
+  var stickyCta = document.getElementById('ncStickyCta');
   var wa = document.getElementById('ncWa');
   function onScroll() {
     var h = document.documentElement;
@@ -20,12 +21,64 @@
     var max = h.scrollHeight - h.clientHeight;
     if (progress) progress.style.width = (max > 0 ? (sc / max * 100) : 0) + '%';
     if (nav) nav.classList.toggle('scrolled', sc > 10);
-    var show = sc > 620;
+    var form = document.getElementById('formulaire');
+    var nearForm = false;
+    if (form) {
+      var fr = form.getBoundingClientRect();
+      nearForm = fr.top < window.innerHeight * 0.75 && fr.bottom > 80;
+    }
+    var show = sc > 420 && !nearForm;
     if (floatCta) floatCta.classList.toggle('show', show);
-    if (wa) wa.classList.toggle('show', sc > 320);
+    if (stickyCta) stickyCta.classList.toggle('is-on', show);
+    if (wa) wa.classList.toggle('show', sc > 280);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  /* Seamless trust marquee — keep track always full (no empty gap at loop) */
+  function fillTrustMarquee() {
+    var track = document.getElementById('ncTrustTrack');
+    if (!track) return;
+    var mask = track.parentElement;
+    if (!mask) return;
+
+    var groups = track.querySelectorAll('.nc-trust-group');
+    if (!groups.length) return;
+
+    var source = groups[0];
+    while (track.children.length > 1) {
+      track.removeChild(track.lastChild);
+    }
+
+    var guard = 0;
+    var need = Math.max(mask.clientWidth * 2, source.offsetWidth * 2);
+    while (track.scrollWidth < need + 8 && guard < 12) {
+      var clone = source.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+      guard++;
+      need = Math.max(mask.clientWidth * 2, source.offsetWidth * 2);
+    }
+
+    /* Ensure even count so -50% lands on an identical half */
+    if (track.children.length % 2 === 1) {
+      var pad = source.cloneNode(true);
+      pad.setAttribute('aria-hidden', 'true');
+      track.appendChild(pad);
+    }
+
+    var half = Math.floor(track.children.length / 2);
+    var duration = Math.max(24, half * 10);
+    track.style.animationDuration = duration + 's';
+  }
+
+  fillTrustMarquee();
+  window.addEventListener('load', fillTrustMarquee);
+  window.addEventListener('resize', function () {
+    window.clearTimeout(window.__ncTrustResize);
+    window.__ncTrustResize = window.setTimeout(fillTrustMarquee, 160);
+  });
+  window.ncFillTrustMarquee = fillTrustMarquee;
 
   /* Reveal on scroll */
   var revEls = document.querySelectorAll('.reveal:not(.in)');
@@ -43,7 +96,7 @@
   /* Hero background video — muted loop, ambient only (pauses offscreen / reduced-motion) */
   var heroVid = document.getElementById('ncHeroVideo');
   var heroVideoWrap = document.querySelector('.nc-hero-video');
-  var heroSection = document.querySelector('.nc-hero--v2');
+  var heroSection = document.querySelector('.nc-hero--entry') || document.querySelector('.nc-hero--v2');
   if (heroVid && heroVideoWrap) {
     var heroInView = true;
     heroVid.muted = true;
