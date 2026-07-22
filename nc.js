@@ -13,7 +13,6 @@
   var progress = document.getElementById('ncProgress');
   var nav = document.getElementById('ncNav');
   var floatCta = document.getElementById('ncFloat');
-  var stickyCta = document.getElementById('ncStickyCta');
   var wa = document.getElementById('ncWa');
   function onScroll() {
     var h = document.documentElement;
@@ -29,7 +28,6 @@
     }
     var show = sc > 420 && !nearForm;
     if (floatCta) floatCta.classList.toggle('show', show);
-    if (stickyCta) stickyCta.classList.toggle('is-on', show);
     if (wa) wa.classList.toggle('show', sc > 280);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
