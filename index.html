@@ -117,6 +117,11 @@
       "telephone": "+212606111199",
       "email": "chaltoutenouamane@gmail.com",
       "priceRange": "$$",
+      "founder": {
+        "@type": "Person",
+        "name": "Nouamane Chaltoute",
+        "jobTitle": "Professeur d'enseignement supérieur"
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Meknès",
@@ -183,6 +188,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/hero-poster.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="nc-theme.css?v=story15">
@@ -257,7 +263,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- HERO — entrée cabinet (quiet premium + vidéo) -->
 <section class="nc-hero nc-hero--entry" id="accueil" aria-label="Accueil NC Consulting">
   <div class="nc-hero-video" aria-hidden="true">
-    <video class="nc-hero-video-el" id="ncHeroVideo" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture preload="auto">
+    <video class="nc-hero-video-el" id="ncHeroVideo" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture preload="metadata" poster="assets/hero-poster.jpg">
       <source src="assets/hero-bg.mp4" type="video/mp4">
     </video>
     <div class="nc-hero-video-scrim"></div>
