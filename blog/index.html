@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../nc-theme.css?v=blog4">
+  <link rel="stylesheet" href="../nc-theme.css?v=blog5">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,7 +47,7 @@
   }
   </script>
 </head>
-<body class="nc-page-body">
+<body class="nc-page-body nc-blog-alive">
   <header class="nc-page-top">
     <div class="container nc-page-top-inner">
       <a class="nc-page-back" href="/">← Accueil</a>
@@ -56,144 +56,169 @@
   </header>
 
   <main class="nc-page-main">
-    <header class="nc-page-hero container">
-      <div class="nc-label">Blog</div>
-      <h1 class="nc-page-title">Préparation concours &amp; <em>reprise d'études</em>.</h1>
-      <p class="nc-page-lead">Pilier Concours &amp; reprise d'études : oral, révision d'été, temps aménagé, stress, simulations, anglais. Aussi : coaching exécutif pour dirigeants.</p>
+    <header class="nc-page-hero container nc-blog-hub-hero">
+      <div>
+        <div class="nc-blog-hub-kicker"><i aria-hidden="true"></i> Blog NC Consulting</div>
+        <h1 class="nc-page-title">Méthodes claires pour <em>réussir</em> — et décider mieux.</h1>
+        <p class="nc-page-lead">Concours d'excellence, reprise d'études à temps aménagé, coaching. Filtrez, lisez, passez à l'action.</p>
+        <div class="nc-blog-hub-stats">
+          <div class="nc-blog-hub-stat"><span>10</span><small>articles concours</small></div>
+          <div class="nc-blog-hub-stat"><span>~8 min</span><small>lecture moyenne</small></div>
+          <div class="nc-blog-hub-stat"><span>2</span><small>publics couverts</small></div>
+        </div>
+      </div>
+      <div class="nc-blog-hub-art" aria-hidden="true">
+        <img src="../assets/blog/oral-5-etapes.svg" width="640" height="512" alt="" decoding="async">
+      </div>
     </header>
 
-    <!-- CMS-ready list: each card = one post; migrate later via admin (annonces + blog). -->
+    <div class="container">
+      <div class="nc-blog-filters" role="toolbar" aria-label="Filtrer les articles">
+        <button type="button" class="is-on" data-filter="all" aria-pressed="true">Tous</button>
+        <button type="button" data-filter="concours" aria-pressed="false">Concours</button>
+        <button type="button" data-filter="reprise" aria-pressed="false">Reprise d'études</button>
+        <button type="button" data-filter="coaching" aria-pressed="false">Coaching</button>
+      </div>
+
+      <article class="nc-blog-featured" data-blog-cat="concours" data-blog-slug="licence-master-excellence-meknes">
+        <a class="nc-blog-featured-visual" href="licence-master-excellence-meknes.html" tabindex="-1" aria-hidden="true">
+          <img src="../assets/blog/oral-5-etapes.svg" width="600" height="400" alt="" decoding="async">
+        </a>
+        <div class="nc-blog-featured-body">
+          <span class="nc-blog-pill">À la une · Concours</span>
+          <h2><a href="licence-master-excellence-meknes.html">Réussir l'oral : la méthode en 5 étapes</a></h2>
+          <p>Le fil rouge de présentation, les oraux blancs, la veille du jour J — le pilier du blog concours.</p>
+          <div class="nc-blog-card-meta" style="margin-top:18px;margin-bottom:0">
+            <span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> Nouamane Chaltoute</span>
+            <span class="nc-blog-meta-sep" aria-hidden="true">·</span>
+            <span>9 min de lecture</span>
+            <span class="nc-blog-meta-sep" aria-hidden="true">·</span>
+            <time datetime="2026-07-22">22 juil. 2026</time>
+          </div>
+        </div>
+      </article>
+    </div>
+
     <section class="container nc-blog-list" aria-label="Articles publiés" data-blog-list>
-      <article class="nc-blog-card" data-blog-slug="apres-admission-demarrer-licence-master" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="apres-admission-demarrer-licence-master" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="apres-admission-demarrer-licence-master.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-admission.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="apres-admission-demarrer-licence-master.html">Après l'admission : bien démarrer</a></h2>
+          <p class="nc-blog-card-excerpt">Temps plein ou aménagé — les 6 premières semaines.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>8 min</span></div>
+          <a class="nc-blog-card-link" href="apres-admission-demarrer-licence-master.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="apres-admission-demarrer-licence-master.html">Après l'admission : bien démarrer sa Licence/Master (temps plein ou aménagé)</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Les six premières semaines après l'admission : habitudes, temps aménagé + vie pro, erreurs à éviter.</p>
-        <a class="nc-blog-card-link" href="apres-admission-demarrer-licence-master.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="candidats-echec-repartir-methode" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="candidats-echec-repartir-methode" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="candidats-echec-repartir-methode.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-echec.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="candidats-echec-repartir-methode.html">Échec l'an dernier : repartir avec méthode</a></h2>
+          <p class="nc-blog-card-excerpt">Diagnostic, plan asymétrique, confiance.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>8 min</span></div>
+          <a class="nc-blog-card-link" href="candidats-echec-repartir-methode.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="candidats-echec-repartir-methode.html">Candidats en échec l'an dernier : comment repartir avec une vraie méthode</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Diagnostic, plan asymétrique, confiance et simulations — sans refaire la même année.</p>
-        <a class="nc-blog-card-link" href="candidats-echec-repartir-methode.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="anglais-concours-progresser-6-semaines" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="anglais-concours-progresser-6-semaines" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="anglais-concours-progresser-6-semaines.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-anglais.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="anglais-concours-progresser-6-semaines.html">Anglais aux concours : 6 semaines</a></h2>
+          <p class="nc-blog-card-excerpt">Routine 15–20 min/jour, oral prioritaire.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>8 min</span></div>
+          <a class="nc-blog-card-link" href="anglais-concours-progresser-6-semaines.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="anglais-concours-progresser-6-semaines.html">Anglais aux concours : progresser en 6 semaines</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Plan 6 semaines, routine 15–20 min/jour, oral prioritaire, ressources simples.</p>
-        <a class="nc-blog-card-link" href="anglais-concours-progresser-6-semaines.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="concilier-vie-pro-concours-organiser-temps" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Reprise d'études</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="concilier-vie-pro-concours-organiser-temps" data-blog-pillar="concours" data-blog-cat="reprise">
+        <a class="nc-blog-card-art" href="concilier-vie-pro-concours-organiser-temps.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-viepro.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Reprise d'études</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="concilier-vie-pro-concours-organiser-temps.html">Vie pro + concours : organiser son temps</a></h2>
+          <p class="nc-blog-card-excerpt">Planning réaliste quand on travaille.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>8 min</span></div>
+          <a class="nc-blog-card-link" href="concilier-vie-pro-concours-organiser-temps.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="concilier-vie-pro-concours-organiser-temps.html">Concilier vie professionnelle et concours : organiser son temps quand on travaille</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Heures/semaine, planning réaliste, congés avant l'oral, format à distance pour profils actifs.</p>
-        <a class="nc-blog-card-link" href="concilier-vie-pro-concours-organiser-temps.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="simulation-oral-questions-concours-excellence" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="simulation-oral-questions-concours-excellence" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="simulation-oral-questions-concours-excellence.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-oral-q.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="simulation-oral-questions-concours-excellence.html">Simulation d'oral : questions fréquentes</a></h2>
+          <p class="nc-blog-card-excerpt">Banque utile + protocole d'entraînement.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>9 min</span></div>
+          <a class="nc-blog-card-link" href="simulation-oral-questions-concours-excellence.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="simulation-oral-questions-concours-excellence.html">Simulation d'oral : les questions les plus posées aux concours d'excellence au Maroc</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Banque de questions, protocole de simulation, présentation en 2 minutes, gérer le blanc.</p>
-        <a class="nc-blog-card-link" href="simulation-oral-questions-concours-excellence.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="stress-charge-mentale-revision-ete" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="stress-charge-mentale-revision-ete" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="stress-charge-mentale-revision-ete.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-stress.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="stress-charge-mentale-revision-ete.html">Stress &amp; charge mentale sur l'été</a></h2>
+          <p class="nc-blog-card-excerpt">Tenir juillet–septembre sans burn-out.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>8 min</span></div>
+          <a class="nc-blog-card-link" href="stress-charge-mentale-revision-ete.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="stress-charge-mentale-revision-ete.html">Gérer le stress et la charge mentale sur tout un été de révisions</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Anti burn-out, signes d'alerte, motivation sur plusieurs mois, protocole jour J.</p>
-        <a class="nc-blog-card-link" href="stress-charge-mentale-revision-ete.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="licence-master-temps-amenage-reprendre-etudes" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Reprise d'études</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="licence-master-temps-amenage-reprendre-etudes" data-blog-pillar="concours" data-blog-cat="reprise">
+        <a class="nc-blog-card-art" href="licence-master-temps-amenage-reprendre-etudes.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-temps.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Reprise d'études</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="licence-master-temps-amenage-reprendre-etudes.html">Temps aménagé : étudier en travaillant</a></h2>
+          <p class="nc-blog-card-excerpt">Pour qui, reconnaissance, inscription Meknès.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>10 min</span></div>
+          <a class="nc-blog-card-link" href="licence-master-temps-amenage-reprendre-etudes.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="licence-master-temps-amenage-reprendre-etudes.html">Licence / Master à temps aménagé : reprendre ses études en travaillant</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Pour qui, différence avec la formation continue, reconnaissance, inscription à Meknès.</p>
-        <a class="nc-blog-card-link" href="licence-master-temps-amenage-reprendre-etudes.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="licence-vs-master-excellence-preparation" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="licence-vs-master-excellence-preparation" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="licence-vs-master-excellence-preparation.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-vs.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="licence-vs-master-excellence-preparation.html">Licence vs Master d'Excellence</a></h2>
+          <p class="nc-blog-card-excerpt">Différences de préparation, double candidature.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>8 min</span></div>
+          <a class="nc-blog-card-link" href="licence-vs-master-excellence-preparation.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="licence-vs-master-excellence-preparation.html">Licence d'Excellence vs Master d'Excellence : quelles différences de préparation ?</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Ce qui est commun, ce qui change, double candidature, comment adapter le planning.</p>
-        <a class="nc-blog-card-link" href="licence-vs-master-excellence-preparation.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="revision-ete-comptabilite-economie-management" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-23">23 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="revision-ete-comptabilite-economie-management" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="revision-ete-comptabilite-economie-management.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-revision.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-23">23 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="revision-ete-comptabilite-economie-management.html">Révision d'été : compta, éco, management</a></h2>
+          <p class="nc-blog-card-excerpt">Par où commencer sans tout lire.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>9 min</span></div>
+          <a class="nc-blog-card-link" href="revision-ete-comptabilite-economie-management.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="revision-ete-comptabilite-economie-management.html">Par où commencer sa révision d'été (comptabilité, économie, management)</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Ordre de bataille pour l'été : priorités par matière, planning réaliste, erreurs à éviter — et lien avec la méthode orale.</p>
-        <a class="nc-blog-card-link" href="revision-ete-comptabilite-economie-management.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="licence-master-excellence-meknes" data-blog-pillar="concours">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Préparation concours</span>
-          <time datetime="2026-07-22">22 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="licence-master-excellence-meknes" data-blog-pillar="concours" data-blog-cat="concours">
+        <a class="nc-blog-card-art" href="licence-master-excellence-meknes.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-oral.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Concours</span><time datetime="2026-07-22">22 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="licence-master-excellence-meknes.html">Oral Licence / Master : méthode 5 étapes</a></h2>
+          <p class="nc-blog-card-excerpt">Plan actionnable + semaine gratuite.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>9 min</span></div>
+          <a class="nc-blog-card-link" href="licence-master-excellence-meknes.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="licence-master-excellence-meknes.html">Réussir l'oral de la Licence / Master d'Excellence à Meknès : la méthode en 5 étapes</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Plan actionnable pour l'oral, matières clés, FAQ concours — et inscription à la semaine gratuite (début 23 juillet 2026).</p>
-        <a class="nc-blog-card-link" href="licence-master-excellence-meknes.html">Lire l'article →</a>
       </article>
 
-      <article class="nc-blog-card" data-blog-slug="coaching-executif-maroc" data-blog-pillar="coaching-executif">
-        <div class="nc-blog-card-meta">
-          <span class="nc-blog-pill">Coaching exécutif</span>
-          <time datetime="2026-07-22">22 juillet 2026</time>
+      <article class="nc-blog-card" data-blog-slug="coaching-executif-maroc" data-blog-pillar="coaching-executif" data-blog-cat="coaching">
+        <a class="nc-blog-card-art" href="coaching-executif-maroc.html" tabindex="-1" aria-hidden="true"><img src="../assets/blog/thumb-coaching.svg" alt="" width="400" height="200" loading="lazy" decoding="async"></a>
+        <div class="nc-blog-card-body">
+          <div class="nc-blog-card-meta"><span class="nc-blog-pill">Coaching</span><time datetime="2026-07-22">22 juil. 2026</time></div>
+          <h2 class="nc-blog-card-title"><a href="coaching-executif-maroc.html">Coaching exécutif : bien choisir</a></h2>
+          <p class="nc-blog-card-excerpt">Pour qui, critères concrets, Meknès &amp; distance.</p>
+          <div class="nc-blog-card-meta"><span class="nc-blog-author"><span class="nc-blog-avatar" aria-hidden="true">NC</span> N. Chaltoute</span><span class="nc-blog-meta-sep">·</span><span>9 min</span></div>
+          <a class="nc-blog-card-link" href="coaching-executif-maroc.html">Lire →</a>
         </div>
-        <h2 class="nc-blog-card-title">
-          <a href="coaching-executif-maroc.html">Coaching exécutif au Maroc : à qui ça s'adresse, et comment bien choisir son coach</a>
-        </h2>
-        <p class="nc-blog-card-excerpt">Critères concrets pour savoir si le coaching exécutif est fait pour vous — et comment sélectionner un coach sérieux (méthode, confidentialité, résultats).</p>
-        <a class="nc-blog-card-link" href="coaching-executif-maroc.html">Lire l'article →</a>
       </article>
     </section>
 
@@ -209,5 +234,6 @@
       <p>© 2026 NC Consulting · <a href="/">ncconsulting.ma</a> · <a href="/blog/">Blog</a></p>
     </div>
   </footer>
+  <script src="blog.js" defer></script>
 </body>
 </html>

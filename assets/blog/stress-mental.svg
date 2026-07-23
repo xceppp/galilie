@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" role="img" aria-label="Stress et charge mentale">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#1B2129"/>
+    <stop offset="100%" stop-color="#0E1116"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8C77E"/>
+    <stop offset="100%" stop-color="#C9A356"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="514" fill="url(#bg)"/>
+<circle cx="1020" cy="80" r="140" fill="#C9A356" opacity=".1"/>
+
+<path d="M120 280 C280 160, 400 400, 560 260 S900 140, 1080 280" fill="none" stroke="#C9A356" stroke-width="5" opacity=".8"/>
+<path d="M120 320 C300 220, 420 380, 580 300 S880 200, 1080 320" fill="none" stroke="#9BA3AD" stroke-width="3" opacity=".4"/>
+<circle cx="560" cy="250" r="44" fill="url(#gold)" opacity=".9"/>
+<text x="560" y="258" text-anchor="middle" fill="#0E1116" font-family="Georgia, serif" font-size="28">∿</text>
+<text x="600" y="450" text-anchor="middle" fill="#9BA3AD" font-family="system-ui,sans-serif" font-size="22" letter-spacing="3">ENDURANCE MENTALE</text>
+
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" role="img" aria-label="Après l'admission Licence Master">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#1B2129"/>
+    <stop offset="100%" stop-color="#0E1116"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8C77E"/>
+    <stop offset="100%" stop-color="#C9A356"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="514" fill="url(#bg)"/>
+<circle cx="1020" cy="80" r="140" fill="#C9A356" opacity=".1"/>
+
+<rect x="420" y="100" width="360" height="280" rx="20" fill="#252D38" stroke="#C9A356" stroke-width="3"/>
+<rect x="480" y="160" width="240" height="160" rx="8" fill="#1B2129"/>
+<path d="M600 200 L600 280 M560 240 L640 240" stroke="#E8C77E" stroke-width="6" stroke-linecap="round"/>
+<text x="600" y="420" text-anchor="middle" fill="#C9A356" font-family="Georgia, serif" font-size="28">Bien démarrer</text>
+<text x="600" y="460" text-anchor="middle" fill="#9BA3AD" font-family="system-ui,sans-serif" font-size="20" letter-spacing="3">APRÈS L'ADMISSION</text>
+
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" role="img" aria-label="Méthode orale en 5 étapes">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#1B2129"/>
+    <stop offset="100%" stop-color="#0E1116"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8C77E"/>
+    <stop offset="100%" stop-color="#C9A356"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="514" fill="url(#bg)"/>
+<circle cx="1020" cy="80" r="140" fill="#C9A356" opacity=".1"/>
+
+<g fill="none" stroke="#C9A356" stroke-width="2.5" opacity=".85">
+  <rect x="80" y="120" width="180" height="260" rx="18"/>
+  <rect x="290" y="120" width="180" height="260" rx="18"/>
+  <rect x="500" y="120" width="180" height="260" rx="18"/>
+  <rect x="710" y="120" width="180" height="260" rx="18"/>
+  <rect x="920" y="120" width="180" height="260" rx="18"/>
+</g>
+<text x="170" y="270" text-anchor="middle" fill="#E8C77E" font-family="Georgia, serif" font-size="64" font-weight="600">1</text>
+<text x="380" y="270" text-anchor="middle" fill="#E8C77E" font-family="Georgia, serif" font-size="64" font-weight="600">2</text>
+<text x="590" y="270" text-anchor="middle" fill="#E8C77E" font-family="Georgia, serif" font-size="64" font-weight="600">3</text>
+<text x="800" y="270" text-anchor="middle" fill="#E8C77E" font-family="Georgia, serif" font-size="64" font-weight="600">4</text>
+<text x="1010" y="270" text-anchor="middle" fill="#E8C77E" font-family="Georgia, serif" font-size="64" font-weight="600">5</text>
+<text x="600" y="450" text-anchor="middle" fill="#9BA3AD" font-family="system-ui,sans-serif" font-size="22" letter-spacing="4">MÉTHODE ORALE</text>
+
+</svg>

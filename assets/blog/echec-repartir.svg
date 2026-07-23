@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" role="img" aria-label="Repartir après un échec">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#1B2129"/>
+    <stop offset="100%" stop-color="#0E1116"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8C77E"/>
+    <stop offset="100%" stop-color="#C9A356"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="514" fill="url(#bg)"/>
+<circle cx="1020" cy="80" r="140" fill="#C9A356" opacity=".1"/>
+
+<path d="M140 360 L320 280 L480 340 L700 160 L980 120" fill="none" stroke="#C9A356" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="480" cy="340" r="14" fill="#9BA3AD"/>
+<circle cx="980" cy="120" r="18" fill="url(#gold)"/>
+<text x="480" y="390" text-anchor="middle" fill="#9BA3AD" font-size="16" font-family="system-ui,sans-serif">Échec</text>
+<text x="980" y="90" text-anchor="middle" fill="#E8C77E" font-size="16" font-family="system-ui,sans-serif">Nouvelle méthode</text>
+<text x="600" y="450" text-anchor="middle" fill="#9BA3AD" font-family="system-ui,sans-serif" font-size="22" letter-spacing="3">REPARTIR PLUS FORT</text>
+
+</svg>

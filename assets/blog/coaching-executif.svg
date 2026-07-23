@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 514" role="img" aria-label="Coaching exécutif Maroc">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#1B2129"/>
+    <stop offset="100%" stop-color="#0E1116"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#E8C77E"/>
+    <stop offset="100%" stop-color="#C9A356"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="514" fill="url(#bg)"/>
+<circle cx="1020" cy="80" r="140" fill="#C9A356" opacity=".1"/>
+
+<circle cx="600" cy="240" r="120" fill="none" stroke="#C9A356" stroke-width="3"/>
+<circle cx="600" cy="240" r="70" fill="none" stroke="#E8C77E" stroke-width="2" opacity=".6"/>
+<circle cx="600" cy="240" r="28" fill="url(#gold)"/>
+<text x="600" y="400" text-anchor="middle" fill="#E8C77E" font-family="Georgia, serif" font-size="28">Coaching exécutif</text>
+<text x="600" y="450" text-anchor="middle" fill="#9BA3AD" font-family="system-ui,sans-serif" font-size="20" letter-spacing="3">CLARTÉ · DÉCISION · RÉSULTAT</text>
+
+</svg>
