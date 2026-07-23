@@ -2190,7 +2190,6 @@ button,input,select,textarea{font-family:inherit}
 @media(max-width:640px){
   .nc-blog-featured-body,.nc-blog-cta{padding:20px 16px}
   .nc-blog-prose{font-size:15.5px}
-  .nc-blog-cover{aspect-ratio:16/9}
 }
 @media(max-width:768px){
   .nc-page-main{padding:36px 0 56px}
