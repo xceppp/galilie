@@ -2109,7 +2109,6 @@ button,input,select,textarea{font-family:inherit}
 }
 .nc-blog-cover img{width:100%;height:auto;display:block;vertical-align:middle}
 .nc-blog-card--noart .nc-blog-card-body{padding-top:18px}
-.nc-blog-card-art img{object-fit:cover;object-position:center top}
 .nc-blog-prose{font-size:16.5px;line-height:1.8;color:var(--ink-dim)}
 .nc-blog-prose > * + *{margin-top:1.05em}
 .nc-blog-prose h2{
