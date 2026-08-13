@@ -22,7 +22,7 @@ const NIVEAU_LABELS = {
   autre: 'Autre profil',
 };
 
-const CAMPAIGN_SERVICE = "Semaine gratuite Licences d'Excellence";
+const CAMPAIGN_SERVICE = "Demande d'information";
 
 const dependentOptions = {
   candidat_lex: {
@@ -36,7 +36,6 @@ const dependentOptions = {
     ],
     services: [
       CAMPAIGN_SERVICE,
-      "Demande d'information",
       'Préparation concours intensive',
       'Coaching individuel concours',
     ],
@@ -51,7 +50,6 @@ const dependentOptions = {
     ],
     services: [
       CAMPAIGN_SERVICE,
-      "Demande d'information",
       'Préparation Licence Pro',
       'Coaching individuel concours',
     ],
@@ -60,7 +58,6 @@ const dependentOptions = {
     filieres: ['Finance', 'Management', 'Marketing', 'Économie', 'Autre'],
     services: [
       CAMPAIGN_SERVICE,
-      "Demande d'information",
       'Préparation Master',
       'Coaching individuel concours',
     ],
@@ -69,7 +66,6 @@ const dependentOptions = {
     filieres: ['Bac+2', 'Licence', 'Master', 'Autre'],
     services: [
       CAMPAIGN_SERVICE,
-      "Demande d'information",
       'Orientation & conseil',
       'Coaching individuel',
     ],
@@ -93,7 +89,6 @@ const dependentOptions = {
     filieres: ['À préciser en échange'],
     services: [
       CAMPAIGN_SERVICE,
-      "Demande d'information",
       'Consultation 1-à-1',
       'Autre',
     ],
@@ -399,7 +394,7 @@ window.ncResetLeadForm = function ncResetLeadForm() {
   clearErrors();
 };
 
-/** Prefill for Semaine gratuite / Licences d'Excellence inscription CTAs */
+/** Prefill lead form for inscription CTAs (demande d'information) */
 window.ncPrefillCampaignLead = function ncPrefillCampaignLead() {
   if (!niveauSelect) return;
   niveauSelect.value = 'candidat_lex';
