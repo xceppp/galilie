@@ -25,8 +25,8 @@ window.NC_ARBRE = {
               href: 'cabinet.html',
             },
             {
-              title: "15+ ans d'expertise",
-              text: '1 500+ professionnels formés · 97 % de satisfaction.',
+              title: "Expertise terrain",
+              text: 'Accompagnement de dirigeants, cadres et candidats — Meknès et à distance.',
               href: 'cabinet.html',
             },
           ],

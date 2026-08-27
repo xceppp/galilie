@@ -5,6 +5,9 @@ site content that is stored in your existing Google Sheet (the same spreadsheet
 used for leads, in new `cms_*` tabs). Changes appear on the live site within a
 minute (edge cache), no redeploy needed.
 
+**Managed today:** homepage copy, Annonces, **Nouveau** (Masters / Licence Pro),
+**Blog** (full articles), trust, formations, FAQ, etc.
+
 ## 1. Google OAuth Web Client ID (for admin sign-in)
 
 This is separate from the service account (which reads/writes Sheets). It only

@@ -25,7 +25,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3 { font-family: "Fraunces", serif; font-weight: 600; margin: 0; }
-input, textarea, button { font-family: inherit; font-size: 14px; }
+input, textarea, button, select { font-family: inherit; font-size: 14px; }
 code { background: var(--ivory); padding: 1px 5px; border-radius: 5px; font-size: 12.5px; }
 
 [hidden] { display: none !important; }
@@ -136,12 +136,12 @@ code { background: var(--ivory); padding: 1px 5px; border-radius: 5px; font-size
 /* ---------- FIELDS ---------- */
 .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .field > span { font-size: 12.5px; font-weight: 600; color: var(--ink); }
-.field input, .field textarea {
+.field input, .field textarea, .field select {
   width: 100%; padding: 11px 13px; border: 1px solid var(--line);
   border-radius: 10px; background: var(--white); color: var(--ink); resize: vertical;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-.field input:focus, .field textarea:focus {
+.field input:focus, .field textarea:focus, .field select:focus {
   outline: none; border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(201,163,86,0.18);
 }

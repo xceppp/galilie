@@ -9,6 +9,8 @@
     faq: [],
     cases: [],
     clients: [],
+    blog: [],
+    nouveau: [],
   };
   var dirty = false;
   var clientId = '';
@@ -34,6 +36,8 @@
     faqList: document.getElementById('faqList'),
     caseList: document.getElementById('caseList'),
     clientList: document.getElementById('clientList'),
+    blogList: document.getElementById('blogList'),
+    nouveauList: document.getElementById('nouveauList'),
     toast: document.getElementById('toast'),
   };
 
@@ -42,6 +46,8 @@
     trust: 'Bandeau confiance',
     promo: 'Offre promo',
     announcements: 'Annonces',
+    nouveau: 'Nouveau',
+    blog: 'Blog',
     formations: 'Formations',
     intro: 'Concours — titres',
     poles: 'Pôles',
@@ -108,6 +114,49 @@
       key: 'clients',
       fields: ['id', 'label', 'active'],
       prefix: 'cl',
+    },
+    blog: {
+      list: el.blogList,
+      tpl: 'tpl-blog',
+      key: 'blog',
+      fields: [
+        'id',
+        'slug',
+        'title',
+        'excerpt',
+        'category',
+        'body_html',
+        'image',
+        'date',
+        'read_min',
+        'featured',
+        'meta_description',
+        'active',
+      ],
+      prefix: 'b',
+      boolFields: ['active', 'featured'],
+    },
+    nouveau: {
+      list: el.nouveauList,
+      tpl: 'tpl-nouveau',
+      key: 'nouveau',
+      fields: [
+        'id',
+        'type',
+        'title',
+        'summary',
+        'status',
+        'etab',
+        'deadline',
+        'ville',
+        'facts',
+        'body',
+        'nc_angle',
+        'source_label',
+        'source_url',
+        'active',
+      ],
+      prefix: 'nv',
     },
   };
 
@@ -240,6 +289,23 @@
     });
   }
 
+  function isBoolField(cfg, field) {
+    if (cfg.boolFields && cfg.boolFields.indexOf(field) !== -1) return true;
+    return field === 'active';
+  }
+
+  function applyStateFromJson(j) {
+    state.content = j.content || {};
+    state.announcements = j.announcements || [];
+    state.trust = j.trust || [];
+    state.formations = j.formations || [];
+    state.faq = j.faq || [];
+    state.cases = j.cases || [];
+    state.clients = j.clients || [];
+    state.blog = j.blog || [];
+    state.nouveau = j.nouveau || [];
+  }
+
   function loadContent() {
     api('/api/admin/content').then(function (res) {
       if (res.status === 503 || (res.json && res.json.error === 'not_configured')) {
@@ -248,13 +314,7 @@
       }
       if (res.status === 401) { showLogin(); initGsi(); return; }
       if (!res.json.ok) { toast('Erreur de chargement', 'err'); return; }
-      state.content = res.json.content || {};
-      state.announcements = res.json.announcements || [];
-      state.trust = res.json.trust || [];
-      state.formations = res.json.formations || [];
-      state.faq = res.json.faq || [];
-      state.cases = res.json.cases || [];
-      state.clients = res.json.clients || [];
+      applyStateFromJson(res.json);
       renderAll();
       setDirty(false);
     }).catch(function () { toast('Erreur réseau', 'err'); });
@@ -270,7 +330,7 @@
       cfg.fields.forEach(function (field) {
         var input = node.querySelector('[data-field="' + field + '"]');
         if (!input) return;
-        if (field === 'active') input.checked = item.active !== false;
+        if (isBoolField(cfg, field)) input.checked = item[field] === true;
         else input.value = item[field] != null ? item[field] : '';
       });
       cfg.list.appendChild(node);
@@ -294,10 +354,18 @@
       cfg.fields.forEach(function (field) {
         var input = row.querySelector('[data-field="' + field + '"]');
         if (!input) return;
-        if (field === 'active') item.active = input.checked;
+        if (isBoolField(cfg, field)) item[field] = input.checked;
         else item[field] = input.value;
       });
       if (!item.id) item.id = cfg.prefix + (i + 1);
+      if (kind === 'blog' && !item.slug && item.title) {
+        item.slug = String(item.title)
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }
       out.push(item);
     });
     return out;
@@ -316,6 +384,8 @@
       faq: collectCollection('faq'),
       cases: collectCollection('case'),
       clients: collectCollection('client'),
+      blog: collectCollection('blog'),
+      nouveau: collectCollection('nouveau'),
     };
   }
 
@@ -332,13 +402,7 @@
         }
         if (res.status === 401) { showLogin(); initGsi(); return; }
         if (res.json.ok) {
-          state.content = res.json.content || {};
-          state.announcements = res.json.announcements || [];
-          state.trust = res.json.trust || [];
-          state.formations = res.json.formations || [];
-          state.faq = res.json.faq || [];
-          state.cases = res.json.cases || [];
-          state.clients = res.json.clients || [];
+          applyStateFromJson(res.json);
           renderAll();
           setDirty(false);
           toast('Modifications enregistrées', 'ok');
@@ -362,6 +426,12 @@
     if (idField) idField.value = cfg.prefix + Date.now();
     var activeField = node.querySelector('[data-field="active"]');
     if (activeField) activeField.checked = true;
+    if (kind === 'blog') {
+      var dateField = node.querySelector('[data-field="date"]');
+      if (dateField && !dateField.value) {
+        dateField.value = new Date().toISOString().slice(0, 10);
+      }
+    }
     cfg.list.appendChild(node);
     var focus = node.querySelector('input[type="text"], textarea');
     if (focus) focus.focus();
@@ -410,13 +480,7 @@
             }
             if (res.status === 401) { showLogin(); initGsi(); return; }
             if (res.json.ok) {
-              state.content = res.json.content || {};
-              state.announcements = res.json.announcements || [];
-              state.trust = res.json.trust || [];
-              state.formations = res.json.formations || [];
-              state.faq = res.json.faq || [];
-              state.cases = res.json.cases || [];
-              state.clients = res.json.clients || [];
+              applyStateFromJson(res.json);
               renderAll();
               setDirty(false);
               toast('Contenu du site importé', 'ok');

@@ -53,6 +53,8 @@
         <button class="nav-item" data-panel="trust" type="button">Bandeau confiance</button>
         <button class="nav-item is-active" data-panel="promo" type="button">Offre promo</button>
         <button class="nav-item" data-panel="announcements" type="button">Annonces</button>
+        <button class="nav-item" data-panel="nouveau" type="button">Nouveau</button>
+        <button class="nav-item" data-panel="blog" type="button">Blog</button>
         <button class="nav-item" data-panel="formations" type="button">Formations</button>
         <button class="nav-item" data-panel="intro" type="button">Concours — titres</button>
         <button class="nav-item" data-panel="poles" type="button">Pôles</button>
@@ -155,6 +157,20 @@
           <p class="panel-desc">Annonces style « avis daté ». Chaque ligne ouvre une page détail avec l'image et les infos. Décochez pour masquer sans supprimer.</p>
           <div class="collection" id="annList"></div>
           <button class="btn-add" type="button" data-add="announcement">+ Ajouter une annonce</button>
+        </section>
+
+        <!-- NOUVEAU -->
+        <section class="panel" id="panel-nouveau">
+          <p class="panel-desc">Zone <b>Nouveau</b> — ouvertures Masters / Licence Pro / Licence d'Excellence. Reformulez en voix NC et citez toujours la source (lien).</p>
+          <div class="collection" id="nouveauList"></div>
+          <button class="btn-add" type="button" data-add="nouveau">+ Ajouter une ouverture</button>
+        </section>
+
+        <!-- BLOG -->
+        <section class="panel" id="panel-blog">
+          <p class="panel-desc">Articles du blog. Le <code>slug</code> devient l'URL <code>/blog/votre-slug</code>. Corps en HTML. Cochez « À la une » pour la carte featured du hub.</p>
+          <div class="collection" id="blogList"></div>
+          <button class="btn-add" type="button" data-add="blog">+ Ajouter un article</button>
         </section>
 
         <!-- FORMATIONS -->
@@ -453,6 +469,81 @@
         <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
         <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
       </div>
+    </div>
+  </template>
+
+  <!-- Nouveau opening -->
+  <template id="tpl-nouveau">
+    <div class="card" data-kind="nouveau">
+      <div class="card-head">
+        <label class="chk"><input type="checkbox" data-field="active"><span>Visible</span></label>
+        <div class="card-actions">
+          <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+          <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+          <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+        </div>
+      </div>
+      <input type="hidden" data-field="id">
+      <div class="grid2">
+        <label class="field"><span>Type</span>
+          <select data-field="type">
+            <option value="master">Master</option>
+            <option value="lpro">Licence Pro</option>
+            <option value="lex">Licence d'Excellence</option>
+          </select>
+        </label>
+        <label class="field"><span>Statut</span><input type="text" data-field="status" placeholder="Inscriptions ouvertes"></label>
+      </div>
+      <label class="field"><span>Titre (voix NC)</span><input type="text" data-field="title"></label>
+      <label class="field"><span>Résumé</span><textarea rows="2" data-field="summary"></textarea></label>
+      <div class="grid2">
+        <label class="field"><span>Établissement</span><input type="text" data-field="etab"></label>
+        <label class="field"><span>Ville</span><input type="text" data-field="ville"></label>
+      </div>
+      <label class="field"><span>Deadline / session</span><input type="text" data-field="deadline"></label>
+      <label class="field"><span>Faits (une par ligne — <code>Label :: valeur</code>)</span><textarea rows="4" data-field="facts"></textarea></label>
+      <label class="field"><span>Texte détail</span><textarea rows="4" data-field="body"></textarea></label>
+      <label class="field"><span>Angle NC</span><textarea rows="3" data-field="nc_angle"></textarea></label>
+      <div class="grid2">
+        <label class="field"><span>Source (libellé)</span><input type="text" data-field="source_label" placeholder="almaster-maroc.com"></label>
+        <label class="field"><span>Source (URL)</span><input type="url" data-field="source_url"></label>
+      </div>
+    </div>
+  </template>
+
+  <!-- Blog article -->
+  <template id="tpl-blog">
+    <div class="card" data-kind="blog">
+      <div class="card-head">
+        <label class="chk"><input type="checkbox" data-field="active"><span>Publié</span></label>
+        <label class="chk"><input type="checkbox" data-field="featured"><span>À la une</span></label>
+        <div class="card-actions">
+          <button type="button" class="ic" data-move="up" title="Monter">↑</button>
+          <button type="button" class="ic" data-move="down" title="Descendre">↓</button>
+          <button type="button" class="ic danger" data-remove title="Supprimer">✕</button>
+        </div>
+      </div>
+      <input type="hidden" data-field="id">
+      <div class="grid2">
+        <label class="field"><span>Slug (URL)</span><input type="text" data-field="slug" placeholder="mon-article"></label>
+        <label class="field"><span>Catégorie</span>
+          <select data-field="category">
+            <option value="concours">Concours</option>
+            <option value="reprise">Reprise d'études</option>
+            <option value="etablissements">Établissements</option>
+            <option value="coaching">Coaching</option>
+          </select>
+        </label>
+      </div>
+      <label class="field"><span>Titre</span><input type="text" data-field="title"></label>
+      <label class="field"><span>Extrait (carte)</span><textarea rows="2" data-field="excerpt"></textarea></label>
+      <div class="grid2">
+        <label class="field"><span>Date (YYYY-MM-DD)</span><input type="text" data-field="date" placeholder="2026-07-22"></label>
+        <label class="field"><span>Minutes de lecture</span><input type="text" data-field="read_min" placeholder="8"></label>
+      </div>
+      <label class="field"><span>Image (chemin)</span><input type="text" data-field="image" placeholder="assets/blog/oral-5-etapes.png"></label>
+      <label class="field"><span>Meta description (SEO)</span><textarea rows="2" data-field="meta_description"></textarea></label>
+      <label class="field"><span>Corps HTML</span><textarea rows="12" data-field="body_html" placeholder="<p>…</p><h2>…</h2>"></textarea></label>
     </div>
   </template>
 

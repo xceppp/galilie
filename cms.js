@@ -196,6 +196,89 @@
       .join('');
   }
 
+  var TYPE_LABELS = {
+    master: 'Master',
+    lpro: 'Licence Pro',
+    lex: "Licence d'Excellence",
+  };
+
+  function typeClass(type) {
+    if (type === 'master') return 'nc-nouveau-type--master';
+    if (type === 'lex') return 'nc-nouveau-type--lex';
+    return '';
+  }
+
+  function renderNouveau(list) {
+    var listEl = document.getElementById('ncNouveauList');
+    if (!listEl) return;
+    if (!list || !list.length) {
+      listEl.innerHTML =
+        '<p class="nc-nouveau-empty">Aucune ouverture pour le moment.</p>';
+      return;
+    }
+    listEl.innerHTML = list
+      .map(function (n) {
+        var id = encodeURIComponent(n.id || '');
+        var type = n.type || 'master';
+        var label = TYPE_LABELS[type] || type;
+        var meta = '';
+        if (n.etab) meta += '<span><b>Étab.</b> ' + esc(n.etab) + '</span>';
+        if (n.deadline) meta += '<span><b>Deadline</b> ' + esc(n.deadline) + '</span>';
+        if (n.ville) meta += '<span><b>Ville</b> ' + esc(n.ville) + '</span>';
+        return (
+          '<a class="nc-nouveau-card" href="nouveau.html?id=' +
+          id +
+          '" data-nv-type="' +
+          esc(type) +
+          '">' +
+          '<div class="nc-nouveau-card__top">' +
+          '<span class="nc-nouveau-type ' +
+          typeClass(type) +
+          '">' +
+          esc(label) +
+          '</span>' +
+          (n.status
+            ? '<span class="nc-nouveau-status">' + esc(n.status) + '</span>'
+            : '') +
+          '</div>' +
+          '<h3>' +
+          esc(n.title || 'Ouverture') +
+          '</h3>' +
+          (n.summary ? '<p>' + esc(n.summary) + '</p>' : '') +
+          (meta ? '<div class="nc-nouveau-meta">' + meta + '</div>' : '') +
+          (n.source_label || n.source_url
+            ? '<div class="nc-nouveau-source">Source : ' +
+              esc(n.source_label || n.source_url) +
+              '</div>'
+            : '') +
+          '<div class="nc-nouveau-nc">Lecture &amp; préparation NC Consulting</div>' +
+          '</a>'
+        );
+      })
+      .join('');
+    wireNouveauFilters();
+  }
+
+  function wireNouveauFilters() {
+    var bar = document.getElementById('ncNouveauFilters');
+    if (!bar || bar.getAttribute('data-wired')) return;
+    bar.setAttribute('data-wired', '1');
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-nv-filter]');
+      if (!btn) return;
+      var filter = btn.getAttribute('data-nv-filter') || 'all';
+      bar.querySelectorAll('[data-nv-filter]').forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('is-on', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      document.querySelectorAll('#ncNouveauList .nc-nouveau-card').forEach(function (card) {
+        var t = card.getAttribute('data-nv-type') || '';
+        card.classList.toggle('is-hidden', filter !== 'all' && t !== filter);
+      });
+    });
+  }
+
   function renderTrust(list) {
     var track = document.getElementById('ncTrustTrack');
     if (!track || !list || !list.length) return;
@@ -374,6 +457,7 @@
     applyChips(content);
 
     renderAnnouncements(data.announcements);
+    renderNouveau(data.nouveau);
     renderTrust(data.trust);
     renderFormations(data.formations);
     renderFaq(data.faq);

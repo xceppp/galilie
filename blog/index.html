@@ -25,27 +25,58 @@
   <link rel="stylesheet" href="../nc-theme.css?v=blog8">
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        "@id": "https://www.ncconsulting.ma/blog/#page",
-        "url": "https://www.ncconsulting.ma/blog/",
-        "name": "Blog NC Consulting",
-        "description": "Articles sur le coaching exécutif, le conseil stratégique et la préparation aux concours au Maroc.",
-        "isPartOf": { "@id": "https://www.ncconsulting.ma/#website" },
-        "about": { "@id": "https://www.ncconsulting.ma/#organization" }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://www.ncconsulting.ma/#organization",
+      "name": "NC Consulting",
+      "alternateName": "NC Consulting Meknès",
+      "url": "https://www.ncconsulting.ma/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Meknès",
+        "addressCountry": "MA"
       },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://www.ncconsulting.ma/blog/#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.ncconsulting.ma/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.ncconsulting.ma/blog/" }
-        ]
+      "sameAs": [
+        "https://www.linkedin.com/company/nc-consulting10",
+        "https://www.facebook.com/share/14n6ep56JPi/",
+        "https://share.google/9RKwR21gkbUsQ6eJo"
+      ]
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://www.ncconsulting.ma/blog/#page",
+      "url": "https://www.ncconsulting.ma/blog/",
+      "name": "Blog NC Consulting",
+      "description": "Articles sur le coaching exécutif, le conseil stratégique et la préparation aux concours au Maroc.",
+      "isPartOf": {
+        "@id": "https://www.ncconsulting.ma/#website"
+      },
+      "about": {
+        "@id": "https://www.ncconsulting.ma/#organization"
       }
-    ]
-  }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.ncconsulting.ma/blog/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://www.ncconsulting.ma/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://www.ncconsulting.ma/blog/"
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="nc-page-body nc-blog-alive">
