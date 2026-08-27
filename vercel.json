@@ -48,78 +48,78 @@
       "permanent": true
     },
     {
-      "source": "/blog/anglais-concours-progresser-6-semaines.html",
-      "destination": "/blog/anglais-concours-progresser-6-semaines",
+      "source": "/blog/anglais-concours-progresser-6-semaines",
+      "destination": "/blog/anglais-concours-progresser-6-semaines.html",
       "permanent": true
     },
     {
-      "source": "/blog/apres-admission-demarrer-licence-master.html",
-      "destination": "/blog/apres-admission-demarrer-licence-master",
+      "source": "/blog/apres-admission-demarrer-licence-master",
+      "destination": "/blog/apres-admission-demarrer-licence-master.html",
       "permanent": true
     },
     {
-      "source": "/blog/candidats-echec-repartir-methode.html",
-      "destination": "/blog/candidats-echec-repartir-methode",
+      "source": "/blog/candidats-echec-repartir-methode",
+      "destination": "/blog/candidats-echec-repartir-methode.html",
       "permanent": true
     },
     {
-      "source": "/blog/coaching-executif-maroc.html",
-      "destination": "/blog/coaching-executif-maroc",
+      "source": "/blog/coaching-executif-maroc",
+      "destination": "/blog/coaching-executif-maroc.html",
       "permanent": true
     },
     {
-      "source": "/blog/concilier-vie-pro-concours-organiser-temps.html",
-      "destination": "/blog/concilier-vie-pro-concours-organiser-temps",
+      "source": "/blog/concilier-vie-pro-concours-organiser-temps",
+      "destination": "/blog/concilier-vie-pro-concours-organiser-temps.html",
       "permanent": true
     },
     {
-      "source": "/blog/est-meknes-bachelor-ingenierie-finance.html",
-      "destination": "/blog/est-meknes-bachelor-ingenierie-finance",
+      "source": "/blog/est-meknes-bachelor-ingenierie-finance",
+      "destination": "/blog/est-meknes-bachelor-ingenierie-finance.html",
       "permanent": true
     },
     {
-      "source": "/blog/fsjes-meknes-licence-master-excellence.html",
-      "destination": "/blog/fsjes-meknes-licence-master-excellence",
+      "source": "/blog/fsjes-meknes-licence-master-excellence",
+      "destination": "/blog/fsjes-meknes-licence-master-excellence.html",
       "permanent": true
     },
     {
-      "source": "/blog/licence-master-excellence-meknes.html",
-      "destination": "/blog/licence-master-excellence-meknes",
+      "source": "/blog/licence-master-excellence-meknes",
+      "destination": "/blog/licence-master-excellence-meknes.html",
       "permanent": true
     },
     {
-      "source": "/blog/licence-master-temps-amenage-reprendre-etudes.html",
-      "destination": "/blog/licence-master-temps-amenage-reprendre-etudes",
+      "source": "/blog/licence-master-temps-amenage-reprendre-etudes",
+      "destination": "/blog/licence-master-temps-amenage-reprendre-etudes.html",
       "permanent": true
     },
     {
-      "source": "/blog/licence-temps-amenage.html",
-      "destination": "/blog/licence-temps-amenage",
+      "source": "/blog/licence-temps-amenage",
+      "destination": "/blog/licence-temps-amenage.html",
       "permanent": true
     },
     {
-      "source": "/blog/licence-vs-master-excellence-preparation.html",
-      "destination": "/blog/licence-vs-master-excellence-preparation",
+      "source": "/blog/licence-vs-master-excellence-preparation",
+      "destination": "/blog/licence-vs-master-excellence-preparation.html",
       "permanent": true
     },
     {
-      "source": "/blog/master-temps-amenage.html",
-      "destination": "/blog/master-temps-amenage",
+      "source": "/blog/master-temps-amenage",
+      "destination": "/blog/master-temps-amenage.html",
       "permanent": true
     },
     {
-      "source": "/blog/revision-ete-comptabilite-economie-management.html",
-      "destination": "/blog/revision-ete-comptabilite-economie-management",
+      "source": "/blog/revision-ete-comptabilite-economie-management",
+      "destination": "/blog/revision-ete-comptabilite-economie-management.html",
       "permanent": true
     },
     {
-      "source": "/blog/simulation-oral-questions-concours-excellence.html",
-      "destination": "/blog/simulation-oral-questions-concours-excellence",
+      "source": "/blog/simulation-oral-questions-concours-excellence",
+      "destination": "/blog/simulation-oral-questions-concours-excellence.html",
       "permanent": true
     },
     {
-      "source": "/blog/stress-charge-mentale-revision-ete.html",
-      "destination": "/blog/stress-charge-mentale-revision-ete",
+      "source": "/blog/stress-charge-mentale-revision-ete",
+      "destination": "/blog/stress-charge-mentale-revision-ete.html",
       "permanent": true
     },
     {
@@ -131,12 +131,6 @@
       "source": "/coaching-executif.html",
       "destination": "/",
       "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/blog/:slug",
-      "destination": "/blog/article.html?slug=:slug"
     }
   ],
   "functions": {

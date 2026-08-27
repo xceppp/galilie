@@ -91,7 +91,9 @@
     if (canon) {
       canon.setAttribute(
         'href',
-        'https://www.ncconsulting.ma/blog/' + encodeURIComponent(post.slug)
+        'https://www.ncconsulting.ma/blog/' +
+          encodeURIComponent(String(post.slug || '').replace(/\.html$/i, '')) +
+          '.html'
       );
     }
 

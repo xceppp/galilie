@@ -52,7 +52,8 @@
   }
 
   function postHref(slug) {
-    return '/blog/' + encodeURIComponent(slug || '');
+    var s = String(slug || '').replace(/\.html$/i, '');
+    return '/blog/' + encodeURIComponent(s) + '.html';
   }
 
   function renderHub(posts) {
