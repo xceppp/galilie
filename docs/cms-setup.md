@@ -5,22 +5,32 @@ site content that is stored in your existing Google Sheet (the same spreadsheet
 used for leads, in new `cms_*` tabs). Changes appear on the live site within a
 minute (edge cache), no redeploy needed.
 
-## 6. Aligner le CMS (form.html + heures extra)
+## 6. Setup Google Sheet (depuis zéro, conserve les données)
 
-**Un seul fichier Apps Script suffit** — ne créez pas de second fichier séparé.
+**Un seul fichier Apps Script** : `scripts/google-sheet-ncconsulting-leads-setup.gs`
 
-1. Ouvrez le Google Sheet → **Extensions → Apps Script**.
-2. Remplacez tout le code par **`scripts/google-sheet-ncconsulting-leads-setup.gs`**  
-   (contient leads + menu + `alignNcConsultingCmsWithSite2026`).
-3. **Enregistrez** → rechargez le Sheet.
-4. Menu **NC Consulting → Aligner CMS (form + heures extra)**  
-   (ou exécutez `alignNcConsultingCmsWithSite2026` dans l’éditeur).
+1. Google Sheet → **Extensions → Apps Script** → collez **le fichier entier**.
+2. **Enregistrez** → rechargez le Sheet.
+3. Menu **NC Consulting → Setup complet (conserve les données)**  
+   (ou exécutez `setupNcConsultingFullFromZero` dans l’éditeur).
+4. Puis : `setLeadNotifyEmail` → `installLeadEmailTrigger`.
+5. Copiez l’ID du classeur dans Vercel → `GOOGLE_SHEETS_ID`.
 
-Si vous voyez *Fonction de script introuvable*, c’est que seul l’ancien script leads était collé sans la section CMS en bas du fichier — recolle le fichier **entier**.
+### Ce que fait le setup complet
 
-Après alignement : Ctrl+F5 sur ncconsulting.ma.
+| Action | Comportement |
+| --- | --- |
+| Onglets leads (`Conseil`, `Formation`, `General`) | Créés + en-têtes/validations ; **lignes existantes conservées** |
+| Onglets CMS (`cms_*`) | Créés + en-têtes ; **remplis seulement si vides** |
+| `cms_content` | **Clés existantes conservées** ; clés manquantes ajoutées |
+| `cms_blog` | **Jamais écrasé** si des articles existent déjà |
+| URLs | `/#formulaire` → `/form.html` partout |
 
-Pour regénérer les tableaux CMS depuis le repo : `node scripts/generate-cms-align-gs.js` puis recolle le leads setup.
+### Aligner après un déploiement site
+
+Menu **NC Consulting → Aligner CMS (form + heures extra)** — met à jour concours/promo/proof et **remplace** formations/nouveau/annonces (pas le blog ni les leads).
+
+Regénérer les seeds depuis le repo : `node scripts/generate-cms-align-gs.js` puis recoller le script.
 
 
 
