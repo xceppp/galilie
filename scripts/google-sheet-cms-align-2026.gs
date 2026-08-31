@@ -1,25 +1,7 @@
 /**
- * NC Consulting — Aligner le CMS Google Sheet (form.html + heures extra)
- * ========================================================================
+ * NC Consulting — Aligner le CMS (standalone — optionnel)
+ * Utilisez plutôt scripts/google-sheet-ncconsulting-leads-setup.gs (tout-en-un).
  * Généré par: node scripts/generate-cms-align-gs.js
- * Ne pas éditer à la main — regénérer depuis lib/cmsDefaults.js si besoin.
- *
- * INSTALLATION
- * 1) Ouvrez le Google Sheet NC Consulting (GOOGLE_SHEETS_ID sur Vercel).
- * 2) Extensions → Apps Script.
- * 3) Fichier → + → Script → collez CE fichier (ou fusionnez le menu onOpen).
- * 4) Enregistrez → Actualisez le Sheet → menu « NC Consulting ».
- * 5) Exécutez: alignNcConsultingCmsWithSite2026
- *
- * CE QUE ÇA FAIT
- * - Met à jour cms_content (concours, promo, proof → heures extra + form.html)
- * - Remplace cms_formations (3 cartes Licence / Master / temps aménagé)
- * - Remplace cms_nouveau (heures extra, sans Almaster)
- * - Met à jour cms_announcements (CTA → /form.html)
- * - Remplace /#formulaire et #formulaire par /form.html dans tout le classeur
- * - Crée les onglets cms_* manquants (headers alignés lib/cmsStore.js)
- *
- * NE MODIFIE PAS: cms_blog, cms_faq, cms_cases, cms_clients, cms_trust, onglets leads.
  */
 
 var CMS_ALIGN_VERSION = '2026-08-31-form-heures-extra';
@@ -105,45 +87,23 @@ Engagement :: Aucun
 Réponse :: Sous 24h','Demander un échange →','/form.html','true','1']
 ];
 
-function onOpenCmsAlignMenu_() {
-  SpreadsheetApp.getUi()
-    .createMenu('NC Consulting')
-    .addItem('Aligner CMS (form + heures extra)', 'alignNcConsultingCmsWithSite2026')
-    .addToUi();
-}
-
-/**
- * Point d'entrée — demande confirmation puis aligne le CMS.
- */
 function alignNcConsultingCmsWithSite2026() {
   var ui = SpreadsheetApp.getUi();
   var confirm = ui.alert(
     'Aligner le CMS NC Consulting',
-    'Version: ' + CMS_ALIGN_VERSION + '\n\n' +
-      'Cette action va:\n' +
-      '• Mettre à jour concours / promo / proof dans cms_content\n' +
-      '• Remplacer cms_formations et cms_nouveau\n' +
-      '• Mettre à jour cms_announcements (CTA form.html)\n' +
-      '• Remplacer /#formulaire → /form.html partout\n\n' +
-      'cms_blog et les onglets leads ne sont PAS écrasés.\n\nContinuer ?',
+    'Version: ' + CMS_ALIGN_VERSION + '\n\nContinuer ?',
     ui.ButtonSet.OK_CANCEL
   );
   if (confirm !== ui.Button.OK) return;
 
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var report = [];
-
   report.push(patchCmsContent_(ss));
   report.push(writeFormationsTab_(ss));
   report.push(writeNouveauTab_(ss));
   report.push(writeAnnouncementsTab_(ss));
   report.push(replaceFormulaireUrlsInWorkbook_(ss));
-
-  ui.alert(
-    'CMS aligné',
-    report.join('\n\n') + '\n\nRechargez ncconsulting.ma (Ctrl+F5) pour voir les changements.',
-    ui.ButtonSet.OK
-  );
+  ui.alert('CMS aligné', report.join('\n\n'), ui.ButtonSet.OK);
 }
 
 function patchCmsContent_(ss) {
@@ -151,15 +111,13 @@ function patchCmsContent_(ss) {
   var lastRow = sh.getLastRow();
   if (lastRow < 2) {
     writeTable_(sh, ['key', 'value'], objectToRows_(CONTENT_PATCH));
-    return 'cms_content: créé avec ' + Object.keys(CONTENT_PATCH).length + ' clés.';
+    return 'cms_content: créé.';
   }
-
   var data = sh.getRange(2, 1, lastRow, 2).getValues();
   var keyCol = {};
   for (var i = 0; i < data.length; i++) {
     keyCol[String(data[i][0] || '').trim()] = i + 2;
   }
-
   var updated = 0;
   var keys = Object.keys(CONTENT_PATCH);
   for (var k = 0; k < keys.length; k++) {
@@ -167,33 +125,31 @@ function patchCmsContent_(ss) {
     var val = CONTENT_PATCH[key];
     if (keyCol[key]) {
       sh.getRange(keyCol[key], 2).setValue(val);
-      updated++;
     } else {
       var newRow = sh.getLastRow() + 1;
-      sh.getRange(newRow, 1, 1, 2).setValues([[key, val]]);
-      keyCol[key] = newRow;
-      updated++;
+      sh.getRange(newRow, 1, newRow, 2).setValues([[key, val]]);
     }
+    updated++;
   }
-  return 'cms_content: ' + updated + ' clé(s) concours/promo/proof mises à jour.';
+  return 'cms_content: ' + updated + ' clé(s).';
 }
 
 function writeFormationsTab_(ss) {
   var sh = ensureSheetWithHeaders_(ss, 'cms_formations', FORMATIONS_HEADERS);
   writeTable_(sh, FORMATIONS_HEADERS, FORMATIONS_ROWS);
-  return 'cms_formations: ' + FORMATIONS_ROWS.length + ' cartes heures extra écrites.';
+  return 'cms_formations: ' + FORMATIONS_ROWS.length + ' cartes.';
 }
 
 function writeNouveauTab_(ss) {
   var sh = ensureSheetWithHeaders_(ss, 'cms_nouveau', NOUVEAU_HEADERS);
   writeTable_(sh, NOUVEAU_HEADERS, NOUVEAU_ROWS);
-  return 'cms_nouveau: ' + NOUVEAU_ROWS.length + ' entrées heures extra (sans sources externes).';
+  return 'cms_nouveau: ' + NOUVEAU_ROWS.length + ' entrées.';
 }
 
 function writeAnnouncementsTab_(ss) {
   var sh = ensureSheetWithHeaders_(ss, 'cms_announcements', ANNOUNCE_HEADERS);
   writeTable_(sh, ANNOUNCE_HEADERS, ANNOUNCEMENT_ROWS);
-  return 'cms_announcements: ' + ANNOUNCEMENT_ROWS.length + ' annonces (CTA form.html).';
+  return 'cms_announcements: ' + ANNOUNCEMENT_ROWS.length + ' annonces.';
 }
 
 function replaceFormulaireUrlsInWorkbook_(ss) {
@@ -208,9 +164,7 @@ function replaceFormulaireUrlsInWorkbook_(ss) {
       for (var c = 0; c < values[r].length; c++) {
         var v = values[r][c];
         if (typeof v !== 'string') continue;
-        var nv = v
-          .replace(/\/#formulaire/g, '/form.html')
-          .replace(/#formulaire/g, '/form.html');
+        var nv = v.replace(/\/#formulaire/g, '/form.html').replace(/#formulaire/g, '/form.html');
         if (nv !== v) {
           values[r][c] = nv;
           cells++;
@@ -220,7 +174,7 @@ function replaceFormulaireUrlsInWorkbook_(ss) {
     }
     if (changed) range.setValues(values);
   }
-  return 'URLs: ' + cells + ' cellule(s) corrigées (#formulaire → form.html).';
+  return 'URLs: ' + cells + ' cellule(s).';
 }
 
 function ensureSheetWithHeaders_(ss, name, headers) {
@@ -236,8 +190,8 @@ function writeTable_(sh, headers, rows) {
   if (lastRow > 1) {
     sh.getRange(2, 1, lastRow, headers.length).clearContent();
   }
-  if (!rows.length) return;
-  sh.getRange(2, 1, rows.length, headers.length).setValues(rows);
+  if (!rows || !rows.length) return;
+  sh.getRange(2, 1, rows.length + 1, headers.length).setValues(rows);
 }
 
 function objectToRows_(obj) {

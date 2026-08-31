@@ -5,19 +5,23 @@ site content that is stored in your existing Google Sheet (the same spreadsheet
 used for leads, in new `cms_*` tabs). Changes appear on the live site within a
 minute (edge cache), no redeploy needed.
 
-## 6. Aligner le Sheet après déploiement (form.html + heures extra)
+## 6. Aligner le CMS (form.html + heures extra)
 
-Après une mise à jour site qui change les CTA ou le CMS par défaut :
+**Un seul fichier Apps Script suffit** — ne créez pas de second fichier séparé.
 
 1. Ouvrez le Google Sheet → **Extensions → Apps Script**.
-2. Ajoutez un fichier **CmsAlign.gs** : copiez le contenu de  
-   `scripts/google-sheet-cms-align-2026.gs` (généré par `node scripts/generate-cms-align-gs.js`).
-3. Si vous utilisez déjà `scripts/google-sheet-ncconsulting-leads-setup.gs`, le menu  
-   **NC Consulting → Aligner CMS (form + heures extra)** appelle la même fonction.
-4. Exécutez **alignNcConsultingCmsWithSite2026** une fois (autorisez l’accès si demandé).
-5. Rechargez le site (Ctrl+F5).
+2. Remplacez tout le code par **`scripts/google-sheet-ncconsulting-leads-setup.gs`**  
+   (contient leads + menu + `alignNcConsultingCmsWithSite2026`).
+3. **Enregistrez** → rechargez le Sheet.
+4. Menu **NC Consulting → Aligner CMS (form + heures extra)**  
+   (ou exécutez `alignNcConsultingCmsWithSite2026` dans l’éditeur).
 
-Cela met à jour `cms_content`, `cms_formations`, `cms_nouveau`, `cms_announcements` et remplace `/#formulaire` par `/form.html` dans tout le classeur. Les onglets **cms_blog** et **leads** ne sont pas écrasés.
+Si vous voyez *Fonction de script introuvable*, c’est que seul l’ancien script leads était collé sans la section CMS en bas du fichier — recolle le fichier **entier**.
+
+Après alignement : Ctrl+F5 sur ncconsulting.ma.
+
+Pour regénérer les tableaux CMS depuis le repo : `node scripts/generate-cms-align-gs.js` puis recolle le leads setup.
+
 
 
 ## 1. Google OAuth Web Client ID (for admin sign-in)
