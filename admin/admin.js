@@ -91,7 +91,7 @@
       list: el.formList,
       tpl: 'tpl-formation',
       key: 'formations',
-      fields: ['id', 'tag', 'title', 'subtitle', 'items', 'cta_url', 'active'],
+      fields: ['id', 'tag', 'title', 'subtitle', 'items', 'cta_url', 'cta_label', 'active'],
       prefix: 'f',
     },
     faq: {
@@ -154,6 +154,7 @@
         'nc_angle',
         'source_label',
         'source_url',
+        'cta_url',
         'active',
       ],
       prefix: 'nv',

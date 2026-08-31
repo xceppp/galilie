@@ -560,3 +560,43 @@ if (leadForm) {
     }
   });
 }
+
+(function applyLeadUrlParams() {
+  if (!leadForm || !niveauSelect) return;
+  const params = new URLSearchParams(window.location.search);
+  const intent = params.get('intent');
+  const programme = params.get('programme');
+  const objectif = params.get('objectif');
+  const situationField = document.getElementById('situation');
+  const map = {
+    licence: 'candidat_lex',
+    lpro: 'candidat_lpro',
+    master: 'candidat_master',
+    coaching: 'coaching',
+  };
+  const intentKey =
+    map[programme] ||
+    (intent === 'concours'
+      ? 'candidat_lex'
+      : intent === 'coaching'
+        ? 'coaching'
+        : intent === 'conseil'
+          ? 'autre'
+          : '');
+  if (intentKey) {
+    niveauSelect.value = intentKey;
+    updateDependentSelects();
+    setWizardStep(2);
+  }
+  if (situationField && objectif) {
+    situationField.value = objectif;
+  } else if (situationField && intent === 'conseil' && !situationField.value) {
+    situationField.value = 'Conseil stratégique / accompagnement dirigeant';
+  }
+  const formSection = document.getElementById('formulaire') || document.getElementById('formWrap');
+  if (formSection && (intent || window.location.pathname.endsWith('form.html'))) {
+    requestAnimationFrame(() => {
+      formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+})();

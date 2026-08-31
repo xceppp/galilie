@@ -351,7 +351,9 @@
   function isLeadFormLink(link) {
     if (!link || link.tagName !== 'A') return false;
     var href = (link.getAttribute('href') || '').trim().toLowerCase();
-    if (href === '#formulaire') return true;
+    if (href.indexOf('form.html') !== -1) return false;
+    if (href === '#formulaire' || href === '/#formulaire') return true;
+    if (href.indexOf('/#formulaire?') === 0) return true;
     if (href !== '#contact') return false;
     return (
       link.classList.contains('btn') ||
@@ -363,6 +365,12 @@
       link.classList.contains('nc-hero-scroll') ||
       link.classList.contains('nc-hero-card-cta')
     );
+  }
+
+  function legacyFormRedirectUrl(link) {
+    var href = (link.getAttribute('href') || '').trim();
+    var q = href.indexOf('?') !== -1 ? href.slice(href.indexOf('?')) : '';
+    return '/form.html' + q;
   }
 
   function isDecouvrirLink(link) {
@@ -385,16 +393,7 @@
     if (!isLeadFormLink(link)) return;
     e.preventDefault();
     closeD();
-    if (history.replaceState) {
-      history.replaceState(null, '', '#formulaire');
-    } else {
-      location.hash = 'formulaire';
-    }
-    scrollToLeadForm({
-      resetForm: true,
-      campaign: isCampaignInscriptionLink(link),
-      focus: true,
-    });
+    window.location.href = legacyFormRedirectUrl(link);
   });
 
   function handleFormHashOnLoad() {
@@ -406,6 +405,11 @@
       return;
     }
     if (hash !== '#formulaire' && hash !== '#contact') return;
+    var target = document.getElementById('formulaire') || document.getElementById('formWrap');
+    if (!target) {
+      window.location.replace('/form.html' + (location.search || ''));
+      return;
+    }
     window.requestAnimationFrame(function () {
       window.setTimeout(function () {
         scrollToLeadForm({ resetForm: true, campaign: true });
@@ -420,6 +424,11 @@
       return;
     }
     if (hash === '#formulaire' || hash === '#contact') {
+      var target = document.getElementById('formulaire') || document.getElementById('formWrap');
+      if (!target) {
+        window.location.href = '/form.html' + (location.search || '');
+        return;
+      }
       scrollToLeadForm({ resetForm: true, campaign: true });
     }
   });

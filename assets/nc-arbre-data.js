@@ -69,22 +69,22 @@ window.NC_ARBRE = {
             {
               title: 'Stratégie & aide à la décision',
               text: 'Arbitrages à fort enjeu, éclairés par un regard extérieur.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Transitions & restructuration',
               text: 'Cadrer, séquencer, tenir le cap du changement.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Organisation & performance',
               text: 'Structurer les rôles, les rituels et le pilotage.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Finance & investissement',
               text: "Décisions chiffrées, scénarios et priorités d'allocation.",
-              href: '#formulaire',
+              href: '/form.html',
             },
           ],
         },
@@ -94,22 +94,22 @@ window.NC_ARBRE = {
             {
               title: 'Leadership & prise de décision',
               text: 'Posture de dirigeant et arbitrages sous pression.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Développement personnel & carrière',
               text: 'Repositionnement, reconversion, trajectoire.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Entrepreneuriat',
               text: 'Structuration du projet et priorités stratégiques.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Entretiens & oraux',
               text: 'Préparation exigeante aux prises de parole décisives.',
-              href: '#formulaire',
+              href: '/form.html',
             },
           ],
         },
@@ -119,22 +119,22 @@ window.NC_ARBRE = {
             {
               title: 'Leadership & management',
               text: 'Formats courts ou modulaires, mise en pratique immédiate.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Négociation & influence',
               text: 'Cas concrets, terrain, résultats mesurables.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Prise de parole',
               text: 'Communication d\u2019impact pour dirigeants et cadres.',
-              href: '#formulaire',
+              href: '/form.html',
             },
             {
               title: 'Transformation digitale',
               text: 'Digital, data et international pour les équipes.',
-              href: '#formulaire',
+              href: '/form.html',
             },
           ],
         },
@@ -234,7 +234,7 @@ window.NC_ARBRE = {
             {
               title: 'Appel découverte',
               text: '20 minutes, sans engagement. Réponse sous 24 h.',
-              href: '#formulaire',
+              href: '/form.html',
             },
           ],
         },
@@ -245,6 +245,6 @@ window.NC_ARBRE = {
     titleHtml: 'Prêt à passer au <em>niveau supérieur</em> ?',
     subtitle: 'Accompagnements limités par trimestre — suivi personnalisé garanti.',
     button: 'Demander un premier échange →',
-    href: '#formulaire',
+    href: '/form.html',
   },
 };

@@ -103,7 +103,7 @@
     esc(cta.subtitle || '') +
     '</small></p>' +
     '<a class="btn btn-gold nc-arbre__bouton" href="' +
-    esc(cta.href || '#formulaire') +
+    esc(cta.href || '/form.html') +
     '">' +
     esc(cta.button || 'Demander un premier échange →') +
     '</a></div>';

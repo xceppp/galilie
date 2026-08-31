@@ -1,21 +1,23 @@
 # NC Consulting — ncconsulting.ma
 
-> Cabinet de conseil stratégique et coaching exécutif à Meknès, Maroc.
+> Cabinet de conseil stratégique, coaching exécutif et préparation aux concours Licence / Master d'Excellence à Meknès, Maroc.
 
 ## Site officiel
 - https://www.ncconsulting.ma/
 - Nom : NC Consulting
 - Domaine : ncconsulting.ma
 
-## Services
+## Services principaux
 - Consultation 1-à-1 pour dirigeants et cadres
 - Coaching exécutif (leadership, performance)
 - Accompagnement & conseil stratégique
-- Présentiel à Meknès et à distance (visio)
+- Préparation concours Licence / Master — heures extra de coaching 1-à-1 (Meknès & à distance)
+- Formats temps aménagé pour salariés qui reprennent leurs études
 
 ## Contact
 - Téléphone : +212 6 06 11 11 99
 - Email : chaltoutenouamane@gmail.com
+- Formulaire : https://www.ncconsulting.ma/form.html
 - Instagram : https://www.instagram.com/ncconsultingg
 - LinkedIn : https://www.linkedin.com/company/nc-consulting10
 - Facebook : https://www.facebook.com/share/14n6ep56JPi/
@@ -23,9 +25,35 @@
 ## Localisation
 - Ville : Meknès, Maroc
 - Région : Fès-Meknès
+- Formats : présentiel à Meknès et visio (à distance)
 
-## Pages publiques
-- / — Accueil
-- /mentions-legales.html
-- /confidentialite.html
-- /cgu.html
+## Pages services
+- https://www.ncconsulting.ma/ — Accueil (conseil, coaching)
+- https://www.ncconsulting.ma/form.html — Contact & inscription (formulaire)
+- https://www.ncconsulting.ma/concours.html — Heures extra Licence & Master (→ formulaire)
+- https://www.ncconsulting.ma/preparation-concours-meknes.html — Préparation concours à Meknès
+- https://www.ncconsulting.ma/cabinet.html — Présentation du cabinet
+- https://www.ncconsulting.ma/methode.html — Méthode en 3 étapes
+- https://www.ncconsulting.ma/decouvrir.html — Carte interactive du site
+- https://www.ncconsulting.ma/nouveau.html — Détail ouvertures Master / Licence Pro
+- https://www.ncconsulting.ma/blog/ — Blog (concours, reprise d'études, coaching)
+
+## Articles blog prioritaires (SEO)
+- https://www.ncconsulting.ma/blog/licence-temps-amenage.html — Licence temps aménagé Meknès
+- https://www.ncconsulting.ma/blog/master-temps-amenage.html — Master temps aménagé, tarifs
+- https://www.ncconsulting.ma/blog/licence-master-excellence-meknes.html — Oral concours en 5 étapes
+- https://www.ncconsulting.ma/blog/fsjes-meknes-licence-master-excellence.html — FSJES Meknès
+- https://www.ncconsulting.ma/blog/est-meknes-bachelor-ingenierie-finance.html — Bachelor EST Meknès
+- https://www.ncconsulting.ma/blog/licence-vs-master-excellence-preparation.html — Licence vs Master
+- https://www.ncconsulting.ma/blog/licence-master-temps-amenage-reprendre-etudes.html — Reprendre études en travaillant
+- https://www.ncconsulting.ma/blog/coaching-executif-maroc.html — Coaching exécutif Maroc
+
+## Tarifs indicatifs (préparation concours, vérifiés sur le site)
+- Master temps aménagé : 15 000 DH/an (voir page Master temps aménagé)
+- Licence / Bachelor temps aménagé : 18 000 DH/an (voir pages concernées)
+- Premier échange conseil / concours : 20 min, sans engagement (formulaire site)
+
+## Pages légales
+- https://www.ncconsulting.ma/mentions-legales.html
+- https://www.ncconsulting.ma/confidentialite.html
+- https://www.ncconsulting.ma/cgu.html

@@ -41,7 +41,9 @@ var CMS_TAB_NAMES = [
   'cms_formations',
   'cms_faq',
   'cms_cases',
-  'cms_clients'
+  'cms_clients',
+  'cms_blog',
+  'cms_nouveau'
 ];
 
 /** Onglets à conserver lors du nettoyage (leads + CMS). */
@@ -99,6 +101,7 @@ function onOpen() {
     .addItem('Définir email notifications', 'setLeadNotifyEmail')
     .addItem('Activer email à chaque nouvelle ligne', 'installLeadEmailTrigger')
     .addSeparator()
+    .addItem('Aligner CMS (form + heures extra)', 'alignNcConsultingCmsWithSite2026')
     .addItem('Supprimer les onglets inutiles…', 'removeUnnecessarySheets')
     .addToUi();
 }

@@ -175,14 +175,14 @@
 
         <!-- FORMATIONS -->
         <section class="panel" id="panel-formations">
-          <p class="panel-desc">Les cartes de préparation Concours. Une ligne d'élément = <code>Nom :: description</code> (ou juste un texte simple).</p>
+          <p class="panel-desc">Cartes « heures extra » Licence / Master — chaque bouton pousse vers le formulaire.</p>
           <div class="collection" id="formList"></div>
           <button class="btn-add" type="button" data-add="formation">+ Ajouter une formation</button>
         </section>
 
         <!-- INTRO / SECTION TITLES -->
         <section class="panel" id="panel-intro">
-          <p class="panel-desc">Les titres en tête de la section Concours.</p>
+          <p class="panel-desc">Les titres en tête de la page Concours (rejoindre les heures extra).</p>
           <label class="field"><span>Petit label</span><input type="text" data-content="concours.label"></label>
           <label class="field"><span>Titre (HTML autorisé : &lt;em&gt;)</span><input type="text" data-content="concours.title_html"></label>
           <label class="field"><span>Sous-titre (HTML autorisé : &lt;strong&gt;)</span><textarea rows="3" data-content="concours.subtitle_html"></textarea></label>
@@ -373,8 +373,11 @@
         <label class="field"><span>Titre</span><input type="text" data-field="title"></label>
       </div>
       <label class="field"><span>Sous-titre</span><input type="text" data-field="subtitle"></label>
-      <label class="field"><span>Éléments (un par ligne — <code>Nom :: description</code>)</span><textarea rows="6" data-field="items"></textarea></label>
-      <label class="field"><span>Lien du bouton</span><input type="url" data-field="cta_url"></label>
+      <label class="field"><span>Éléments (un par ligne)</span><textarea rows="6" data-field="items"></textarea></label>
+      <div class="grid2">
+        <label class="field"><span>Texte du bouton</span><input type="text" data-field="cta_label" placeholder="Rejoindre — Licence →"></label>
+        <label class="field"><span>Lien du bouton</span><input type="text" data-field="cta_url" placeholder="/form.html?intent=concours"></label>
+      </div>
     </div>
   </template>
 
@@ -402,7 +405,7 @@
       <label class="field"><span>Infos (une par ligne — <code>Label :: valeur</code>)</span><textarea rows="4" data-field="details"></textarea></label>
       <div class="grid2">
         <label class="field"><span>Bouton CTA</span><input type="text" data-field="cta_label" placeholder="Je m'inscris →"></label>
-        <label class="field"><span>Lien CTA</span><input type="text" data-field="cta_url" placeholder="/#formulaire"></label>
+        <label class="field"><span>Lien CTA</span><input type="text" data-field="cta_url" placeholder="/form.html"></label>
       </div>
     </div>
   </template>
@@ -488,24 +491,25 @@
         <label class="field"><span>Type</span>
           <select data-field="type">
             <option value="master">Master</option>
-            <option value="lpro">Licence Pro</option>
+            <option value="lpro">Temps aménagé</option>
             <option value="lex">Licence d'Excellence</option>
           </select>
         </label>
-        <label class="field"><span>Statut</span><input type="text" data-field="status" placeholder="Inscriptions ouvertes"></label>
+        <label class="field"><span>Statut</span><input type="text" data-field="status" placeholder="Places ouvertes"></label>
       </div>
-      <label class="field"><span>Titre (voix NC)</span><input type="text" data-field="title"></label>
+      <label class="field"><span>Titre</span><input type="text" data-field="title" placeholder="Heures extra — Master"></label>
       <label class="field"><span>Résumé</span><textarea rows="2" data-field="summary"></textarea></label>
       <div class="grid2">
-        <label class="field"><span>Établissement</span><input type="text" data-field="etab"></label>
-        <label class="field"><span>Ville</span><input type="text" data-field="ville"></label>
+        <label class="field"><span>Avec</span><input type="text" data-field="etab" placeholder="NC Consulting"></label>
+        <label class="field"><span>Lieu</span><input type="text" data-field="ville" placeholder="Meknès & visio"></label>
       </div>
-      <label class="field"><span>Deadline / session</span><input type="text" data-field="deadline"></label>
+      <label class="field"><span>Disponibilité</span><input type="text" data-field="deadline" placeholder="Sur rendez-vous"></label>
       <label class="field"><span>Faits (une par ligne — <code>Label :: valeur</code>)</span><textarea rows="4" data-field="facts"></textarea></label>
       <label class="field"><span>Texte détail</span><textarea rows="4" data-field="body"></textarea></label>
       <label class="field"><span>Angle NC</span><textarea rows="3" data-field="nc_angle"></textarea></label>
-      <div class="grid2">
-        <label class="field"><span>Source (libellé)</span><input type="text" data-field="source_label" placeholder="almaster-maroc.com"></label>
+      <label class="field"><span>Lien formulaire</span><input type="text" data-field="cta_url" placeholder="/form.html?intent=concours&programme=master"></label>
+      <div class="grid2" hidden>
+        <label class="field"><span>Source (libellé)</span><input type="text" data-field="source_label"></label>
         <label class="field"><span>Source (URL)</span><input type="url" data-field="source_url"></label>
       </div>
     </div>

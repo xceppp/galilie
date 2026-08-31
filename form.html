@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr-MA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0E1116">
+
+  <script src="assets/gtm-init.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJG3HYZ4LC"></script>
+  <script src="assets/gtag-init.js"></script>
+
+  <meta name="robots" content="index, follow">
+  <title>Contact &amp; inscription — NC Consulting Meknès</title>
+  <meta name="description" content="Demandez un premier échange gratuit (20 min) ou inscrivez-vous à la préparation concours Licence / Master. Réponse sous 24 h — Meknès ou à distance.">
+  <link rel="canonical" href="https://www.ncconsulting.ma/form.html">
+  <link rel="icon" href="https://www.ncconsulting.ma/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://www.ncconsulting.ma/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="nc-theme.css">
+  <link rel="stylesheet" href="nc-form.css">
+  <script src="assets/theme-init.js"></script>
+</head>
+<body class="nc-page-body">
+  <header class="nc-page-top">
+    <div class="container nc-page-top-inner">
+      <a class="nc-page-back" href="/">← Retour à l'accueil</a>
+      <span class="nc-wordmark">NC <span>Consulting</span></span>
+    </div>
+  </header>
+
+  <main class="nc-page-main">
+    <section class="nc-booking" id="formulaire" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="nc-booking-inner">
+          <div class="nc-booking-copy reveal">
+            <div class="nc-scarcity" data-cms="contact.scarcity">Premier échange de 20 min — sans engagement</div>
+            <h1 class="nc-title" id="contact-title" data-cms-html="contact.title_html">Réservez un <em>premier échange</em></h1>
+            <p class="lead" data-cms="contact.lead">Vingt minutes pour clarifier votre besoin (conseil, coaching ou préparation). Réponse personnalisée sous 24 h.</p>
+            <ul class="nc-booking-benefits" data-cms-list="contact.benefits" data-cms-list-type="check">
+              <li><span class="chk">✓</span>20 minutes · Meknès ou à distance</li>
+              <li><span class="chk">✓</span>Confidentiel · sans frais ni engagement</li>
+              <li><span class="chk">✓</span>Diagnostic franc et prochaines étapes concrètes</li>
+              <li><span class="chk">✓</span>Réponse sous 24 heures</li>
+            </ul>
+            <div class="nc-slots" data-cms-html="contact.slots_html">Réponse sous <b style="color:var(--gold-lt)">24 h</b> · Sur rendez-vous</div>
+            <p class="nc-sub" style="margin-top:20px">Heures extra Licence / Master ? <a href="concours.html">Voir la préparation</a> · <a href="blog/">Guides blog</a></p>
+          </div>
+
+          <div class="reveal d1">
+            <div class="nc-form-card" id="formWrap">
+              <div class="form-topline"></div>
+              <div class="form-pad">
+                <form id="leadForm" novalidate>
+                  <div class="hp-field" aria-hidden="true" hidden>
+                    <label for="hp_website">Ne pas remplir</label>
+                    <input type="text" id="hp_website" name="website" tabindex="-1" autocomplete="off">
+                  </div>
+                  <div class="wiz-head" aria-label="Étapes du formulaire">
+                    <div class="wiz-step">
+                      <div class="wiz-dot active" id="wizDot1">1</div>
+                      <div class="wiz-lbl active" id="wizLbl1">Contact</div>
+                    </div>
+                    <div class="wiz-line" id="wizLine1"></div>
+                    <div class="wiz-step">
+                      <div class="wiz-dot" id="wizDot2">2</div>
+                      <div class="wiz-lbl" id="wizLbl2">Profil</div>
+                    </div>
+                    <div class="wiz-line" id="wizLine2"></div>
+                    <div class="wiz-step">
+                      <div class="wiz-dot" id="wizDot3">3</div>
+                      <div class="wiz-lbl" id="wizLbl3">Confirmation</div>
+                    </div>
+                  </div>
+
+                  <div class="wiz-panel active" id="wizPanel1">
+                    <div class="wiz-title">Commençons par vos coordonnées</div>
+                    <div class="wiz-sub">Ces informations nous permettent de vous recontacter rapidement.</div>
+                    <div class="fgrid2">
+                      <div class="field">
+                        <label for="prenom">Prénom</label>
+                        <input id="prenom" name="prenom" type="text" autocomplete="given-name" required>
+                      </div>
+                      <div class="field">
+                        <label for="nom">Nom</label>
+                        <input id="nom" name="nom" type="text" autocomplete="family-name" required>
+                      </div>
+                    </div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="telephone">Téléphone</label>
+                      <input id="telephone" name="telephone" type="tel" placeholder="+212 6XX XX XX XX" autocomplete="tel" required>
+                    </div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="email">Email <span class="field-opt">(optionnel)</span></label>
+                      <input id="email" name="email" type="email" placeholder="contact@exemple.com" autocomplete="email">
+                    </div>
+                    <div class="wiz-nav">
+                      <button class="submit wiz-next" type="button" data-wiz-next="2">Suivant — Mon profil →</button>
+                    </div>
+                  </div>
+
+                  <div class="wiz-panel" id="wizPanel2">
+                    <div class="wiz-title">Votre inscription</div>
+                    <div class="wiz-sub">Indiquez si vous visez une Licence ou un Master — pour caler vos heures extra (optionnel).</div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="situation">Votre objectif, en une phrase <span class="field-opt">(optionnel)</span></label>
+                      <textarea id="situation" name="situation" rows="3" placeholder="Ex. : heures extra pour l'oral Licence Excellence Finance…"></textarea>
+                    </div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="niveau">Votre profil <span class="field-opt">(optionnel)</span></label>
+                      <select id="niveau" name="niveau">
+                        <option value="" disabled selected>Sélectionnez</option>
+                        <option value="candidat_lex">Candidat Licence d'Excellence</option>
+                        <option value="candidat_lpro">Candidat Licence Pro</option>
+                        <option value="candidat_master">Candidat Master</option>
+                        <option value="etudiant">Étudiant / Autre filière</option>
+                        <option value="coaching">Coaching / conseil exécutif</option>
+                        <option value="autre">Autre profil</option>
+                      </select>
+                    </div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="filiere">Spécialité / filière <span class="field-opt">(optionnel)</span></label>
+                      <select id="filiere" name="filiere">
+                        <option value="" disabled selected>Choisissez d'abord le profil</option>
+                      </select>
+                    </div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="service">Demande <span class="field-opt">(optionnel)</span></label>
+                      <select id="service" name="service">
+                        <option value="" disabled selected>Choisissez d'abord le profil</option>
+                      </select>
+                    </div>
+                    <div class="field" style="margin-top:10px">
+                      <label for="mode">Mode <span class="field-opt">(optionnel)</span></label>
+                      <select id="mode" name="mode">
+                        <option value="" disabled>Sélectionnez</option>
+                        <option selected>À distance</option>
+                        <option>Présentiel (Meknès)</option>
+                        <option>Les deux</option>
+                      </select>
+                    </div>
+                    <div class="wiz-nav">
+                      <button class="wiz-back" type="button" data-wiz-prev="1">← Retour</button>
+                      <button class="submit wiz-next" type="button" data-wiz-next="3">Confirmer →</button>
+                    </div>
+                  </div>
+
+                  <div class="wiz-panel" id="wizPanel3">
+                    <div class="wiz-title">Validation finale</div>
+                    <div class="wiz-sub">Vérifiez vos informations et envoyez votre demande.</div>
+                    <div class="wiz-summary">
+                      <div class="wiz-row"><span>Nom</span><strong id="sumName">—</strong></div>
+                      <div class="wiz-row"><span>Téléphone</span><strong id="sumPhone">—</strong></div>
+                      <div class="wiz-row"><span>Email</span><strong id="sumEmail">—</strong></div>
+                      <div class="wiz-row"><span>Situation</span><strong id="sumSituation">—</strong></div>
+                      <div class="wiz-row"><span>Profil</span><strong id="sumNiveau">—</strong></div>
+                      <div class="wiz-row"><span>Option</span><strong id="sumFiliere">—</strong></div>
+                      <div class="wiz-row"><span>Service / Mode</span><strong id="sumServiceMode">—</strong></div>
+                    </div>
+                    <div class="form-progress" id="formProgress">
+                      <div class="form-progress-bar" id="formProgressBar"></div>
+                    </div>
+                    <div class="form-progress-label" id="formProgressLabel">Seuls le nom et le téléphone sont nécessaires.</div>
+                    <div id="leadSubmitError" class="field-error lead-submit-error" role="alert" hidden></div>
+                    <div class="wiz-nav">
+                      <button class="wiz-back" type="button" data-wiz-prev="2">← Retour</button>
+                      <button class="submit" id="leadSubmitBtn" type="submit">✓ Envoyer ma demande</button>
+                    </div>
+                    <div class="locknote">
+                      🔒 Vos données restent confidentielles. Ce site est protégé par reCAPTCHA&nbsp;; les
+                      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">règles de confidentialité</a>
+                      et les
+                      <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">conditions d'utilisation</a>
+                      de Google s'appliquent.
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="success" id="successState">
+                <div class="ok">✓</div>
+                <h3>Demande reçue !</h3>
+                <p>Merci. Nous vous répondons sous 24h avec une recommandation claire et un plan adapté à votre objectif.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="nc-page-foot">
+    <div class="container">
+      <nav class="nc-page-foot-nav" aria-label="Navigation du site">
+        <a href="/">Accueil</a>
+        <a href="/concours.html">Concours</a>
+        <a href="/decouvrir.html">Découvrir</a>
+        <a href="/methode.html">Méthode</a>
+        <a href="/cabinet.html">Cabinet</a>
+        <a href="/blog/">Blog</a>
+        <a href="/form.html">Formulaire</a>
+      </nav>
+      <p>© 2026 NC Consulting · <a href="/">ncconsulting.ma</a> · Meknès, Maroc</p>
+    </div>
+  </footer>
+
+  <script src="assets/nc-constants.js" defer></script>
+  <script src="nc.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="cms.js" defer></script>
+</body>
+</html>

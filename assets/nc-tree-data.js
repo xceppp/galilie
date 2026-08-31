@@ -168,7 +168,7 @@ window.NC_TREE = {
       label: 'Contact & appel gratuit',
       summary:
         'Réservez un appel découverte de 20 minutes ou envoyez votre demande via le formulaire — réponse personnalisée sous 24–48 h.',
-      href: '/#formulaire',
+      href: '/form.html',
     },
   ],
 };

@@ -211,23 +211,24 @@
   function renderNouveau(list) {
     var listEl = document.getElementById('ncNouveauList');
     if (!listEl) return;
-    if (!list || !list.length) {
-      listEl.innerHTML =
-        '<p class="nc-nouveau-empty">Aucune ouverture pour le moment.</p>';
-      return;
-    }
+    if (!list || !list.length) return;
     listEl.innerHTML = list
       .map(function (n) {
-        var id = encodeURIComponent(n.id || '');
         var type = n.type || 'master';
         var label = TYPE_LABELS[type] || type;
+        var href =
+          n.cta_url ||
+          (type === 'master'
+            ? '/form.html?intent=concours&programme=master'
+            : type === 'lex' || type === 'lpro'
+              ? '/form.html?intent=concours&programme=licence'
+              : '/form.html?intent=concours');
         var meta = '';
-        if (n.etab) meta += '<span><b>Étab.</b> ' + esc(n.etab) + '</span>';
-        if (n.deadline) meta += '<span><b>Deadline</b> ' + esc(n.deadline) + '</span>';
-        if (n.ville) meta += '<span><b>Ville</b> ' + esc(n.ville) + '</span>';
+        if (n.ville) meta += '<span><b>Lieu</b> ' + esc(n.ville) + '</span>';
+        if (n.status) meta += '<span><b>Statut</b> ' + esc(n.status) + '</span>';
         return (
-          '<a class="nc-nouveau-card" href="nouveau.html?id=' +
-          id +
+          '<a class="nc-nouveau-card" href="' +
+          esc(href) +
           '" data-nv-type="' +
           esc(type) +
           '">' +
@@ -242,16 +243,11 @@
             : '') +
           '</div>' +
           '<h3>' +
-          esc(n.title || 'Ouverture') +
+          esc(n.title || 'Heures extra') +
           '</h3>' +
           (n.summary ? '<p>' + esc(n.summary) + '</p>' : '') +
           (meta ? '<div class="nc-nouveau-meta">' + meta + '</div>' : '') +
-          (n.source_label || n.source_url
-            ? '<div class="nc-nouveau-source">Source : ' +
-              esc(n.source_label || n.source_url) +
-              '</div>'
-            : '') +
-          '<div class="nc-nouveau-nc">Lecture &amp; préparation NC Consulting</div>' +
+          '<div class="nc-nouveau-nc">Rejoindre via le formulaire →</div>' +
           '</a>'
         );
       })
@@ -327,15 +323,20 @@
         return '<li>' + esc(line) + '</li>';
       })
       .join('');
-    var ctaUrl = f.cta_url || '#';
+    var ctaUrl = f.cta_url || '/form.html?intent=concours';
+    var ctaLabel = f.cta_label || 'Rejoindre la préparation →';
+    var isExternal = /^https?:\/\//i.test(ctaUrl);
+    var ctaAttrs = isExternal
+      ? ' target="_blank" rel="noopener noreferrer"'
+      : '';
     return (
       '<div class="nc-concours-card">' +
       '<span class="nc-concours-card-tag">' + esc(f.tag) + '</span>' +
       '<h3>' + esc(f.title) + '</h3>' +
       '<p>' + esc(f.subtitle) + '</p>' +
       '<ul class="' + listClass + '">' + listHtml + '</ul>' +
-      '<a class="btn btn-gold nc-concours-cta" href="' + esc(ctaUrl) +
-      '" target="_blank" rel="noopener noreferrer">Réserver ma place →</a>' +
+      '<a class="btn btn-gold nc-concours-cta" href="' + esc(ctaUrl) + '"' +
+      ctaAttrs + '>' + esc(ctaLabel) + '</a>' +
       '</div>'
     );
   }

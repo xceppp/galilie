@@ -18,20 +18,75 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "@id": "https://www.ncconsulting.ma/#organization",
-  "name": "NC Consulting",
-  "alternateName": "NC Consulting Meknès",
-  "url": "https://www.ncconsulting.ma/",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Meknès",
-    "addressCountry": "MA"
-  },
-  "sameAs": [
-    "https://www.linkedin.com/company/nc-consulting10",
-    "https://www.facebook.com/share/14n6ep56JPi/",
-    "https://share.google/9RKwR21gkbUsQ6eJo"
+  "@graph": [
+    {
+      "@type": ["ProfessionalService", "LocalBusiness"],
+      "@id": "https://www.ncconsulting.ma/cabinet.html#business",
+      "name": "NC Consulting",
+      "alternateName": "NC Consulting Meknès",
+      "url": "https://www.ncconsulting.ma/cabinet.html",
+      "description": "Cabinet de conseil stratégique et coaching exécutif à Meknès — dirigeants, cadres, étudiants et organisations.",
+      "telephone": "+212606111199",
+      "email": "chaltoutenouamane@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Meknès",
+        "addressRegion": "Fès-Meknès",
+        "addressCountry": "MA"
+      },
+      "areaServed": { "@type": "Country", "name": "Maroc" },
+      "sameAs": [
+        "https://www.linkedin.com/company/nc-consulting10",
+        "https://www.facebook.com/share/14n6ep56JPi/",
+        "https://share.google/9RKwR21gkbUsQ6eJo"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.ncconsulting.ma/cabinet.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "À qui s'adresse le cabinet NC Consulting ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dirigeants, cadres, entrepreneurs, étudiants en concours et organisations qui cherchent un accompagnement exigeant — conseil stratégique, coaching exécutif ou préparation Licence / Master à Meknès et à distance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quelle différence entre coaching exécutif et conseil stratégique ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le coaching exécutif est un programme structuré sur plusieurs semaines autour du leadership et de la performance. Le conseil stratégique est un partenariat pour vos décisions majeures, transitions et projets — avec diagnostic franc et plans d'action concrets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "NC Consulting propose-t-il aussi la préparation aux concours ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui : préparation intensive aux concours Licence d'Excellence, Licence Pro et Master (économie, gestion, finance, management), en présentiel à Meknès ou à distance. Voir la page Préparation concours et le blog associé."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Les séances se font-elles à Meknès ou à distance ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Les deux formats : présentiel à Meknès ou visio. Même exigence et même suivi dans les deux cas lorsque le rythme est structuré."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment prendre contact avec NC Consulting ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Via le formulaire sur ncconsulting.ma : premier échange de 20 minutes, gratuit et sans engagement, pour qualifier votre besoin (conseil, coaching ou concours)."
+          }
+        }
+      ]
+    }
   ]
 }
   </script>
@@ -87,7 +142,7 @@
         <h3>Conseil stratégique &amp; coaching exécutif</h3>
         <p>Vous pilotez une équipe, une PME ou une direction et devez trancher vite sur des sujets sensibles. Nous vous apportons un regard extérieur exigeant, des plans d'action concrets et un suivi entre les séances.</p>
         <ul class="nc-page-list"><li>Consultation 1-à-1 confidentielle</li><li>Coaching exécutif structuré</li><li>Accompagnement conseil sur vos enjeux majeurs</li></ul>
-        <a class="btn btn-gold" href="/#formulaire">Réserver mon appel gratuit →</a>
+        <a class="btn btn-gold" href="/form.html">Réserver mon appel gratuit →</a>
       </article>
 
       <article class="nc-page-profile" id="profil-etudiant">
@@ -95,7 +150,7 @@
         <h3>Préparation concours &amp; formations certifiantes</h3>
         <p>Licences d'excellence, Masters, expertise comptable, audit et finance : des programmes intensifs, pratiques et orientés résultats pour décrocher votre place.</p>
         <ul class="nc-page-list"><li>Préparation concours Licence &amp; Master</li><li>Formations audit, comptabilité &amp; finance</li><li>Coaching individuel inclus</li></ul>
-        <a class="btn btn-gold" href="concours.html">Voir les programmes Concours →</a>
+        <a class="btn btn-gold" href="concours.html">Heures extra Licence &amp; Master →</a>
       </article>
 
       <article class="nc-page-profile" id="profil-professionnel">
@@ -111,7 +166,7 @@
         <h3>Formations sur mesure &amp; conseil organisationnel</h3>
         <p>Vous investissez dans vos équipes ou cherchez un partenaire pour structurer la performance. Nous concevons des parcours adaptés à vos enjeux : contrôle de gestion, marchés publics, audit interne, etc.</p>
         <ul class="nc-page-list"><li>Formations intra-entreprise</li><li>Conseil en gestion &amp; pilotage</li><li>Intervenants praticiens</li></ul>
-        <a class="btn btn-gold" href="/#formulaire">Réserver mon appel gratuit →</a>
+        <a class="btn btn-gold" href="/form.html">Réserver mon appel gratuit →</a>
       </article>
     </section>
 
@@ -160,15 +215,50 @@
       </div>
     </section>
 
+    <section class="container nc-page-block nc-blog-faq" id="faq" aria-labelledby="cabinet-faq-title">
+      <h2 class="nc-page-section-title" id="cabinet-faq-title">FAQ — Le cabinet</h2>
+      <div class="nc-blog-faq-list">
+        <details class="nc-blog-faq-item">
+          <summary>À qui s'adresse le cabinet NC Consulting ?</summary>
+          <p>Dirigeants, cadres, entrepreneurs, étudiants en concours et organisations qui cherchent un accompagnement exigeant — conseil stratégique, coaching exécutif ou préparation Licence / Master à Meknès et à distance.</p>
+        </details>
+        <details class="nc-blog-faq-item">
+          <summary>Quelle différence entre coaching exécutif et conseil stratégique ?</summary>
+          <p>Le coaching exécutif est un programme structuré sur plusieurs semaines autour du leadership et de la performance. Le conseil stratégique est un partenariat pour vos décisions majeures, transitions et projets — avec diagnostic franc et plans d'action concrets.</p>
+        </details>
+        <details class="nc-blog-faq-item">
+          <summary>NC Consulting propose-t-il aussi la préparation aux concours ?</summary>
+          <p>Oui : voir la page <a href="concours.html">Préparation concours</a>, les guides <a href="/blog/licence-master-excellence-meknes.html">oral en 5 étapes</a> et le <a href="/blog/">blog</a>. Coaching individuel à Meknès ou en visio.</p>
+        </details>
+        <details class="nc-blog-faq-item">
+          <summary>Les séances se font-elles à Meknès ou à distance ?</summary>
+          <p>Les deux formats : présentiel à Meknès ou visio. Même exigence et même suivi dans les deux cas lorsque le rythme est structuré.</p>
+        </details>
+        <details class="nc-blog-faq-item">
+          <summary>Comment prendre contact avec NC Consulting ?</summary>
+          <p>Via le <a href="/form.html">formulaire sur ncconsulting.ma</a> : premier échange de 20 minutes, gratuit et sans engagement, pour qualifier votre besoin (conseil, coaching ou concours).</p>
+        </details>
+      </div>
+    </section>
+
     <section class="container nc-page-cta-band">
       <h2>Prêt à échanger avec un conseiller ?</h2>
       <p>Premier appel découverte gratuit · 20 minutes · Sans engagement</p>
-      <a class="btn btn-gold btn-lg" href="/#formulaire">Réserver mon appel gratuit →</a>
+      <a class="btn btn-gold btn-lg" href="/form.html">Réserver mon appel gratuit →</a>
     </section>
   </main>
 
   <footer class="nc-page-foot">
     <div class="container">
+      <nav class="nc-page-foot-nav" aria-label="Navigation du site">
+        <a href="/">Accueil</a>
+        <a href="/concours.html">Concours</a>
+        <a href="/decouvrir.html">Découvrir</a>
+        <a href="/methode.html">Méthode</a>
+        <a href="/cabinet.html">Cabinet</a>
+        <a href="/blog/">Blog</a>
+        <a href="/form.html">Formulaire</a>
+      </nav>
       <p>© 2026 NC Consulting · <a href="/">ncconsulting.ma</a> · Meknès, Maroc</p>
     </div>
   </footer>

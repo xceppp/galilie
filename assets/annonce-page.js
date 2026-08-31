@@ -16,7 +16,7 @@
       details:
         'Statut :: Session terminée\nAlternative :: Premier échange 20 min\nLieu :: Meknès ou à distance\nEngagement :: Aucun',
       cta_label: 'Réserver un échange →',
-      cta_url: '/#formulaire',
+      cta_url: '/form.html',
       active: false,
       order: 99,
     },
@@ -33,7 +33,7 @@
       details:
         'Durée :: 20 minutes\nLieu :: Meknès ou à distance\nEngagement :: Aucun\nRéponse :: Sous 24h',
       cta_label: 'Demander un échange →',
-      cta_url: '/#formulaire',
+      cta_url: '/form.html',
       active: true,
       order: 1,
     },
@@ -118,7 +118,7 @@
       : '<div class="nc-ann-detail__media"><div class="nc-ann-detail__media-empty">Aucune affiche pour cette annonce</div></div>';
 
     var ctaLabel = a.cta_label || 'En savoir plus →';
-    var ctaUrl = a.cta_url || '/#formulaire';
+    var ctaUrl = a.cta_url || '/form.html';
 
     mount.innerHTML =
       '<div class="nc-ann-detail__grid">' +

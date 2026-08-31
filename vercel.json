@@ -38,6 +38,31 @@
       "permanent": true
     },
     {
+      "source": "/methode",
+      "destination": "/methode.html",
+      "permanent": true
+    },
+    {
+      "source": "/cabinet",
+      "destination": "/cabinet.html",
+      "permanent": true
+    },
+    {
+      "source": "/form",
+      "destination": "/form.html",
+      "permanent": true
+    },
+    {
+      "source": "/nouveau",
+      "destination": "/nouveau.html",
+      "permanent": true
+    },
+    {
+      "source": "/preparation-concours-meknes",
+      "destination": "/preparation-concours-meknes.html",
+      "permanent": true
+    },
+    {
       "source": "/blog",
       "destination": "/blog/",
       "permanent": true
