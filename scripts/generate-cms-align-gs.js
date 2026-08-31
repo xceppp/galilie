@@ -44,7 +44,8 @@ function escGs(str) {
     .replace(/\\/g, '\\\\')
     .replace(/'/g, "\\'")
     .replace(/\r\n/g, '\n')
-    .replace(/\r/g, '\n');
+    .replace(/\r/g, '\n')
+    .replace(/\n/g, '\\n');
 }
 
 function rowFormation(f) {
@@ -305,13 +306,22 @@ fs.writeFileSync(OUT, gs, 'utf8');
 console.log('Wrote', OUT);
 
 let leads = fs.readFileSync(LEADS, 'utf8');
-if (leads.indexOf('PLACEHOLDER_CMS_FORMATIONS_ROWS') === -1) {
-  console.warn('Leads setup: placeholders not found — skip inject');
+const cmsRowsBlock =
+  cmsFormationsBlock + '\n\n' + cmsNouveauBlock + '\n\n' + cmsAnnounceBlock;
+const placeholderRe =
+  /var CMS_FORMATIONS_ROWS = PLACEHOLDER_CMS_FORMATIONS_ROWS;\r?\nvar CMS_NOUVEAU_ROWS = PLACEHOLDER_CMS_NOUVEAU_ROWS;\r?\nvar CMS_ANNOUNCEMENT_ROWS = PLACEHOLDER_CMS_ANNOUNCEMENT_ROWS;/;
+const existingRe =
+  /var CMS_FORMATIONS_ROWS = \[[\s\S]*?\];\r?\n\r?\nvar CMS_NOUVEAU_ROWS = \[[\s\S]*?\];\r?\n\r?\nvar CMS_ANNOUNCEMENT_ROWS = \[[\s\S]*?\];/;
+
+const before = leads;
+if (placeholderRe.test(leads)) {
+  leads = leads.replace(placeholderRe, cmsRowsBlock);
+} else if (existingRe.test(leads)) {
+  leads = leads.replace(existingRe, cmsRowsBlock);
 } else {
-  leads = leads.replace(
-    /var CMS_FORMATIONS_ROWS = PLACEHOLDER_CMS_FORMATIONS_ROWS;\r?\nvar CMS_NOUVEAU_ROWS = PLACEHOLDER_CMS_NOUVEAU_ROWS;\r?\nvar CMS_ANNOUNCEMENT_ROWS = PLACEHOLDER_CMS_ANNOUNCEMENT_ROWS;/,
-    cmsFormationsBlock + '\n\n' + cmsNouveauBlock + '\n\n' + cmsAnnounceBlock
-  );
+  console.warn('Leads setup: CMS row blocks not found — skip inject');
+}
+if (leads !== before) {
   fs.writeFileSync(LEADS, leads, 'utf8');
   console.log('Updated', LEADS);
 }

@@ -450,47 +450,20 @@ var CMS_CONTENT_PATCH = {
 
 /** @type {Array<Array<string>>} — régénérer avec node scripts/generate-cms-align-gs.js si cmsDefaults change */
 var CMS_FORMATIONS_ROWS = [
-['f1','Licence','Heures extra — Licence','Renforcez votre préparation avant le concours Licence d\'Excellence ou Licence Pro.','Oral & posture sous pression
-Compta · économie · management
-Anglais concours
-Plan de révision réaliste
-Suivi jusqu\'aux résultats','/form.html?intent=concours&programme=licence','true','1','Rejoindre — Licence →'],
-['f2','Master','Heures extra — Master','Ajoutez des heures ciblées pour réussir l\'accès Master (dossier, oral, projet pro).','Projet professionnel & oral
-Finance · audit · management
-Anglais & argumentaire
-Méthode dossier / entretien
-Suivi jusqu\'à l\'admission','/form.html?intent=concours&programme=master','true','2','Rejoindre — Master →'],
-['f3','Temps aménagé','Heures extra — en travaillant','Vous reprisez Licence / Master en parallèle du boulot ? On calibre des heures compatibles.','Planning compatible emploi
-Sessions courtes & régulières
-Licence ou Master aménagé
-Meknès ou visio
-Premier échange 20 min','/form.html?intent=concours','true','3','Rejoindre — Formulaire →']
+['f1','Licence','Heures extra — Licence','Renforcez votre préparation avant le concours Licence d\'Excellence ou Licence Pro.','Oral & posture sous pression\nCompta · économie · management\nAnglais concours\nPlan de révision réaliste\nSuivi jusqu\'aux résultats','/form.html?intent=concours&programme=licence','true','1','Rejoindre — Licence →'],
+['f2','Master','Heures extra — Master','Ajoutez des heures ciblées pour réussir l\'accès Master (dossier, oral, projet pro).','Projet professionnel & oral\nFinance · audit · management\nAnglais & argumentaire\nMéthode dossier / entretien\nSuivi jusqu\'à l\'admission','/form.html?intent=concours&programme=master','true','2','Rejoindre — Master →'],
+['f3','Temps aménagé','Heures extra — en travaillant','Vous reprisez Licence / Master en parallèle du boulot ? On calibre des heures compatibles.','Planning compatible emploi\nSessions courtes & régulières\nLicence ou Master aménagé\nMeknès ou visio\nPremier échange 20 min','/form.html?intent=concours','true','3','Rejoindre — Formulaire →']
 ];
 
 var CMS_NOUVEAU_ROWS = [
-['nv-heures-master','master','Heures extra — Master','Ajoutez des heures 1-à-1 pour préparer votre accès Master : oral, projet pro, finance / management.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & visio','Format :: Coaching 1-à-1
-Objectif :: Accès Master
-Lieu :: Meknès ou à distance
-Entrée :: Formulaire NC','Vous visez un Master ? Rejoignez NC Consulting pour des heures extra ciblées — dossier, oral et argumentaire — puis inscrivez-vous via le formulaire.','On calibre le volume d’heures selon votre calendrier et votre filière, puis on enchaîne sur un plan concret jusqu’à l’admission.','','','true','1','/form.html?intent=concours&programme=master'],
-['nv-heures-licence','lex','Heures extra — Licence d’Excellence','Renforcez oral, bases et méthode avant le concours Licence — sessions dédiées avec NC Consulting.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & visio','Format :: Coaching 1-à-1
-Objectif :: Concours Licence
-Lieu :: Meknès ou à distance
-Entrée :: Formulaire NC','Vous préparez une Licence d’Excellence ou Licence Pro ? Rejoignez les heures extra NC : oral, compta, éco, management, anglais — puis le formulaire pour réserver votre créneau.','Même exigence qu’à l’oral du concours : clarté, bases solides, tenue sous pression — avec un suivi jusqu’aux résultats.','','','true','2','/form.html?intent=concours&programme=licence'],
-['nv-heures-amenage','lpro','Heures extra — temps aménagé','Vous travaillez et visez Licence / Master aménagé ? On calibre des heures compatibles avec votre emploi.','Sur rendez-vous','NC Consulting','Flexible','Meknès & visio','Format :: Sessions courtes
-Public :: Salariés / reprise
-Lieu :: Meknès ou à distance
-Entrée :: Formulaire NC','Planning réaliste, sessions courtes et régulières, suivi jusqu’au concours — sans quitter votre activité.','Un premier échange de 20 min suffit pour voir si le volume d’heures est tenable avec votre emploi du temps.','','','true','3','/form.html?intent=concours']
+['nv-heures-master','master','Heures extra — Master','Ajoutez des heures 1-à-1 pour préparer votre accès Master : oral, projet pro, finance / management.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & visio','Format :: Coaching 1-à-1\nObjectif :: Accès Master\nLieu :: Meknès ou à distance\nEntrée :: Formulaire NC','Vous visez un Master ? Rejoignez NC Consulting pour des heures extra ciblées — dossier, oral et argumentaire — puis inscrivez-vous via le formulaire.','On calibre le volume d’heures selon votre calendrier et votre filière, puis on enchaîne sur un plan concret jusqu’à l’admission.','','','true','1','/form.html?intent=concours&programme=master'],
+['nv-heures-licence','lex','Heures extra — Licence d’Excellence','Renforcez oral, bases et méthode avant le concours Licence — sessions dédiées avec NC Consulting.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & visio','Format :: Coaching 1-à-1\nObjectif :: Concours Licence\nLieu :: Meknès ou à distance\nEntrée :: Formulaire NC','Vous préparez une Licence d’Excellence ou Licence Pro ? Rejoignez les heures extra NC : oral, compta, éco, management, anglais — puis le formulaire pour réserver votre créneau.','Même exigence qu’à l’oral du concours : clarté, bases solides, tenue sous pression — avec un suivi jusqu’aux résultats.','','','true','2','/form.html?intent=concours&programme=licence'],
+['nv-heures-amenage','lpro','Heures extra — temps aménagé','Vous travaillez et visez Licence / Master aménagé ? On calibre des heures compatibles avec votre emploi.','Sur rendez-vous','NC Consulting','Flexible','Meknès & visio','Format :: Sessions courtes\nPublic :: Salariés / reprise\nLieu :: Meknès ou à distance\nEntrée :: Formulaire NC','Planning réaliste, sessions courtes et régulières, suivi jusqu’au concours — sans quitter votre activité.','Un premier échange de 20 min suffit pour voir si le volume d’heures est tenable avec votre emploi du temps.','','','true','3','/form.html?intent=concours']
 ];
 
 var CMS_ANNOUNCEMENT_ROWS = [
-['semaine-gratuite','Semaine gratuite — Licences d\'Excellence','Cette session (juillet 2026) est terminée. Réservez un premier échange pour un accompagnement personnalisé.','Terminée','23','Juil','assets/annonce-semaine-gratuite.png','La semaine gratuite de préparation (début 23 juillet 2026) est terminée. Pour un accompagnement concours, coaching ou conseil, réservez un premier échange de 20 minutes — Meknès ou à distance, sans engagement.','Statut :: Session terminée
-Alternative :: Premier échange 20 min
-Lieu :: Meknès ou à distance
-Engagement :: Aucun','Réserver un échange →','/form.html','false','99'],
-['nouveaux-creneaux','Premier échange de 20 min — Meknès ou à distance','Confidentiel, sans engagement. On clarifie votre besoin et la meilleure façon d\'avancer.','Sur rendez-vous','—','Échange','','Réservez un premier échange confidentiel avec NC Consulting. On clarifie votre besoin (coaching, conseil ou préparation concours) et on définit la meilleure façon d\'avancer — sans engagement.','Durée :: 20 minutes
-Lieu :: Meknès ou à distance
-Engagement :: Aucun
-Réponse :: Sous 24h','Demander un échange →','/form.html','true','1']
+['semaine-gratuite','Semaine gratuite — Licences d\'Excellence','Cette session (juillet 2026) est terminée. Réservez un premier échange pour un accompagnement personnalisé.','Terminée','23','Juil','assets/annonce-semaine-gratuite.png','La semaine gratuite de préparation (début 23 juillet 2026) est terminée. Pour un accompagnement concours, coaching ou conseil, réservez un premier échange de 20 minutes — Meknès ou à distance, sans engagement.','Statut :: Session terminée\nAlternative :: Premier échange 20 min\nLieu :: Meknès ou à distance\nEngagement :: Aucun','Réserver un échange →','/form.html','false','99'],
+['nouveaux-creneaux','Premier échange de 20 min — Meknès ou à distance','Confidentiel, sans engagement. On clarifie votre besoin et la meilleure façon d\'avancer.','Sur rendez-vous','—','Échange','','Réservez un premier échange confidentiel avec NC Consulting. On clarifie votre besoin (coaching, conseil ou préparation concours) et on définit la meilleure façon d\'avancer — sans engagement.','Durée :: 20 minutes\nLieu :: Meknès ou à distance\nEngagement :: Aucun\nRéponse :: Sous 24h','Demander un échange →','/form.html','true','1']
 ];
 
 function alignNcConsultingCmsWithSite2026() {
