@@ -1,6 +1,6 @@
 # NC Consulting — ncconsulting.ma
 
-> Cabinet de conseil stratégique, coaching exécutif et préparation aux concours Licence / Master d'Excellence à Meknès, Maroc.
+> Cabinet de conseil stratégique, coaching exécutif et préparation Bac (examen national) à Meknès, Maroc.
 
 ## Site officiel
 - https://www.ncconsulting.ma/
@@ -11,8 +11,7 @@
 - Consultation 1-à-1 pour dirigeants et cadres
 - Coaching exécutif (leadership, performance)
 - Accompagnement & conseil stratégique
-- Préparation concours Licence / Master — heures extra de coaching 1-à-1 (Meknès & à distance)
-- Formats temps aménagé pour salariés qui reprennent leurs études
+- Préparation Bac — examen national : 2è BAC SEG, Sciences Mathématiques A & B, Sciences Expérimentales (Meknès & à distance)
 
 ## Contact
 - Téléphone : +212 6 06 11 11 99
@@ -30,12 +29,12 @@
 ## Pages services
 - https://www.ncconsulting.ma/ — Accueil (conseil, coaching)
 - https://www.ncconsulting.ma/form.html — Contact & inscription (formulaire)
-- https://www.ncconsulting.ma/concours.html — Heures extra Licence & Master (→ formulaire)
-- https://www.ncconsulting.ma/preparation-concours-meknes.html — Préparation concours à Meknès
+- https://www.ncconsulting.ma/concours.html — Préparation Bac / examen national (→ formulaire)
+- https://www.ncconsulting.ma/preparation-concours-meknes.html — Préparation Bac à Meknès
 - https://www.ncconsulting.ma/cabinet.html — Présentation du cabinet
 - https://www.ncconsulting.ma/methode.html — Méthode en 3 étapes
 - https://www.ncconsulting.ma/decouvrir.html — Carte interactive du site
-- https://www.ncconsulting.ma/nouveau.html — Détail ouvertures Master / Licence Pro
+- https://www.ncconsulting.ma/nouveau.html — Détail filières Bac
 - https://www.ncconsulting.ma/blog/ — Blog (concours, reprise d'études, coaching)
 
 ## Articles blog prioritaires (SEO)

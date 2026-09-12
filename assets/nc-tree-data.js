@@ -124,18 +124,18 @@ window.NC_TREE = {
         },
         {
           id: 'profil-etudiant',
-          label: 'Étudiants & concours',
+          label: 'Étudiants & Bac',
           summary:
-            'Préparation Licences d\'excellence, Masters, expertise comptable — programmes intensifs orientés résultats.',
+            'Préparation à l\'examen national — 2è BAC SEG, Sciences Mathématiques A & B, Sciences Expérimentales.',
           href: 'concours.html',
         },
       ],
     },
     {
       id: 'concours',
-      label: 'Prépa concours',
+      label: 'Préparation Bac',
       summary:
-        'Parcours dédié aux étudiants : préparation intensive concours, formations certifiantes et coaching individuel.',
+        'Cours de soutien, méthode, exercices et examens nationaux — présentiel à Meknès ou à distance.',
       href: 'concours.html',
     },
     {

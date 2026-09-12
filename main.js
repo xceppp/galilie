@@ -14,6 +14,9 @@ const filiereSelect = document.getElementById('filiere');
 const serviceSelect = document.getElementById('service');
 
 const NIVEAU_LABELS = {
+  bac_seg: '2è BAC — Sciences Économiques & Gestion',
+  bac_sma: 'Sciences Mathématiques A / B',
+  bac_exp: 'Sciences Expérimentales',
   candidat_lex: "Candidat Licence d'Excellence",
   candidat_lpro: 'Candidat Licence Pro',
   candidat_master: 'Candidat Master',
@@ -25,6 +28,54 @@ const NIVEAU_LABELS = {
 const CAMPAIGN_SERVICE = "Demande d'information";
 
 const dependentOptions = {
+  bac_seg: {
+    filieres: [
+      'Pack National',
+      'À la carte',
+      'Économie générale & Statistique',
+      'Comptabilité & Mathématiques financières',
+      'EOAE',
+      'Mathématiques',
+      'Autre',
+    ],
+    services: [
+      CAMPAIGN_SERVICE,
+      'Préparation Bac SEG',
+      'Pack National',
+      'À la carte',
+    ],
+  },
+  bac_sma: {
+    filieres: [
+      'Sciences Mathématiques A',
+      'Sciences Mathématiques B',
+      'Mathématiques',
+      'Physique et Chimie',
+      'SVT',
+      "Sciences de l'Ingénieur (SI)",
+      'Anglais',
+      'Philosophie',
+      'Autre',
+    ],
+    services: [
+      CAMPAIGN_SERVICE,
+      'Préparation Bac Mathématiques A & B',
+    ],
+  },
+  bac_exp: {
+    filieres: [
+      'Mathématiques',
+      'Physique et Chimie',
+      'Sciences de la Vie et de la Terre',
+      'Anglais',
+      'Philosophie',
+      'Autre',
+    ],
+    services: [
+      CAMPAIGN_SERVICE,
+      'Préparation Sciences Expérimentales',
+    ],
+  },
   candidat_lex: {
     filieres: [
       'Finance & Comptabilité',
@@ -397,7 +448,7 @@ window.ncResetLeadForm = function ncResetLeadForm() {
 /** Prefill lead form for inscription CTAs (demande d'information) */
 window.ncPrefillCampaignLead = function ncPrefillCampaignLead() {
   if (!niveauSelect) return;
-  niveauSelect.value = 'candidat_lex';
+  niveauSelect.value = 'bac_seg';
   updateDependentSelects();
   if (serviceSelect) {
     const opts = Array.from(serviceSelect.options);
@@ -569,6 +620,9 @@ if (leadForm) {
   const objectif = params.get('objectif');
   const situationField = document.getElementById('situation');
   const map = {
+    seg: 'bac_seg',
+    sma: 'bac_sma',
+    exp: 'bac_exp',
     licence: 'candidat_lex',
     lpro: 'candidat_lpro',
     master: 'candidat_master',
@@ -577,7 +631,7 @@ if (leadForm) {
   const intentKey =
     map[programme] ||
     (intent === 'concours'
-      ? 'candidat_lex'
+      ? 'bac_seg'
       : intent === 'coaching'
         ? 'coaching'
         : intent === 'conseil'

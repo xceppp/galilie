@@ -514,26 +514,26 @@ var CMS_SETUP_VERSION = '2026-08-31-full';
 var CMS_ALIGN_VERSION = '2026-08-31-form-heures-extra';
 
 var CMS_CONTENT_PATCH = {
-  'concours.label': 'Rejoignez-nous — Heures extra',
-  'concours.title_html': 'Préparez votre <em>Licence</em> ou votre <em>Master</em>.',
-  'concours.subtitle_html': 'Vous visez une <strong>Licence d\'Excellence, Licence Pro ou Master</strong> ? Rejoignez NC Consulting pour des <strong>heures extra</strong> de coaching 1-à-1 — oral, bases et méthode — à Meknès ou à distance. Ensuite, inscrivez-vous via le formulaire.',
-  'promo.badge': 'Places limitées',
-  'promo.urgency': 'Coaching 1-à-1',
-  'promo.title': 'Rejoignez les prochains créneaux d\'heures extra',
-  'promo.title_highlight': 'prochains créneaux',
+  'concours.label': 'Préparation Bac',
+  'concours.title_html': 'Préparation à l’<em>examen national</em>',
+  'concours.subtitle_html': 'Cours de soutien · Méthode · Exercices · Examens nationaux — présentiel à Meknès ou à distance (tout le Maroc).',
+  'promo.badge': 'Confiance, Méthode, Résultat',
+  'promo.urgency': 'Groupes réduits',
+  'promo.title': 'Plus qu’un soutien, un vrai accompagnement',
+  'promo.title_highlight': 'accompagnement',
   'promo.places_reserved': '7',
   'promo.places_total': '10',
-  'promo.updated_label': 'Créneaux mis à jour régulièrement',
-  'promo.cta_label': 'Rejoindre la préparation →',
+  'promo.updated_label': 'Encadrement par professeur agrégé & docteur · Préparation ciblée Bac marocain',
+  'promo.cta_label': 'S’inscrire via le formulaire →',
   'promo.cta_url': '/form.html?intent=concours',
-  'proof.1_value': '1-à-1',
-  'proof.1_label': 'heures dédiées',
-  'proof.2_value': 'Suivi',
-  'proof.2_label': 'jusqu\'aux résultats',
-  'proof.3_value': 'Oral',
-  'proof.3_label': '& bases renforcées',
-  'proof.4_value': '0 DH',
-  'proof.4_label': 'premier échange'
+  'proof.1_value': 'Meknès',
+  'proof.1_label': 'présentiel',
+  'proof.2_value': 'Distance',
+  'proof.2_label': 'tout le Maroc',
+  'proof.3_value': 'Groupes',
+  'proof.3_label': 'réduits',
+  'proof.4_value': 'Suivi',
+  'proof.4_label': 'personnalisé'
 };
 
 var CMS_CONTENT_ROWS = [
@@ -558,26 +558,26 @@ var CMS_CONTENT_ROWS = [
 ['hero.card.items','Diagnostic clair de votre situation\nRecommandation ciblée, pas générique\nConfidentialité totale'],
 ['hero.card.cta','Demander un premier échange →'],
 ['hero.card.rating','Premier échange confidentiel'],
-['concours.label','Rejoignez-nous — Heures extra'],
-['concours.title_html','Préparez votre <em>Licence</em> ou votre <em>Master</em>.'],
-['concours.subtitle_html','Vous visez une <strong>Licence d\'Excellence, Licence Pro ou Master</strong> ? Rejoignez NC Consulting pour des <strong>heures extra</strong> de coaching 1-à-1 — oral, bases et méthode — à Meknès ou à distance. Ensuite, inscrivez-vous via le formulaire.'],
-['promo.badge','Places limitées'],
-['promo.urgency','Coaching 1-à-1'],
-['promo.title','Rejoignez les prochains créneaux d\'heures extra'],
-['promo.title_highlight','prochains créneaux'],
+['concours.label','Préparation Bac'],
+['concours.title_html','Préparation à l’<em>examen national</em>'],
+['concours.subtitle_html','Cours de soutien · Méthode · Exercices · Examens nationaux — présentiel à Meknès ou à distance (tout le Maroc).'],
+['promo.badge','Confiance, Méthode, Résultat'],
+['promo.urgency','Groupes réduits'],
+['promo.title','Plus qu’un soutien, un vrai accompagnement'],
+['promo.title_highlight','accompagnement'],
 ['promo.places_reserved','7'],
 ['promo.places_total','10'],
-['promo.updated_label','Créneaux mis à jour régulièrement'],
-['promo.cta_label','Rejoindre la préparation →'],
+['promo.updated_label','Encadrement par professeur agrégé & docteur · Préparation ciblée Bac marocain'],
+['promo.cta_label','S’inscrire via le formulaire →'],
 ['promo.cta_url','/form.html?intent=concours'],
-['proof.1_value','1-à-1'],
-['proof.1_label','heures dédiées'],
-['proof.2_value','Suivi'],
-['proof.2_label','jusqu\'aux résultats'],
-['proof.3_value','Oral'],
-['proof.3_label','& bases renforcées'],
-['proof.4_value','0 DH'],
-['proof.4_label','premier échange'],
+['proof.1_value','Meknès'],
+['proof.1_label','présentiel'],
+['proof.2_value','Distance'],
+['proof.2_label','tout le Maroc'],
+['proof.3_value','Groupes'],
+['proof.3_label','réduits'],
+['proof.4_value','Suivi'],
+['proof.4_label','personnalisé'],
 ['poles.label','Nos pôles'],
 ['poles.title_html','Trois expertises pour <em>professionnels exigeants</em>.'],
 ['poles.subtitle','Conseil, coaching et montée en compétences — exclusivement pour dirigeants, cadres et entrepreneurs.'],
@@ -725,15 +725,15 @@ var CMS_BLOG_ROWS = [
 ];
 
 var CMS_FORMATIONS_ROWS = [
-['f1','Licence','Heures extra — Licence','Renforcez votre préparation avant le concours Licence d\'Excellence ou Licence Pro.','Oral & posture sous pression\nCompta · économie · management\nAnglais concours\nPlan de révision réaliste\nSuivi jusqu\'aux résultats','/form.html?intent=concours&programme=licence','true','1','Rejoindre — Licence →'],
-['f2','Master','Heures extra — Master','Ajoutez des heures ciblées pour réussir l\'accès Master (dossier, oral, projet pro).','Projet professionnel & oral\nFinance · audit · management\nAnglais & argumentaire\nMéthode dossier / entretien\nSuivi jusqu\'à l\'admission','/form.html?intent=concours&programme=master','true','2','Rejoindre — Master →'],
-['f3','Temps aménagé','Heures extra — en travaillant','Vous reprisez Licence / Master en parallèle du boulot ? On calibre des heures compatibles.','Planning compatible emploi\nSessions courtes & régulières\nLicence ou Master aménagé\nMeknès ou visio\nPremier échange 20 min','/form.html?intent=concours','true','3','Rejoindre — Formulaire →']
+['f1','2è BAC SEG','Sciences Économiques & Gestion','Préparation à l’examen national — Pack National ou À la carte.','Économie générale & Statistique\nComptabilité & Mathématiques financières\nÉconomie & Organisation Administrative des Entreprises (EOAE)\nMathématiques\nPrésentiel Meknès · À distance — tout le Maroc','/form.html?intent=concours&programme=seg','true','1','S’inscrire — 2è BAC SEG →'],
+['f2','Mathématiques A & B','Sciences Mathématiques A & B','Deux parcours, un même objectif : votre réussite !','Mathématiques · Physique et Chimie\nSVT (parcours A) ou Sciences de l’Ingénieur (parcours B)\nAnglais · Philosophie\nSujets des années précédentes corrigés\nGroupes réduits · Suivi personnalisé','/form.html?intent=concours&programme=sma','true','2','S’inscrire — Mathématiques A & B →'],
+['f3','Sciences Expérimentales','Sciences Expérimentales','Un accompagnement complet pour un excellent résultat !','Mathématiques — Consolider les bases et maîtriser les techniques\nPhysique et Chimie — Comprendre, s’entraîner, réussir\nSVT — Des explications claires et des schémas simplifiés\nAnglais — Méthodes, exercices et entraînement\nPhilosophie — Analyser, argumenter, réussir la dissertation','/form.html?intent=concours&programme=exp','true','3','S’inscrire — Sciences Expérimentales →']
 ];
 
 var CMS_NOUVEAU_ROWS = [
-['nv-heures-master','master','Heures extra — Master','Ajoutez des heures 1-à-1 pour préparer votre accès Master : oral, projet pro, finance / management.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & visio','Format :: Coaching 1-à-1\nObjectif :: Accès Master\nLieu :: Meknès ou à distance\nEntrée :: Formulaire NC','Vous visez un Master ? Rejoignez NC Consulting pour des heures extra ciblées — dossier, oral et argumentaire — puis inscrivez-vous via le formulaire.','On calibre le volume d’heures selon votre calendrier et votre filière, puis on enchaîne sur un plan concret jusqu’à l’admission.','','','true','1','/form.html?intent=concours&programme=master'],
-['nv-heures-licence','lex','Heures extra — Licence d’Excellence','Renforcez oral, bases et méthode avant le concours Licence — sessions dédiées avec NC Consulting.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & visio','Format :: Coaching 1-à-1\nObjectif :: Concours Licence\nLieu :: Meknès ou à distance\nEntrée :: Formulaire NC','Vous préparez une Licence d’Excellence ou Licence Pro ? Rejoignez les heures extra NC : oral, compta, éco, management, anglais — puis le formulaire pour réserver votre créneau.','Même exigence qu’à l’oral du concours : clarté, bases solides, tenue sous pression — avec un suivi jusqu’aux résultats.','','','true','2','/form.html?intent=concours&programme=licence'],
-['nv-heures-amenage','lpro','Heures extra — temps aménagé','Vous travaillez et visez Licence / Master aménagé ? On calibre des heures compatibles avec votre emploi.','Sur rendez-vous','NC Consulting','Flexible','Meknès & visio','Format :: Sessions courtes\nPublic :: Salariés / reprise\nLieu :: Meknès ou à distance\nEntrée :: Formulaire NC','Planning réaliste, sessions courtes et régulières, suivi jusqu’au concours — sans quitter votre activité.','Un premier échange de 20 min suffit pour voir si le volume d’heures est tenable avec votre emploi du temps.','','','true','3','/form.html?intent=concours']
+['nv-bac-seg','seg','Sciences Économiques & Gestion','Pack National ou À la carte — Économie, Comptabilité, EOAE, Mathématiques.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & à distance','Filière :: 2è BAC SEG\nOptions :: Pack National | À la carte\nLieu :: Meknès ou à distance\nMotto :: Confiance, Méthode, Résultat','Préparation à l’examen national — Cours de soutien · Méthode · Exercices · Examens nationaux. Pour les deux options du Bac : Sciences Économiques | Sciences de Gestion Comptable.','Encadrement par professeur agrégé & docteur · Préparation ciblée Bac marocain · Exercices & examens nationaux corrigés.','','','true','1','/form.html?intent=concours&programme=seg'],
+['nv-bac-sma','sma','Sciences Mathématiques A & B','Deux parcours, un même objectif : votre réussite ! Maths, Physique-Chimie, SVT ou SI, Anglais, Philosophie.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & à distance','Parcours :: Sciences Mathématiques A & B\nOffre :: Cours, fiches, sujets corrigés\nLieu :: Meknès ou à distance\nFormat :: Groupes réduits','Programme de l’examen national — Sciences Mathématiques A (SVT) et B (Sciences de l’Ingénieur). Plus qu’un soutien, un vrai accompagnement !','Cours clairs et structurés · Fiches de cours et résumés · Sujets des années précédentes corrigés · Conseils d’orientation.','','','true','2','/form.html?intent=concours&programme=sma'],
+['nv-bac-exp','exp','Sciences Expérimentales','Mathématiques, Physique et Chimie, SVT, Anglais, Philosophie — petits groupes, suivi personnalisé.','Places ouvertes','NC Consulting','Sur rendez-vous','Meknès & à distance','Au programme :: 5 matières\nOffre :: Cours, fiches, examens corrigés\nLieu :: Meknès ou à distance\nMotto :: Confiance Méthode Résultats','Un accompagnement complet pour un excellent résultat ! Mathématiques, Physique et Chimie, Sciences de la Vie et de la Terre, Anglais, Philosophie.','Cours clairs et structurés · Fiches de cours et résumés · Exercices et sujets d’examens corrigés · Petits groupes pour un meilleur encadrement.','','','true','3','/form.html?intent=concours&programme=exp']
 ];
 
 var CMS_ANNOUNCEMENT_ROWS = [

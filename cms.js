@@ -200,17 +200,20 @@
     master: 'Master',
     lpro: 'Licence Pro',
     lex: "Licence d'Excellence",
+    seg: '2è BAC SEG',
+    sma: 'Mathématiques A & B',
+    exp: 'Sciences Expérimentales',
   };
 
   function typeClass(type) {
-    if (type === 'master') return 'nc-nouveau-type--master';
-    if (type === 'lex') return 'nc-nouveau-type--lex';
+    if (type === 'master' || type === 'sma') return 'nc-nouveau-type--master';
+    if (type === 'lex' || type === 'seg') return 'nc-nouveau-type--lex';
     return '';
   }
 
   function renderNouveau(list) {
     var listEl = document.getElementById('ncNouveauList');
-    if (!listEl) return;
+    if (!listEl || listEl.hasAttribute('data-cms-skip')) return;
     if (!list || !list.length) return;
     listEl.innerHTML = list
       .map(function (n) {
@@ -243,7 +246,7 @@
             : '') +
           '</div>' +
           '<h3>' +
-          esc(n.title || 'Heures extra') +
+          esc(n.title || 'Préparation Bac') +
           '</h3>' +
           (n.summary ? '<p>' + esc(n.summary) + '</p>' : '') +
           (meta ? '<div class="nc-nouveau-meta">' + meta + '</div>' : '') +
@@ -343,7 +346,8 @@
 
   function renderFormations(list) {
     var container = document.getElementById('ncFormations');
-    if (!container || !list || !list.length) return;
+    if (!container || container.hasAttribute('data-cms-skip')) return;
+    if (!list || !list.length) return;
     container.innerHTML = list.map(renderFormationCard).join('');
   }
 
